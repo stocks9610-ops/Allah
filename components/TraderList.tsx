@@ -9,54 +9,53 @@ export interface ExtendedTrader extends Trader {
 }
 
 /** 
- * LOCAL IMAGE MAP 
- * These paths point to public/traders/ on your GitHub.
- * Extension updated to .jpeg as requested.
+ * CURATED AI-STYLE PERSONA MAP
+ * High-quality portraits matching trader names/bios
  */
 const TRADER_IMAGES = {
-  anas: '/traders/1.jpeg',
-  thomas: '/traders/2.jpeg',
-  t3: '/traders/3.jpeg',
-  t4: '/traders/4.jpeg',
-  t5: '/traders/5.jpeg',
-  t6: '/traders/6.jpeg',
-  t7: '/traders/7.jpeg',
-  t8: '/traders/8.jpeg',
-  t9: '/traders/9.jpeg',
-  t10: '/traders/10.jpeg',
-  t11: '/traders/11.jpeg',
-  t12: '/traders/12.jpeg',
-  t13: '/traders/13.jpeg',
-  t14: '/traders/14.jpeg',
-  t15: '/traders/15.jpeg',
-  t16: '/traders/16.jpeg',
-  t17: '/traders/17.jpeg',
-  t18: '/traders/18.jpeg',
-  t19: '/traders/19.jpeg',
-  t20: '/traders/20.jpeg',
+  anas: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80', // South Asian Professional
+  thomas: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&q=80', // European Executive
+  p4: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=80', // Analyst Type
+  elio: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&q=80', // Tech/DeFi
+  craig: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&q=80', // Day Trader
+  binary: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop&q=80', // Scalper
+  gold: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=400&h=400&fit=crop&q=80', // Veteran Gold Trader
+  forex: 'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=400&h=400&fit=crop&q=80', // Forex Specialist
+  alpha: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=400&h=400&fit=crop&q=80', // Quant
+  omega: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=400&fit=crop&q=80', // Liquidity Hunter
+  quantum: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=400&h=400&fit=crop&q=80', // Arbitrage
+  stellar: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&h=400&fit=crop&q=80', // Macro Guru
+  vector: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=400&fit=crop&q=80', // Altcoin Hunter
+  neural: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&h=400&fit=crop&q=80', // AI Strategist
+  cyber: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&h=400&fit=crop&q=80', // Sentiment Analyst
+  flux: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&q=80', // Pattern Expert
+  matrix: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80', // Order Flow
+  core: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop&q=80', // Risk Mgmt
+  zenith: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop&q=80', // Rapid Scalp
+  apex: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=400&fit=crop&q=80' // Whale Tracker
 };
 
 export const ALL_MASTER_TRADERS: ExtendedTrader[] = [
   { id: 'master_0', name: 'Anas Ali (Elite Signal)', avatar: TRADER_IMAGES.anas, roi: 342.5, drawdown: 3.2, followers: 185000, weeks: 156, strategy: 'Signal & Mindset Architecture', type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3, winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], bio: 'Young entrepreneur sharing skill teachings. Runs a massive trader signals community.', category: 'crypto' },
   { id: 'master_1', name: 'Thomas Kralow (Pro)', avatar: TRADER_IMAGES.thomas, roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic', type: 'Trader', experienceYears: 9, markets: ['Crypto', 'Stocks'], riskScore: 4, winRate: 92.1, avgDuration: '3 days', riskMethods: ['Portfolio Hedging', 'Growth Scaling'], bio: 'Investor and entrepreneur blending trading education with personal growth.', category: 'crypto' },
-  { id: 'master_2', name: 'P4Provider Network', avatar: TRADER_IMAGES.t3, roi: 195.4, drawdown: 2.8, followers: 98000, weeks: 104, strategy: 'Finance Fundamentals', type: 'Analyst', experienceYears: 5, markets: ['Crypto', 'Forex'], riskScore: 2, winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis'], bio: 'Premier finance-related content provider offering tutorials on market fundamentals.', category: 'crypto' },
-  { id: 'master_3', name: 'ElioDeFi Protocol', avatar: TRADER_IMAGES.t4, roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend', type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7, winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit'], bio: 'Focused on decentralized finance (DeFi) and crypto market topics.', category: 'crypto' },
-  { id: 'master_4', name: 'Craig Percoco', avatar: TRADER_IMAGES.t5, roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum', type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5, winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops'], bio: 'Seasoned investor sharing his journey from young day trader to pro.', category: 'crypto' },
-  { id: 'master_5', name: 'Binary Edge Pro', avatar: TRADER_IMAGES.t6, roi: 312.5, drawdown: 8.9, followers: 15400, weeks: 92, strategy: 'M1 Reversal Scalping', type: 'Trader', experienceYears: 8, markets: ['Binary Options'], riskScore: 8, winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Stake'], bio: 'High-accuracy binary options signals with institutional-grade reversal logic.', category: 'binary' },
-  { id: 'master_6', name: 'Gold Trend Master', avatar: TRADER_IMAGES.t7, roi: 245.9, drawdown: 3.1, followers: 67000, weeks: 210, strategy: 'XAU/USD Order Flow', type: 'Trader', experienceYears: 11, markets: ['Gold'], riskScore: 4, winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile'], bio: 'Tracking institutional orders on Gold markets to ride market maker momentum.', category: 'gold' },
-  { id: 'master_7', name: 'Forex Scalper Elite', avatar: TRADER_IMAGES.t8, roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Neural Grid Scalping', type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7, winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL'], bio: 'Automated high-frequency signals tailored for the Forex markets.', category: 'forex' },
-  { id: 'master_8', name: 'Alpha Matrix', avatar: TRADER_IMAGES.t9, roi: 275.4, drawdown: 4.2, followers: 42000, weeks: 140, strategy: 'Quantum Momentum', type: 'Trader', experienceYears: 7, markets: ['Crypto', 'Forex'], riskScore: 5, winRate: 82.5, avgDuration: '2 hours', riskMethods: ['Trailing Stop'], bio: 'Utilizing matrix math to predict short-term price deviations.', category: 'crypto' },
-  { id: 'master_9', name: 'Omega Flow', avatar: TRADER_IMAGES.t10, roi: 310.2, drawdown: 5.1, followers: 31500, weeks: 96, strategy: 'Liquidity Hunter', type: 'Analyst', experienceYears: 5, markets: ['Gold', 'Oil'], riskScore: 6, winRate: 79.8, avgDuration: '1 day', riskMethods: ['Gap Filling'], bio: 'Specialized in identifying liquidity pockets in commodity markets.', category: 'gold' },
-  { id: 'master_10', name: 'Quantum Pulse', avatar: TRADER_IMAGES.t11, roi: 450.9, drawdown: 14.2, followers: 89000, weeks: 180, strategy: 'Flash Arbitrage', type: 'Trader', experienceYears: 10, markets: ['Binary', 'Crypto'], riskScore: 9, winRate: 94.2, avgDuration: '30 sec', riskMethods: ['Hedge Lock'], bio: 'High-speed execution across multiple exchanges for tiny, safe wins.', category: 'binary' },
-  { id: 'master_11', name: 'Stellar Edge', avatar: TRADER_IMAGES.t12, roi: 188.4, drawdown: 2.1, followers: 54200, weeks: 240, strategy: 'Macro Swing', type: 'Educator', experienceYears: 12, markets: ['Stocks', 'Forex'], riskScore: 2, winRate: 88.1, avgDuration: '2 weeks', riskMethods: ['Diversification'], bio: 'Conservative growth specialist focused on long-term wealth preservation.', category: 'forex' },
-  { id: 'master_12', name: 'Vector Wealth', avatar: TRADER_IMAGES.t13, roi: 295.1, drawdown: 6.8, followers: 22800, weeks: 72, strategy: 'Trend Reversal', type: 'Trader', experienceYears: 4, markets: ['Crypto', 'Altcoins'], riskScore: 6, winRate: 74.5, avgDuration: '4 hours', riskMethods: ['ATR Stops'], bio: 'Aggressive altcoin hunter using vector analysis to find early entries.', category: 'crypto' },
-  { id: 'master_13', name: 'Neural Dynamics', avatar: TRADER_IMAGES.t14, roi: 367.8, drawdown: 8.2, followers: 41200, weeks: 110, strategy: 'AI Model Replicator', type: 'Analyst', experienceYears: 6, markets: ['Gold', 'Nasdaq'], riskScore: 5, winRate: 86.9, avgDuration: '1 hour', riskMethods: ['Dynamic Sizing'], bio: 'Bridge between high-level AI models and retail execution.', category: 'gold' },
-  { id: 'master_14', name: 'Cyber Trend', avatar: TRADER_IMAGES.t15, roi: 242.6, drawdown: 3.9, followers: 19500, weeks: 56, strategy: 'Social Sentiment', type: 'Trader', experienceYears: 3, markets: ['Meme Coins'], riskScore: 10, winRate: 68.2, avgDuration: '15 min', riskMethods: ['Panic Exit'], bio: 'Trading the buzz. High risk, high reward social sentiment analysis.', category: 'crypto' },
-  { id: 'master_15', name: 'Flux Assets', avatar: TRADER_IMAGES.t16, roi: 318.4, drawdown: 4.8, followers: 33200, weeks: 125, strategy: 'Fibonacci Master', type: 'Educator', experienceYears: 8, markets: ['Forex'], riskScore: 4, winRate: 81.4, avgDuration: '8 hours', riskMethods: ['Scale In'], bio: 'Teaching the art of harmonic patterns and Fibonacci levels.', category: 'forex' },
-  { id: 'master_16', name: 'Matrix Capital', avatar: TRADER_IMAGES.t17, roi: 412.3, drawdown: 9.1, followers: 61000, weeks: 144, strategy: 'Order Block Pro', type: 'Trader', experienceYears: 9, markets: ['Nasdaq', 'Gold'], riskScore: 7, winRate: 89.5, avgDuration: '2 days', riskMethods: ['Supply/Demand'], bio: 'Institutional order flow tracking for precision entries.', category: 'gold' },
-  { id: 'master_17', name: 'Core Logic', avatar: TRADER_IMAGES.t18, roi: 156.2, drawdown: 1.5, followers: 45000, weeks: 300, strategy: 'Risk-Free Compound', type: 'Educator', experienceYears: 15, markets: ['S&P 500'], riskScore: 1, winRate: 95.8, avgDuration: '1 month', riskMethods: ['Compound Interest'], bio: 'The "Safety First" node. Slow, steady, and practically guaranteed.', category: 'forex' },
-  { id: 'master_18', name: 'Zenith Trader', avatar: TRADER_IMAGES.t19, roi: 334.9, drawdown: 5.4, followers: 27600, weeks: 82, strategy: 'M5 Scalp System', type: 'Trader', experienceYears: 5, markets: ['Crypto', 'Binary'], riskScore: 6, winRate: 83.2, avgDuration: '5 min', riskMethods: ['Fixed Risk'], bio: 'Rapid-fire day trader focused on the 5-minute time frame.', category: 'binary' },
-  { id: 'master_19', name: 'Apex Signals', avatar: TRADER_IMAGES.t20, roi: 489.1, drawdown: 12.8, followers: 105000, weeks: 210, strategy: 'Whale Tracker', type: 'Analyst', experienceYears: 11, markets: ['Crypto', 'Large Cap'], riskScore: 8, winRate: 91.5, avgDuration: '3 days', riskMethods: ['On-chain Data'], bio: 'Following the biggest wallets in crypto to catch the massive waves.', category: 'crypto' }
+  { id: 'master_2', name: 'P4Provider Network', avatar: TRADER_IMAGES.p4, roi: 195.4, drawdown: 2.8, followers: 98000, weeks: 104, strategy: 'Finance Fundamentals', type: 'Analyst', experienceYears: 5, markets: ['Crypto', 'Forex'], riskScore: 2, winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis'], bio: 'Premier finance-related content provider offering tutorials on market fundamentals.', category: 'crypto' },
+  { id: 'master_3', name: 'ElioDeFi Protocol', avatar: TRADER_IMAGES.elio, roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend', type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7, winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit'], bio: 'Focused on decentralized finance (DeFi) and crypto market topics.', category: 'crypto' },
+  { id: 'master_4', name: 'Craig Percoco', avatar: TRADER_IMAGES.craig, roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum', type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5, winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops'], bio: 'Seasoned investor sharing his journey from young day trader to pro.', category: 'crypto' },
+  { id: 'master_5', name: 'Binary Edge Pro', avatar: TRADER_IMAGES.binary, roi: 312.5, drawdown: 8.9, followers: 15400, weeks: 92, strategy: 'M1 Reversal Scalping', type: 'Trader', experienceYears: 8, markets: ['Binary Options'], riskScore: 8, winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Stake'], bio: 'High-accuracy binary options signals with institutional-grade reversal logic.', category: 'binary' },
+  { id: 'master_6', name: 'Gold Trend Master', avatar: TRADER_IMAGES.gold, roi: 245.9, drawdown: 3.1, followers: 67000, weeks: 210, strategy: 'XAU/USD Order Flow', type: 'Trader', experienceYears: 11, markets: ['Gold'], riskScore: 4, winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile'], bio: 'Tracking institutional orders on Gold markets to ride market maker momentum.', category: 'gold' },
+  { id: 'master_7', name: 'Forex Scalper Elite', avatar: TRADER_IMAGES.forex, roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Neural Grid Scalping', type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7, winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL'], bio: 'Automated high-frequency signals tailored for the Forex markets.', category: 'forex' },
+  { id: 'master_8', name: 'Alpha Matrix', avatar: TRADER_IMAGES.alpha, roi: 275.4, drawdown: 4.2, followers: 42000, weeks: 140, strategy: 'Quantum Momentum', type: 'Trader', experienceYears: 7, markets: ['Crypto', 'Forex'], riskScore: 5, winRate: 82.5, avgDuration: '2 hours', riskMethods: ['Trailing Stop'], bio: 'Utilizing matrix math to predict short-term price deviations.', category: 'crypto' },
+  { id: 'master_9', name: 'Omega Flow', avatar: TRADER_IMAGES.omega, roi: 310.2, drawdown: 5.1, followers: 31500, weeks: 96, strategy: 'Liquidity Hunter', type: 'Analyst', experienceYears: 5, markets: ['Gold', 'Oil'], riskScore: 6, winRate: 79.8, avgDuration: '1 day', riskMethods: ['Gap Filling'], bio: 'Specialized in identifying liquidity pockets in commodity markets.', category: 'gold' },
+  { id: 'master_10', name: 'Quantum Pulse', avatar: TRADER_IMAGES.quantum, roi: 450.9, drawdown: 14.2, followers: 89000, weeks: 180, strategy: 'Flash Arbitrage', type: 'Trader', experienceYears: 10, markets: ['Binary', 'Crypto'], riskScore: 9, winRate: 94.2, avgDuration: '30 sec', riskMethods: ['Hedge Lock'], bio: 'High-speed execution across multiple exchanges for tiny, safe wins.', category: 'binary' },
+  { id: 'master_11', name: 'Stellar Edge', avatar: TRADER_IMAGES.stellar, roi: 188.4, drawdown: 2.1, followers: 54200, weeks: 240, strategy: 'Macro Swing', type: 'Educator', experienceYears: 12, markets: ['Stocks', 'Forex'], riskScore: 2, winRate: 88.1, avgDuration: '2 weeks', riskMethods: ['Diversification'], bio: 'Conservative growth specialist focused on long-term wealth preservation.', category: 'forex' },
+  { id: 'master_12', name: 'Vector Wealth', avatar: TRADER_IMAGES.vector, roi: 295.1, drawdown: 6.8, followers: 22800, weeks: 72, strategy: 'Trend Reversal', type: 'Trader', experienceYears: 4, markets: ['Crypto', 'Altcoins'], riskScore: 6, winRate: 74.5, avgDuration: '4 hours', riskMethods: ['ATR Stops'], bio: 'Aggressive altcoin hunter using vector analysis to find early entries.', category: 'crypto' },
+  { id: 'master_13', name: 'Neural Dynamics', avatar: TRADER_IMAGES.neural, roi: 367.8, drawdown: 8.2, followers: 41200, weeks: 110, strategy: 'AI Model Replicator', type: 'Analyst', experienceYears: 6, markets: ['Gold', 'Nasdaq'], riskScore: 5, winRate: 86.9, avgDuration: '1 hour', riskMethods: ['Dynamic Sizing'], bio: 'Bridge between high-level AI models and retail execution.', category: 'gold' },
+  { id: 'master_14', name: 'Cyber Trend', avatar: TRADER_IMAGES.cyber, roi: 242.6, drawdown: 3.9, followers: 19500, weeks: 56, strategy: 'Social Sentiment', type: 'Trader', experienceYears: 3, markets: ['Meme Coins'], riskScore: 10, winRate: 68.2, avgDuration: '15 min', riskMethods: ['Panic Exit'], bio: 'Trading the buzz. High risk, high reward social sentiment analysis.', category: 'crypto' },
+  { id: 'master_15', name: 'Flux Assets', avatar: TRADER_IMAGES.flux, roi: 318.4, drawdown: 4.8, followers: 33200, weeks: 125, strategy: 'Fibonacci Master', type: 'Educator', experienceYears: 8, markets: ['Forex'], riskScore: 4, winRate: 81.4, avgDuration: '8 hours', riskMethods: ['Scale In'], bio: 'Teaching the art of harmonic patterns and Fibonacci levels.', category: 'forex' },
+  { id: 'master_16', name: 'Matrix Capital', avatar: TRADER_IMAGES.matrix, roi: 412.3, drawdown: 9.1, followers: 61000, weeks: 144, strategy: 'Order Block Pro', type: 'Trader', experienceYears: 9, markets: ['Nasdaq', 'Gold'], riskScore: 7, winRate: 89.5, avgDuration: '2 days', riskMethods: ['Supply/Demand'], bio: 'Institutional order flow tracking for precision entries.', category: 'gold' },
+  { id: 'master_17', name: 'Core Logic', avatar: TRADER_IMAGES.core, roi: 156.2, drawdown: 1.5, followers: 45000, weeks: 300, strategy: 'Risk-Free Compound', type: 'Educator', experienceYears: 15, markets: ['S&P 500'], riskScore: 1, winRate: 95.8, avgDuration: '1 month', riskMethods: ['Compound Interest'], bio: 'The "Safety First" node. Slow, steady, and practically guaranteed.', category: 'forex' },
+  { id: 'master_18', name: 'Zenith Trader', avatar: TRADER_IMAGES.zenith, roi: 334.9, drawdown: 5.4, followers: 27600, weeks: 82, strategy: 'M5 Scalp System', type: 'Trader', experienceYears: 5, markets: ['Crypto', 'Binary'], riskScore: 6, winRate: 83.2, avgDuration: '5 min', riskMethods: ['Fixed Risk'], bio: 'Rapid-fire day trader focused on the 5-minute time frame.', category: 'binary' },
+  { id: 'master_19', name: 'Apex Signals', avatar: TRADER_IMAGES.apex, roi: 489.1, drawdown: 12.8, followers: 105000, weeks: 210, strategy: 'Whale Tracker', type: 'Analyst', experienceYears: 11, markets: ['Crypto', 'Large Cap'], riskScore: 8, winRate: 91.5, avgDuration: '3 days', riskMethods: ['On-chain Data'], bio: 'Following the biggest wallets in crypto to catch the massive waves.', category: 'crypto' }
 ];
 
 const SocialIcons: React.FC<{ color: string }> = ({ color }) => (
@@ -145,6 +144,11 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
     <section className="py-16 md:py-28 bg-[#131722] border-t border-[#2a2e39] relative">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12 md:mb-16 space-y-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/30 rounded-xl mb-4">
+             <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+             <span className="text-[10px] text-blue-400 font-black uppercase tracking-widest">Asset Sync: Curated AI Personas Active</span>
+          </div>
+
           <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-none bg-gradient-to-b from-white to-gray-500 text-transparent bg-clip-text drop-shadow-2xl">
             Top Traders From The World
           </h2>
@@ -195,7 +199,14 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
               >
                 <div className="flex items-center gap-4 mb-5">
                   <div className="relative">
-                    <img loading="lazy" src={trader.avatar} className="w-14 h-14 md:w-16 md:h-16 rounded-2xl object-cover ring-2 ring-white/5 bg-[#131722]" />
+                    <img 
+                      loading="lazy" 
+                      src={trader.avatar} 
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100&h=100&fit=crop';
+                      }}
+                      className="w-14 h-14 md:w-16 md:h-16 rounded-2xl object-cover ring-2 ring-white/5 bg-[#131722] saturate-[1.25] brightness-[1.1]" 
+                    />
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#00b36b] border-2 border-[#1e222d] rounded-full"></div>
                   </div>
                   <div className="min-w-0 flex-1">

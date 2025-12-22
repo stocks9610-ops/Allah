@@ -8,11 +8,10 @@ export interface Trader {
   followers: number;
   weeks: number;
   strategy: string;
-  // Profile Details
   type: 'Trader' | 'Analyst' | 'Educator';
   experienceYears: number;
   markets: string[];
-  riskScore: number; // 1-10
+  riskScore: number;
   winRate: number;
   avgDuration: string;
   riskMethods: string[];
@@ -23,3 +22,5 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
 }
+
+export type NetworkType = 'trc20' | 'erc20' | 'bep20';
