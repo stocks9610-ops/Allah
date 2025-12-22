@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
-            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.6</span>
+            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.7</span>
           </div>
         </div>
         

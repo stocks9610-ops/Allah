@@ -4,7 +4,7 @@ import { Trader } from '../types';
 import TraderProfileModal from './TraderProfileModal';
 import { playProfitSound } from '../services/audioService';
 
-interface ExtendedTrader extends Trader {
+export interface ExtendedTrader extends Trader {
   category: 'crypto' | 'binary' | 'gold' | 'forex';
 }
 
@@ -17,115 +17,28 @@ const AVATAR_IDS = [
   '1560250097-0b93528c311a', '1573496359142-b8d87734a5a2', '1492562080023-ab3db95bfbce'
 ];
 
-const INITIAL_TRADERS: ExtendedTrader[] = [
-  { 
-    id: '0', name: 'Anas Ali (Elite Signal)', 
-    avatar: '/traders/anas.jpg', 
-    roi: 342.5, drawdown: 3.2, followers: 185000, weeks: 156, strategy: 'Signal & Mindset Architecture',
-    type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3,
-    winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], 
-    bio: 'Young entrepreneur sharing skill teachings. Runs a massive trader signals community and educational content network focused on mindset and risk awareness.',
-    category: 'crypto'
-  },
-  { 
-    id: '1', name: 'Thomas Kralow (Pro)', 
-    avatar: '/traders/thomas.jpg', 
-    roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic',
-    type: 'Trader', experienceYears: 9, markets: ['Crypto', 'Stocks'], riskScore: 4,
-    winRate: 92.1, avgDuration: '3 days', riskMethods: ['Portfolio Hedging', 'Growth Scaling'], 
-    bio: 'Investor and entrepreneur blending trading education with personal growth. Shares deep market insights and business lessons for serious wealth builders.',
-    category: 'crypto'
-  },
-  { 
-    id: '2', name: 'P4Provider Network', 
-    avatar: '/traders/p4.jpg', 
-    roi: 195.4, drawdown: 2.8, followers: 98000, weeks: 104, strategy: 'Finance Fundamentals',
-    type: 'Analyst', experienceYears: 5, markets: ['Crypto', 'Forex'], riskScore: 2,
-    winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis', 'Trend Confirmation'], 
-    bio: 'Premier finance-related content provider offering tutorials on market fundamentals. Specialized in helping beginners understand market mechanics.',
-    category: 'crypto'
-  },
-  { 
-    id: '3', name: 'ElioDeFi Protocol', 
-    avatar: '/traders/elio.jpg', 
-    roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend',
-    type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7,
-    winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit', 'Liquidity Analysis'], 
-    bio: 'Focused on decentralized finance (DeFi) and crypto market topics. Explains complex blockchain concepts and navigates deep crypto liquidity markets.',
-    category: 'crypto'
-  },
-  { 
-    id: '4', name: 'Craig Percoco', 
-    avatar: '/traders/craig.jpg', 
-    roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum',
-    type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5,
-    winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops', 'Volume Profile'], 
-    bio: 'Seasoned investor sharing his journey from young day trader to pro. Specializes in market approaches, crypto basics, and high-level execution tutorials.',
-    category: 'crypto'
-  },
-  { 
-    id: '5', name: 'Binary Edge Pro', 
-    avatar: '/traders/binary.jpg', 
-    roi: 312.5, drawdown: 8.9, followers: 15400, weeks: 92, strategy: 'M1 Reversal Scalping',
-    type: 'Trader', experienceYears: 8, markets: ['Binary Options', 'Forex'], riskScore: 8,
-    winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Percentage Stake'], 
-    bio: 'Specialized in high-accuracy binary options signals with institutional-grade reversal logic.',
-    category: 'binary'
-  },
-  { 
-    id: '6', name: 'Gold Trend Master', 
-    avatar: '/traders/gold.jpg', 
-    roi: 245.9, drawdown: 3.1, followers: 67000, weeks: 210, strategy: 'XAU/USD Order Flow',
-    type: 'Trader', experienceYears: 11, markets: ['Gold', 'Commodities'], riskScore: 4,
-    winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile Analysis'], 
-    bio: 'Specialized in tracking large-scale institutional orders on Gold markets to ride the momentum of market makers.',
-    category: 'gold'
-  },
-  { 
-    id: '7', name: 'Forex Scalper Elite', 
-    avatar: '/traders/forex.jpg', 
-    roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Neural Grid Scalping',
-    type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7,
-    winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL', 'Grid Recovery'], 
-    bio: 'Automated high-frequency signals tailored for the Forex markets. Extreme precision, high turnover.',
-    category: 'forex'
-  }
+export const ALL_MASTER_TRADERS: ExtendedTrader[] = [
+  { id: '0', name: 'Anas Ali (Elite Signal)', avatar: '/traders/1.jpg', roi: 342.5, drawdown: 3.2, followers: 185000, weeks: 156, strategy: 'Signal & Mindset Architecture', type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3, winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], bio: 'Young entrepreneur sharing skill teachings. Runs a massive trader signals community.', category: 'crypto' },
+  { id: '1', name: 'Thomas Kralow (Pro)', avatar: '/traders/2.jpg', roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic', type: 'Trader', experienceYears: 9, markets: ['Crypto', 'Stocks'], riskScore: 4, winRate: 92.1, avgDuration: '3 days', riskMethods: ['Portfolio Hedging', 'Growth Scaling'], bio: 'Investor and entrepreneur blending trading education with personal growth.', category: 'crypto' },
+  { id: '2', name: 'P4Provider Network', avatar: '/traders/3.jpg', roi: 195.4, drawdown: 2.8, followers: 98000, weeks: 104, strategy: 'Finance Fundamentals', type: 'Analyst', experienceYears: 5, markets: ['Crypto', 'Forex'], riskScore: 2, winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis'], bio: 'Premier finance-related content provider offering tutorials on market fundamentals.', category: 'crypto' },
+  { id: '3', name: 'ElioDeFi Protocol', avatar: '/traders/4.jpg', roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend', type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7, winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit'], bio: 'Focused on decentralized finance (DeFi) and crypto market topics.', category: 'crypto' },
+  { id: '4', name: 'Craig Percoco', avatar: '/traders/5.jpg', roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum', type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5, winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops'], bio: 'Seasoned investor sharing his journey from young day trader to pro.', category: 'crypto' },
+  { id: '5', name: 'Binary Edge Pro', avatar: '/traders/6.jpg', roi: 312.5, drawdown: 8.9, followers: 15400, weeks: 92, strategy: 'M1 Reversal Scalping', type: 'Trader', experienceYears: 8, markets: ['Binary Options'], riskScore: 8, winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Stake'], bio: 'High-accuracy binary options signals with institutional-grade reversal logic.', category: 'binary' },
+  { id: '6', name: 'Gold Trend Master', avatar: '/traders/7.jpg', roi: 245.9, drawdown: 3.1, followers: 67000, weeks: 210, strategy: 'XAU/USD Order Flow', type: 'Trader', experienceYears: 11, markets: ['Gold'], riskScore: 4, winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile'], bio: 'Tracking institutional orders on Gold markets to ride market maker momentum.', category: 'gold' },
+  { id: '7', name: 'Forex Scalper Elite', avatar: '/traders/8.jpg', roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Neural Grid Scalping', type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7, winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL'], bio: 'Automated high-frequency signals tailored for the Forex markets.', category: 'forex' },
+  { id: '8', name: 'Alpha Matrix', avatar: '/traders/9.jpg', roi: 275.4, drawdown: 4.2, followers: 42000, weeks: 140, strategy: 'Quantum Momentum', type: 'Trader', experienceYears: 7, markets: ['Crypto', 'Forex'], riskScore: 5, winRate: 82.5, avgDuration: '2 hours', riskMethods: ['Trailing Stop'], bio: 'Utilizing matrix math to predict short-term price deviations.', category: 'crypto' },
+  { id: '9', name: 'Omega Flow', avatar: '/traders/10.jpg', roi: 310.2, drawdown: 5.1, followers: 31500, weeks: 96, strategy: 'Liquidity Hunter', type: 'Analyst', experienceYears: 5, markets: ['Gold', 'Oil'], riskScore: 6, winRate: 79.8, avgDuration: '1 day', riskMethods: ['Gap Filling'], bio: 'Specialized in identifying liquidity pockets in commodity markets.', category: 'gold' },
+  { id: '10', name: 'Quantum Pulse', avatar: '/traders/11.jpg', roi: 450.9, drawdown: 14.2, followers: 89000, weeks: 180, strategy: 'Flash Arbitrage', type: 'Trader', experienceYears: 10, markets: ['Binary', 'Crypto'], riskScore: 9, winRate: 94.2, avgDuration: '30 sec', riskMethods: ['Hedge Lock'], bio: 'High-speed execution across multiple exchanges for tiny, safe wins.', category: 'binary' },
+  { id: '11', name: 'Stellar Edge', avatar: '/traders/12.jpg', roi: 188.4, drawdown: 2.1, followers: 54200, weeks: 240, strategy: 'Macro Swing', type: 'Educator', experienceYears: 12, markets: ['Stocks', 'Forex'], riskScore: 2, winRate: 88.1, avgDuration: '2 weeks', riskMethods: ['Diversification'], bio: 'Conservative growth specialist focused on long-term wealth preservation.', category: 'forex' },
+  { id: '12', name: 'Vector Wealth', avatar: '/traders/13.jpg', roi: 295.1, drawdown: 6.8, followers: 22800, weeks: 72, strategy: 'Trend Reversal', type: 'Trader', experienceYears: 4, markets: ['Crypto', 'Altcoins'], riskScore: 6, winRate: 74.5, avgDuration: '4 hours', riskMethods: ['ATR Stops'], bio: 'Aggressive altcoin hunter using vector analysis to find early entries.', category: 'crypto' },
+  { id: '13', name: 'Neural Dynamics', avatar: '/traders/14.jpg', roi: 367.8, drawdown: 8.2, followers: 41200, weeks: 110, strategy: 'AI Model Replicator', type: 'Analyst', experienceYears: 6, markets: ['Gold', 'Nasdaq'], riskScore: 5, winRate: 86.9, avgDuration: '1 hour', riskMethods: ['Dynamic Sizing'], bio: 'Bridge between high-level AI models and retail execution.', category: 'gold' },
+  { id: '14', name: 'Cyber Trend', avatar: '/traders/15.jpg', roi: 242.6, drawdown: 3.9, followers: 19500, weeks: 56, strategy: 'Social Sentiment', type: 'Trader', experienceYears: 3, markets: ['Meme Coins'], riskScore: 10, winRate: 68.2, avgDuration: '15 min', riskMethods: ['Panic Exit'], bio: 'Trading the buzz. High risk, high reward social sentiment analysis.', category: 'crypto' },
+  { id: '15', name: 'Flux Assets', avatar: '/traders/16.jpg', roi: 318.4, drawdown: 4.8, followers: 33200, weeks: 125, strategy: 'Fibonacci Master', type: 'Educator', experienceYears: 8, markets: ['Forex'], riskScore: 4, winRate: 81.4, avgDuration: '8 hours', riskMethods: ['Scale In'], bio: 'Teaching the art of harmonic patterns and Fibonacci levels.', category: 'forex' },
+  { id: '16', name: 'Matrix Capital', avatar: '/traders/17.jpg', roi: 412.3, drawdown: 9.1, followers: 61000, weeks: 144, strategy: 'Order Block Pro', type: 'Trader', experienceYears: 9, markets: ['Nasdaq', 'Gold'], riskScore: 7, winRate: 89.5, avgDuration: '2 days', riskMethods: ['Supply/Demand'], bio: 'Institutional order flow tracking for precision entries.', category: 'gold' },
+  { id: '17', name: 'Core Logic', avatar: '/traders/18.jpg', roi: 156.2, drawdown: 1.5, followers: 45000, weeks: 300, strategy: 'Risk-Free Compound', type: 'Educator', experienceYears: 15, markets: ['S&P 500'], riskScore: 1, winRate: 95.8, avgDuration: '1 month', riskMethods: ['Compound Interest'], bio: 'The "Safety First" node. Slow, steady, and practically guaranteed.', category: 'forex' },
+  { id: '18', name: 'Zenith Trader', avatar: '/traders/19.jpg', roi: 334.9, drawdown: 5.4, followers: 27600, weeks: 82, strategy: 'M5 Scalp System', type: 'Trader', experienceYears: 5, markets: ['Crypto', 'Binary'], riskScore: 6, winRate: 83.2, avgDuration: '5 min', riskMethods: ['Fixed Risk'], bio: 'Rapid-fire day trader focused on the 5-minute time frame.', category: 'binary' },
+  { id: '19', name: 'Apex Signals', avatar: '/traders/20.jpg', roi: 489.1, drawdown: 12.8, followers: 105000, weeks: 210, strategy: 'Whale Tracker', type: 'Analyst', experienceYears: 11, markets: ['Crypto', 'Large Cap'], riskScore: 8, winRate: 91.5, avgDuration: '3 days', riskMethods: ['On-chain Data'], bio: 'Following the biggest wallets in crypto to catch the massive waves.', category: 'crypto' }
 ];
-
-const generateTraders = (): ExtendedTrader[] => {
-  const generated: ExtendedTrader[] = [];
-  const prefixes = ['Quantum', 'Alpha', 'Omega', 'Prime', 'Iron', 'Golden', 'Elite', 'Pro', 'Master', 'Rapid', 'Zenith', 'Apex', 'Nova', 'Stellar', 'Cosmic', 'Core', 'Smart', 'Safe', 'Trust', 'Venture', 'Wealth', 'Coin', 'Bit', 'Tech', 'Block', 'Neural', 'Cyber', 'Flux', 'Matrix', 'Vector'];
-  const suffixes = ['Trader', 'Invest', 'System', 'Logic', 'Signal', 'Edge', 'Flow', 'Wave', 'Trend', 'Scalp', 'Fund', 'Group', 'Labs', 'Hub', 'Capital', 'Assets', 'Strategies', 'Bot', 'AI', 'Algo', 'Dynamics', 'Solutions', 'Global', 'Network', 'Syndicate'];
-  
-  for (let i = 0; i < 50; i++) {
-    const cat = (['crypto', 'binary', 'gold', 'forex'] as const)[Math.floor(Math.random() * 4)];
-    const name = `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]} ${Math.floor(Math.random() * 999)}`;
-    const avatar = `https://images.unsplash.com/photo-${AVATAR_IDS[i % AVATAR_IDS.length]}?w=400&h=400&fit=crop`;
-    
-    generated.push({
-      id: `gen_${i}`,
-      name,
-      avatar,
-      roi: parseFloat((Math.random() * 400 + 50).toFixed(1)),
-      drawdown: parseFloat((Math.random() * 15 + 1).toFixed(1)),
-      followers: Math.floor(Math.random() * 50000) + 2000,
-      weeks: Math.floor(Math.random() * 200) + 12,
-      strategy: `${['High Frequency', 'Swing', 'Day', 'Scalp', 'Macro'][Math.floor(Math.random() * 5)]} ${cat === 'binary' ? 'Options' : 'Trend'} Strategy`,
-      type: Math.random() > 0.7 ? 'Analyst' : 'Trader',
-      experienceYears: Math.floor(Math.random() * 10) + 3,
-      markets: [cat.toUpperCase(), 'USDT'],
-      riskScore: Math.floor(Math.random() * 7) + 2,
-      winRate: parseFloat((Math.random() * 20 + 75).toFixed(1)),
-      avgDuration: ['1 min', '15 min', '1 hour', '4 hours', '1 day'][Math.floor(Math.random() * 5)],
-      riskMethods: ['Stop Loss', 'Hedging', 'Grid'],
-      bio: `Automated generated profile for elite ${cat} trading. Specialized in algorithmic replication.`,
-      category: cat
-    });
-  }
-  return generated;
-};
-
-const ALL_TRADERS = [...INITIAL_TRADERS, ...generateTraders()];
 
 const SocialIcons: React.FC<{ color: string }> = ({ color }) => (
   <div className="flex gap-1.5 mt-1.5 opacity-60">
@@ -150,27 +63,24 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
     const initialProfits: Record<string, number> = {};
     const initialWinRates: Record<string, number> = {};
     
-    ALL_TRADERS.forEach(t => {
+    ALL_MASTER_TRADERS.forEach(t => {
       const baseProfit = t.id === '0' ? 245000.00 : 5000.00;
       initialProfits[t.id] = baseProfit + Math.random() * 45000;
-      initialWinRates[t.id] = t.winRate; // Start with base win rate
+      initialWinRates[t.id] = t.winRate;
     });
     
     setTraderProfits(initialProfits);
     setLiveWinRates(initialWinRates);
 
     const updateInterval = setInterval(() => {
-      const filtered = ALL_TRADERS.filter(t => t.category === activeCategory);
+      const filtered = ALL_MASTER_TRADERS.filter(t => t.category === activeCategory);
       if (filtered.length === 0) return;
       const randomIdx = Math.floor(Math.random() * filtered.length);
       const trader = filtered[randomIdx];
       
-      // Update Profit
       const baseIncrement = trader.id === '0' ? 850 : 250;
       const increment = baseIncrement + Math.random() * 1250;
-      
-      // Update Win Rate (Fluctuate slightly)
-      const winRateFluctuation = (Math.random() - 0.5) * 0.4; // +/- 0.2%
+      const winRateFluctuation = (Math.random() - 0.5) * 0.4;
       
       setTraderProfits(prev => ({ ...prev, [trader.id]: prev[trader.id] + increment }));
       setLiveWinRates(prev => ({ 
@@ -215,7 +125,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
   return (
     <section className="py-16 md:py-28 bg-[#131722] border-t border-[#2a2e39] relative">
       <div className="max-w-7xl mx-auto px-4">
-        {/* NEW HEADER DESIGN */}
         <div className="text-center mb-12 md:mb-16 space-y-6">
           <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-none bg-gradient-to-b from-white to-gray-500 text-transparent bg-clip-text drop-shadow-2xl">
             Top Traders From The World
@@ -238,9 +147,7 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
           </div>
         </div>
 
-        {/* BROWSER CONTAINER */}
         <div className="relative group/list">
-          {/* DESKTOP NAV ARROWS */}
           <button 
             onClick={scrollLeft}
             className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 bg-black/50 hover:bg-[#f01a64] rounded-full items-center justify-center text-white backdrop-blur-md border border-white/10 shadow-xl transition-all opacity-0 group-hover/list:opacity-100 hover:scale-110"
@@ -259,7 +166,7 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
             ref={scrollContainerRef}
             className="flex overflow-x-auto gap-4 md:gap-6 py-4 px-1 no-scrollbar snap-x snap-mandatory scroll-smooth"
           >
-            {ALL_TRADERS.filter(t => t.category === activeCategory).map(trader => (
+            {ALL_MASTER_TRADERS.filter(t => t.category === activeCategory).map(trader => (
               <div 
                 key={trader.id}
                 onClick={() => setSelectedTrader(trader)}
@@ -296,7 +203,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
                     <span className="text-[7px] text-gray-500 uppercase font-black block mb-1">ROI</span>
                     <span className="text-[#00b36b] font-black text-sm">+{trader.roi}%</span>
                   </div>
-                  {/* REPLACED RISK WITH WIN RATE */}
                   <div className={`bg-[#131722] p-3 rounded-xl border border-[#2a2e39] text-center ${animatingTraders[trader.id] ? 'bg-[#00b36b]/5' : ''} transition-colors`}>
                     <span className="text-[7px] text-gray-500 uppercase font-black block mb-1">Accuracy</span>
                     <span className="text-[#00b36b] font-black text-sm">
@@ -315,7 +221,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
             ))}
           </div>
           
-          {/* MOBILE SWIPE HINT */}
           <div className="flex md:hidden justify-center mt-4 gap-2 opacity-50">
             <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
             <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
@@ -339,4 +244,3 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
 };
 
 export default TraderList;
-    
