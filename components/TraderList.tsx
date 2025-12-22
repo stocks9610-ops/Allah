@@ -11,29 +11,29 @@ export interface ExtendedTrader extends Trader {
 /** 
  * LOCAL IMAGE MAP 
  * These paths point to public/traders/ on your GitHub.
- * Rename your images to 1.webp, 2.webp, etc. and upload them to that folder.
+ * Extension updated to .jpeg as requested.
  */
 const TRADER_IMAGES = {
-  anas: '/traders/1.webp',
-  thomas: '/traders/2.webp',
-  t3: '/traders/3.webp',
-  t4: '/traders/4.webp',
-  t5: '/traders/5.webp',
-  t6: '/traders/6.webp',
-  t7: '/traders/7.webp',
-  t8: '/traders/8.webp',
-  t9: '/traders/9.webp',
-  t10: '/traders/10.webp',
-  t11: '/traders/11.webp',
-  t12: '/traders/12.webp',
-  t13: '/traders/13.webp',
-  t14: '/traders/14.webp',
-  t15: '/traders/15.webp',
-  t16: '/traders/16.webp',
-  t17: '/traders/17.webp',
-  t18: '/traders/18.webp',
-  t19: '/traders/19.webp',
-  t20: '/traders/20.webp',
+  anas: '/traders/1.jpeg',
+  thomas: '/traders/2.jpeg',
+  t3: '/traders/3.jpeg',
+  t4: '/traders/4.jpeg',
+  t5: '/traders/5.jpeg',
+  t6: '/traders/6.jpeg',
+  t7: '/traders/7.jpeg',
+  t8: '/traders/8.jpeg',
+  t9: '/traders/9.jpeg',
+  t10: '/traders/10.jpeg',
+  t11: '/traders/11.jpeg',
+  t12: '/traders/12.jpeg',
+  t13: '/traders/13.jpeg',
+  t14: '/traders/14.jpeg',
+  t15: '/traders/15.jpeg',
+  t16: '/traders/16.jpeg',
+  t17: '/traders/17.jpeg',
+  t18: '/traders/18.jpeg',
+  t19: '/traders/19.jpeg',
+  t20: '/traders/20.jpeg',
 };
 
 export const ALL_MASTER_TRADERS: ExtendedTrader[] = [
