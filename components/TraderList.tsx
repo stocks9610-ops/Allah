@@ -9,30 +9,31 @@ export interface ExtendedTrader extends Trader {
 }
 
 /** 
- * MASTER IMAGE MAP - CLOUDINARY LINKS
- * Update these when links change every 7 days.
+ * LOCAL IMAGE MAP 
+ * These paths point to public/traders/ on your GitHub.
+ * Rename your images to 1.webp, 2.webp, etc. and upload them to that folder.
  */
 const TRADER_IMAGES = {
-  anas: 'https://res.cloudinary.com/demo/image/upload/v1/traders/anas_placeholder.jpg',
-  thomas: 'https://res.cloudinary.com/demo/image/upload/v1/traders/thomas_placeholder.jpg',
-  t3: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
-  t4: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
-  t5: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&h=400&fit=crop',
-  t6: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop',
-  t7: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop',
-  t8: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop',
-  t9: 'https://images.unsplash.com/photo-1521119989659-a3492de74725?w=400&h=400&fit=crop',
-  t10: 'https://images.unsplash.com/photo-1554151228-14d9def656ec?w=400&h=400&fit=crop',
-  t11: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=400&h=400&fit=crop',
-  t12: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop',
-  t13: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=400&h=400&fit=crop',
-  t14: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop',
-  t15: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop',
-  t16: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=400&fit=crop',
-  t17: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
-  t18: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop',
-  t19: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop',
-  t20: 'https://images.unsplash.com/photo-1610375461490-6d615d666d9b?w=400&h=400&fit=crop',
+  anas: '/traders/1.webp',
+  thomas: '/traders/2.webp',
+  t3: '/traders/3.webp',
+  t4: '/traders/4.webp',
+  t5: '/traders/5.webp',
+  t6: '/traders/6.webp',
+  t7: '/traders/7.webp',
+  t8: '/traders/8.webp',
+  t9: '/traders/9.webp',
+  t10: '/traders/10.webp',
+  t11: '/traders/11.webp',
+  t12: '/traders/12.webp',
+  t13: '/traders/13.webp',
+  t14: '/traders/14.webp',
+  t15: '/traders/15.webp',
+  t16: '/traders/16.webp',
+  t17: '/traders/17.webp',
+  t18: '/traders/18.webp',
+  t19: '/traders/19.webp',
+  t20: '/traders/20.webp',
 };
 
 export const ALL_MASTER_TRADERS: ExtendedTrader[] = [
