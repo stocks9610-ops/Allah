@@ -1,7 +1,8 @@
 {
-  "name": "CopyTrade Elite",
-  "description": "World Trade Platform - High Frequency Social Trading Terminal",
+  "name": "allah",
+  "description": "ya allah isko complete karva de",
   "requestFramePermissions": [
-    "camera"
+    "camera",
+    "microphone"
   ]
 }

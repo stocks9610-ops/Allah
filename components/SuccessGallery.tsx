@@ -1,16 +1,15 @@
 
 import React, { useState } from 'react';
-import { ALL_MASTER_TRADERS } from './TraderList';
 
 interface GalleryItem {
-  id: number | string;
+  id: number;
   url: string;
-  category: 'payout' | 'setup' | 'community' | 'trader';
+  category: 'payout' | 'setup' | 'community';
   title: string;
   description: string;
 }
 
-const GENERIC_GALLERY_DATA: GalleryItem[] = [
+const GALLERY_DATA: GalleryItem[] = [
   { id: 1, category: 'payout', title: 'USDT Withdrawal Success', description: '$12,450 Profit extracted via TRC-20 cluster.', url: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=800&h=1000&fit=crop' },
   { id: 2, category: 'setup', title: 'Elite Terminal ZA', description: 'Institutional front-running terminal in Sandton.', url: 'https://images.unsplash.com/photo-1611974717525-587441658ee0?w=800&h=800&fit=crop' },
   { id: 3, category: 'community', title: 'Dubai Member Meetup', description: 'Top 50 replicators gathering for global strategy.', url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop' },
@@ -21,23 +20,12 @@ const GENERIC_GALLERY_DATA: GalleryItem[] = [
   { id: 8, category: 'setup', title: 'Home Office Freedom', description: 'Financial freedom looks like this. No boss, just bots.', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=800&fit=crop' }
 ];
 
-// Map 20 Traders into the gallery format
-const TRADER_GALLERY_ITEMS: GalleryItem[] = ALL_MASTER_TRADERS.map((t) => ({
-  id: `gallery_${t.id}`,
-  category: 'trader',
-  title: t.name,
-  description: `${t.strategy} - Verified ${t.winRate}% Win Rate.`,
-  url: t.avatar
-}));
-
-const GALLERY_DATA = [...GENERIC_GALLERY_DATA, ...TRADER_GALLERY_ITEMS];
-
 interface SuccessGalleryProps {
   onClose: () => void;
 }
 
 const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
-  const [filter, setFilter] = useState<'all' | 'payout' | 'setup' | 'community' | 'trader'>('all');
+  const [filter, setFilter] = useState<'all' | 'payout' | 'setup' | 'community'>('all');
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
   const filteredItems = filter === 'all' 
@@ -46,6 +34,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-[110] bg-[#131722]/95 backdrop-blur-2xl flex flex-col animate-in fade-in duration-300">
+      {/* HEADER */}
       <div className="p-6 md:p-10 flex items-center justify-between border-b border-white/5 bg-[#131722]/50 sticky top-0 z-20">
         <div>
           <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter italic">Elite Success Hall</h2>
@@ -58,44 +47,43 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
         </button>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3 p-6 shrink-0">
-        {['all', 'masters', 'payout', 'setup', 'community'].map((cat) => {
-          const displayCat = cat === 'masters' ? 'trader' : cat;
-          const isActive = filter === (displayCat === 'all' ? 'all' : displayCat);
-          
-          return (
-            <button
-              key={cat}
-              onClick={() => setFilter(displayCat as any)}
-              className={`px-6 py-2 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all border ${
-                isActive
-                ? 'bg-[#f01a64] text-white border-[#f01a64] shadow-[0_0_15px_rgba(240,26,100,0.4)]' 
-                : 'bg-white/5 text-gray-500 border-white/10 hover:border-[#f01a64]/50'
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
+      {/* FILTERS */}
+      <div className="flex justify-center gap-3 p-6 shrink-0">
+        {['all', 'payout', 'setup', 'community'].map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setFilter(cat as any)}
+            className={`px-6 py-2 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all border ${
+              filter === cat 
+              ? 'bg-[#f01a64] text-white border-[#f01a64] shadow-[0_0_15px_rgba(240,26,100,0.4)]' 
+              : 'bg-white/5 text-gray-500 border-white/10 hover:border-[#f01a64]/50'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
       </div>
 
+      {/* MASONRY GRID */}
       <div className="flex-1 overflow-y-auto p-6 md:p-10 no-scrollbar">
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
           {filteredItems.map((item) => (
             <div 
               key={item.id}
               onClick={() => setSelectedImage(item)}
-              className="relative group cursor-pointer overflow-hidden rounded-[2rem] border border-white/10 hover:border-[#f01a64] transition-all break-inside-avoid shadow-2xl bg-[#1e222d]"
+              className="relative group cursor-pointer overflow-hidden rounded-[2rem] border border-white/10 hover:border-[#f01a64] transition-all break-inside-avoid shadow-2xl"
             >
-              <img src={item.url} alt={item.title} className="w-full object-cover transition-transform duration-700 group-hover:scale-110 min-h-[200px]" />
+              <img src={item.url} alt={item.title} className="w-full object-cover transition-transform duration-700 group-hover:scale-110" />
               
+              {/* VERIFICATION BADGE */}
               <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#00b36b] text-white px-3 py-1 rounded-full text-[8px] font-black uppercase shadow-lg z-10">
                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                {item.category === 'trader' ? 'Master Verified' : 'Neural Verified'}
+                Neural Verified
               </div>
 
+              {/* OVERLAY */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
                 <h4 className="text-white font-black text-sm uppercase mb-1">{item.title}</h4>
                 <p className="text-gray-400 text-[10px] font-medium leading-relaxed">{item.description}</p>
@@ -105,29 +93,29 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
         </div>
       </div>
 
+      {/* LIGHTBOX MODAL */}
       {selectedImage && (
         <div 
           className="fixed inset-0 z-[120] bg-black/95 flex items-center justify-center p-4 animate-in zoom-in-95 duration-200"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-5xl w-full h-full max-h-[85vh] flex flex-col md:flex-row bg-[#1e222d] rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] border border-white/10" onClick={e => e.stopPropagation()}>
-            <div className="flex-1 bg-black flex items-center justify-center relative overflow-hidden">
-              <img src={selectedImage.url} className="w-full h-full object-contain relative z-10" />
-              <div className="absolute inset-0 bg-center bg-cover blur-3xl opacity-30 scale-150" style={{ backgroundImage: `url(${selectedImage.url})` }}></div>
+          <div className="relative max-w-5xl w-full h-full max-h-[85vh] flex flex-col md:flex-row bg-[#1e222d] rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] border border-white/10">
+            <div className="flex-1 bg-black flex items-center justify-center">
+              <img src={selectedImage.url} className="w-full h-full object-contain" />
             </div>
             <div className="w-full md:w-80 p-8 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-[#1e222d] to-[#131722]">
-              <span className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.4em] mb-4">Verification Artifact #{typeof selectedImage.id === 'string' ? selectedImage.id.split('_')[1] : selectedImage.id}749</span>
+              <span className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.4em] mb-4">Verification Artifact #{selectedImage.id}749</span>
               <h3 className="text-white font-black text-2xl lg:text-3xl uppercase tracking-tighter mb-4 italic">{selectedImage.title}</h3>
               <p className="text-gray-400 text-sm font-medium leading-relaxed mb-8">{selectedImage.description}</p>
               
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-[#00b36b] rounded-full animate-pulse"></div>
-                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Status: Verified Master</span>
+                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Status: Payout Confirmed</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Protocol: Zulu Alpha-V4</span>
+                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Network: TRC-20 Mainnet</span>
                 </div>
               </div>
 
@@ -142,7 +130,8 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
         </div>
       )}
 
-      <div className="p-6 text-center shrink-0 border-t border-white/5 bg-[#131722]">
+      {/* FOOTER CAPTION */}
+      <div className="p-6 text-center shrink-0 border-t border-white/5">
         <p className="text-[9px] text-gray-600 font-black uppercase tracking-[0.4em]">
           All assets verified by Zulu Replication Protocol v4.0. Institutional Grade Evidence.
         </p>
