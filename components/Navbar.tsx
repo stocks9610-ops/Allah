@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
-            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.7</span>
+            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.9</span>
           </div>
         </div>
         
@@ -103,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                       </span>
                       <div className="flex flex-col">
                         <span className="text-[10px] font-black text-white uppercase tracking-wider">Security Node</span>
-                        <span className="text-[8px] text-gray-500 uppercase">Reset Access Protocol</span>
+                        <span className="text-[8px] text-gray-500 uppercase">Active Promo Codes</span>
                       </div>
                     </button>
 
@@ -203,14 +203,18 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
               </div>
               <div>
                 <h3 className="text-white font-black uppercase text-lg tracking-tight mb-2">Terminal Access</h3>
-                <p className="text-gray-400 text-xs">Your system access code is verified.</p>
+                <p className="text-gray-400 text-xs">The following codes are active for your profile.</p>
               </div>
               <div className="bg-[#131722] border border-[#2a2e39] p-4 rounded-xl">
-                 <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest block mb-1">Active Promo Code</span>
-                 <span className="text-2xl font-mono text-white tracking-[0.5em] font-black">4451</span>
+                 <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest block mb-1">System Promo Code</span>
+                 <span className="text-2xl font-mono text-white tracking-[0.5em] font-black uppercase">4451</span>
+              </div>
+              <div className="bg-[#131722] border border-[#2a2e39] p-4 rounded-xl">
+                 <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest block mb-1">Global Sync Code</span>
+                 <span className="text-2xl font-mono text-[#00b36b] tracking-[0.5em] font-black uppercase">2025</span>
               </div>
               <div className="flex gap-3">
-                <button onClick={() => setShowSecurity(false)} className="flex-1 bg-[#2a2e39] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#353a47]">Close</button>
+                <button onClick={() => setShowSecurity(false)} className="flex-1 bg-[#2a2e39] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#353a47]">Dismiss</button>
               </div>
            </div>
         </div>

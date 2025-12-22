@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ALL_MASTER_TRADERS } from './TraderList';
 
 interface GalleryItem {
-  id: number;
+  id: number | string;
   url: string;
   category: 'payout' | 'setup' | 'community' | 'trader';
   title: string;
@@ -22,8 +22,8 @@ const GENERIC_GALLERY_DATA: GalleryItem[] = [
 ];
 
 // Map 20 Traders into the gallery format
-const TRADER_GALLERY_ITEMS: GalleryItem[] = ALL_MASTER_TRADERS.map((t, i) => ({
-  id: 100 + i,
+const TRADER_GALLERY_ITEMS: GalleryItem[] = ALL_MASTER_TRADERS.map((t) => ({
+  id: `gallery_${t.id}`,
   category: 'trader',
   title: t.name,
   description: `${t.strategy} - Verified ${t.winRate}% Win Rate.`,
@@ -61,12 +61,14 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
       <div className="flex flex-wrap justify-center gap-3 p-6 shrink-0">
         {['all', 'masters', 'payout', 'setup', 'community'].map((cat) => {
           const displayCat = cat === 'masters' ? 'trader' : cat;
+          const isActive = filter === (displayCat === 'all' ? 'all' : displayCat);
+          
           return (
             <button
               key={cat}
               onClick={() => setFilter(displayCat as any)}
               className={`px-6 py-2 rounded-xl font-black text-[9px] uppercase tracking-widest transition-all border ${
-                (filter === displayCat || (filter === 'all' && cat === 'all'))
+                isActive
                 ? 'bg-[#f01a64] text-white border-[#f01a64] shadow-[0_0_15px_rgba(240,26,100,0.4)]' 
                 : 'bg-white/5 text-gray-500 border-white/10 hover:border-[#f01a64]/50'
               }`}
@@ -83,9 +85,9 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
             <div 
               key={item.id}
               onClick={() => setSelectedImage(item)}
-              className="relative group cursor-pointer overflow-hidden rounded-[2rem] border border-white/10 hover:border-[#f01a64] transition-all break-inside-avoid shadow-2xl"
+              className="relative group cursor-pointer overflow-hidden rounded-[2rem] border border-white/10 hover:border-[#f01a64] transition-all break-inside-avoid shadow-2xl bg-[#1e222d]"
             >
-              <img src={item.url} alt={item.title} className="w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src={item.url} alt={item.title} className="w-full object-cover transition-transform duration-700 group-hover:scale-110 min-h-[200px]" />
               
               <div className="absolute top-4 left-4 flex items-center gap-2 bg-[#00b36b] text-white px-3 py-1 rounded-full text-[8px] font-black uppercase shadow-lg z-10">
                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -108,12 +110,13 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
           className="fixed inset-0 z-[120] bg-black/95 flex items-center justify-center p-4 animate-in zoom-in-95 duration-200"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-5xl w-full h-full max-h-[85vh] flex flex-col md:flex-row bg-[#1e222d] rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] border border-white/10">
-            <div className="flex-1 bg-black flex items-center justify-center">
-              <img src={selectedImage.url} className="w-full h-full object-contain" />
+          <div className="relative max-w-5xl w-full h-full max-h-[85vh] flex flex-col md:flex-row bg-[#1e222d] rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] border border-white/10" onClick={e => e.stopPropagation()}>
+            <div className="flex-1 bg-black flex items-center justify-center relative overflow-hidden">
+              <img src={selectedImage.url} className="w-full h-full object-contain relative z-10" />
+              <div className="absolute inset-0 bg-center bg-cover blur-3xl opacity-30 scale-150" style={{ backgroundImage: `url(${selectedImage.url})` }}></div>
             </div>
             <div className="w-full md:w-80 p-8 lg:p-12 flex flex-col justify-center bg-gradient-to-br from-[#1e222d] to-[#131722]">
-              <span className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.4em] mb-4">Verification Artifact #{selectedImage.id}749</span>
+              <span className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.4em] mb-4">Verification Artifact #{typeof selectedImage.id === 'string' ? selectedImage.id.split('_')[1] : selectedImage.id}749</span>
               <h3 className="text-white font-black text-2xl lg:text-3xl uppercase tracking-tighter mb-4 italic">{selectedImage.title}</h3>
               <p className="text-gray-400 text-sm font-medium leading-relaxed mb-8">{selectedImage.description}</p>
               
@@ -139,7 +142,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
         </div>
       )}
 
-      <div className="p-6 text-center shrink-0 border-t border-white/5">
+      <div className="p-6 text-center shrink-0 border-t border-white/5 bg-[#131722]">
         <p className="text-[9px] text-gray-600 font-black uppercase tracking-[0.4em]">
           All assets verified by Zulu Replication Protocol v4.0. Institutional Grade Evidence.
         </p>

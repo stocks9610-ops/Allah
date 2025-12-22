@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="CopyTrade">
     <!-- Vercel Deployment Force Update -->
-    <meta name="build-version" content="v2.7-MASTER-SYNC">
+    <meta name="build-version" content="v2.9-STABLE-BUILD">
     
     <!-- PWA Icons & Manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -30,11 +30,9 @@
         overflow-x: hidden;
         width: 100%;
         position: relative;
-        /* Prevent browser default pull-to-refresh */
         overscroll-behavior-y: contain;
       }
       
-      /* Futuristic Background Grid */
       body::before {
         content: "";
         position: fixed;
@@ -50,7 +48,6 @@
         pointer-events: none;
       }
 
-      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 4px;
       }
@@ -88,7 +85,6 @@
         animation: neural-spin 1s linear infinite;
       }
 
-      /* Fix for iOS momentum scrolling */
       .no-scrollbar {
         -ms-overflow-style: none;
         scrollbar-width: none;
@@ -100,10 +96,9 @@
     </style>
 <script>
   (function() {
-    console.log("%c NEURAL TERMINAL v2.7 (MASTER SYNC) ACTIVE ", "background: #00b36b; color: white; font-size: 20px; font-weight: bold; padding: 10px; border-radius: 5px;");
+    console.log("%c NEURAL TERMINAL v2.9 (STABLE BUILD) ACTIVE ", "background: #00b36b; color: white; font-size: 20px; font-weight: bold; padding: 10px; border-radius: 5px;");
     
     document.addEventListener('contextmenu', e => {
-      // Allow context menu on mobile images/inputs if needed, otherwise deter
       if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
         e.preventDefault();
       }
