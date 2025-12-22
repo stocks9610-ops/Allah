@@ -11,25 +11,24 @@ const HolographicGuide: React.FC<HolographicGuideProps> = ({ step, customMessage
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Animation reset on step change
     setVisible(false);
     const timer = setTimeout(() => {
       let msg = "";
       switch (step) {
         case 'init':
-          msg = "💡 <span class='text-white font-bold'>TIP:</span> Tap a <span class='text-[#f01a64] font-bold'>Trader Card</span> above to auto-copy their strategy.";
+          msg = "💡 <span class='text-white font-bold'>TIP:</span> <span class='text-[#f01a64] font-black uppercase'>Copy winning traders instantly.</span> Mirror their trades and earn automatically.";
           break;
         case 'deposit_needed':
-          msg = "🔒 <span class='text-amber-500 font-bold'>ACCESS RESTRICTED:</span> Deposit <span class='text-white font-bold'>$500+</span> to unlock High-Frequency Nodes.";
+          msg = "🔒 <span class='text-amber-500 font-bold'>ACCESS RESTRICTED:</span> Mirroring requires <span class='text-white font-bold'>Mainnet Sync ($500+)</span>. Follow top traders now.";
           break;
         case 'ready':
-          msg = "🚀 <span class='text-[#00b36b] font-bold'>SYSTEM PRIME:</span> Select an investment plan below to deploy liquidity.";
+          msg = "🚀 <span class='text-[#00b36b] font-bold'>SYSTEM PRIME:</span> No experience needed. <span class='text-white font-black uppercase'>Just copy profits.</span> Select a node below.";
           break;
         case 'investing':
-          msg = "⚙️ <span class='text-[#f01a64] font-bold'>EXECUTING:</span> Establishing bridge to Mainnet... Do not close.";
+          msg = "⚙️ <span class='text-[#f01a64] font-bold'>EXECUTING:</span> Mirroring expert trades in real time. <span class='text-white font-bold'>Syncing global orders...</span>";
           break;
         case 'profit':
-          msg = "✅ <span class='text-[#00b36b] font-bold'>SUCCESS:</span> Payout secured. Funds added to Ledger.";
+          msg = "✅ <span class='text-[#00b36b] font-bold'>SUCCESS:</span> Strategy replication complete. <span class='text-white font-bold'>Profits routed to Neural Ledger.</span>";
           break;
       }
       if (customMessage) msg = customMessage;
@@ -42,33 +41,27 @@ const HolographicGuide: React.FC<HolographicGuideProps> = ({ step, customMessage
 
   return (
     <div 
-      className={`fixed bottom-24 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[400px] z-40 transition-all duration-700 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+      className={`fixed bottom-24 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px] z-40 transition-all duration-700 transform ${visible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
     >
-      {/* GLASS CONTAINER */}
-      <div className="bg-[#1e222d]/40 backdrop-blur-md border border-white/10 p-4 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-start gap-4 relative overflow-hidden group">
+      <div className="bg-[#1e222d]/60 backdrop-blur-xl border border-white/10 p-5 rounded-[2rem] shadow-2xl flex items-center gap-5 relative overflow-hidden group">
+        <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-gradient-to-b from-transparent via-[#f01a64] to-transparent opacity-50 animate-pulse"></div>
         
-        {/* SCANNER LINE ANIMATION */}
-        <div className="absolute top-0 bottom-0 left-0 w-[2px] bg-gradient-to-b from-transparent via-[#f01a64] to-transparent opacity-50 animate-pulse"></div>
-        
-        {/* ICON */}
-        <div className="shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-inner">
+        <div className="shrink-0 w-10 h-10 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
           <div className={`w-2 h-2 rounded-full animate-ping ${step === 'investing' ? 'bg-[#f01a64]' : 'bg-[#00b36b]'}`}></div>
         </div>
 
-        {/* TEXT CONTENT */}
         <div className="flex-1">
           <div className="flex justify-between items-center mb-1">
-            <span className="text-[8px] font-black text-gray-400 uppercase tracking-[0.2em]">Tactical Guide</span>
-            <span className="text-[8px] font-mono text-gray-500">v2.4</span>
+            <span className="text-[9px] font-black text-gray-500 uppercase tracking-[0.3em]">Tactical Guide</span>
+            <span className="text-[9px] font-mono text-gray-600">Active Nodes: 45k+</span>
           </div>
           <p 
-            className="text-[10px] md:text-xs text-gray-300 font-medium leading-relaxed font-sans"
+            className="text-[11px] md:text-xs text-gray-300 font-medium leading-relaxed font-sans"
             dangerouslySetInnerHTML={{ __html: message }}
           />
         </div>
 
-        {/* BACKGROUND GLOW */}
-        <div className={`absolute -right-4 -bottom-4 w-16 h-16 blur-2xl rounded-full opacity-20 pointer-events-none transition-colors duration-500 ${step === 'deposit_needed' ? 'bg-amber-500' : step === 'investing' ? 'bg-[#f01a64]' : 'bg-[#00b36b]'}`}></div>
+        <div className={`absolute -right-8 -bottom-8 w-24 h-24 blur-3xl rounded-full opacity-20 pointer-events-none transition-colors duration-500 ${step === 'deposit_needed' ? 'bg-amber-500' : step === 'investing' ? 'bg-[#f01a64]' : 'bg-[#00b36b]'}`}></div>
       </div>
     </div>
   );

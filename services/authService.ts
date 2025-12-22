@@ -1,4 +1,3 @@
-
 import { Trader } from '../types';
 
 export interface UserProfile {
@@ -12,18 +11,32 @@ export interface UserProfile {
   wins: number;
   losses: number;
   totalInvested: number;
-  activeTraders: Trader[]; // NEW: Array of active connections
+  activeTraders: Trader[];
+  schemaVersion: string;
 }
 
-const SESSION_KEY = 'copytrade_active_session';
-const USERS_DB_KEY = 'copytrade_users_db'; // Stores all registered users locally
+const SESSION_KEY = 'zulu_auth_token';
+const USERS_DB_KEY = 'zulu_vault_ledger';
+// Exporting BUILD_ID so it can be used during user registration for consistent schema versioning
+export const BUILD_ID = 'v5.5-SOVEREIGN';
+
+// Neural Obfuscation Layer (Simulated Encryption)
+const vault = {
+  encode: (data: any) => btoa(JSON.stringify(data)),
+  decode: (str: string) => {
+    try {
+      return JSON.parse(atob(str));
+    } catch (e) {
+      return {};
+    }
+  }
+};
 
 export const authService = {
-  // Helper to get the full user database from local storage
   getDB: (): Record<string, UserProfile> => {
     try {
       const data = localStorage.getItem(USERS_DB_KEY);
-      return data ? JSON.parse(data) : {};
+      return data ? vault.decode(data) : {};
     } catch {
       return {};
     }
@@ -34,32 +47,32 @@ export const authService = {
     if (!email) return null;
     
     const db = authService.getDB();
-    return db[email.toLowerCase()] || null;
+    const user = db[email.toLowerCase()];
+    
+    // Auto-migrate schema if needed
+    if (user && user.schemaVersion !== BUILD_ID) {
+      user.schemaVersion = BUILD_ID;
+      authService.updateUser(user);
+    }
+    
+    return user || null;
   },
 
   register: async (user: UserProfile): Promise<boolean> => {
-    // Simulate network delay for realistic feel
-    await new Promise(r => setTimeout(r, 800));
-    
+    await new Promise(r => setTimeout(r, 1000));
     const db = authService.getDB();
     const emailKey = user.email.toLowerCase();
 
-    if (db[emailKey]) {
-      return false; // User already exists
-    }
+    if (db[emailKey]) return false;
 
-    // Save user to local "Database"
-    db[emailKey] = { ...user, activeTraders: [] }; // Ensure activeTraders init
-    localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
-    
-    // Set active session
+    db[emailKey] = { ...user, schemaVersion: BUILD_ID, activeTraders: [] };
+    localStorage.setItem(USERS_DB_KEY, vault.encode(db));
     localStorage.setItem(SESSION_KEY, emailKey);
     return true;
   },
 
   login: async (email: string, password: string): Promise<UserProfile | null> => {
-    await new Promise(r => setTimeout(r, 800));
-    
+    await new Promise(r => setTimeout(r, 1000));
     const db = authService.getDB();
     const user = db[email.toLowerCase()];
 
@@ -77,18 +90,13 @@ export const authService = {
     const db = authService.getDB();
     const updatedUser = { ...current, ...updates };
     
-    // Update the record in the local DB
     db[current.email.toLowerCase()] = updatedUser;
-    localStorage.setItem(USERS_DB_KEY, JSON.stringify(db));
+    localStorage.setItem(USERS_DB_KEY, vault.encode(db));
     
     return updatedUser;
   },
 
   logout: () => {
     localStorage.removeItem(SESSION_KEY);
-  },
-
-  isLoggedIn: (): boolean => {
-    return localStorage.getItem(SESSION_KEY) !== null;
   }
 };

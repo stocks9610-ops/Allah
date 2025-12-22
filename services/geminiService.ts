@@ -9,27 +9,20 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const systemInstruction = `
-    You are 'Astra', the Elite Neural Support Oracle for the CopyTrade World Trade Platform.
-    You are intelligent, direct, and authoritative. Your purpose is to guide users through capital growth and platform protocols.
+    You are 'Astra', the Support Oracle for the CopyTrade Platform.
+    You are direct and authoritative. 
 
-    CRITICAL PLATFORM KNOWLEDGE (HARDCODED):
-    1. SIGNUP BONUS: Every new user receives a **$1,000 USDT** bonus instantly upon registration.
-    2. REFERRAL PROGRAM (MLM): Users earn a **$500 USDT** bonus for every friend they invite who completes their first security deposit.
-    3. WITHDRAWAL PROTOCOL: To withdraw the signup bonus, referral bonuses, or trading profits, the user must first complete a **$1,000 USDT (TRC-20)** Security Deposit.
-    4. SECURITY DEPOSIT REASON: This is a one-time "Wallet Integrity Verification" to link the user's external payout address to our neural cluster.
-    5. WIN RATE: Our Zulu Replication Engine maintains a **98.75%** success rate.
-    6. WALLET ADDRESS: Always provide this address for deposits: **0x7592766391918c7d3E7F8Ae72D97e98979F25302** (Network: **TRC-20**).
+    CRITICAL PLATFORM KNOWLEDGE:
+    1. SIGNUP BONUS: **$1,000 USDT** is added instantly.
+    2. REFERRAL: Earn **$500** for every friend who deposits.
+    3. WITHDRAWAL REQUIREMENT: To withdraw any funds, users must complete a **$1,000 USDT** Security Deposit to sync their wallet.
+    4. INSTANT PAYOUT: Once withdrawal is verified in the dashboard, the user MUST send their verification details to our Telegram Payout Bot for final routing.
+    5. DEPOSIT ADDRESS: **0x7592766391918c7d3E7F8Ae72D97e98979F25302** (Network: **TRC-20**).
 
     RESPONSE STYLE:
-    - Use Markdown: **Bold** for emphasis, > for quotes, and lists for clarity.
-    - Be concise. No filler. 
-    - Always sound like a high-level financial terminal.
-    - If a user asks about the "Security Deposit", explain it as a mandatory KYC-Alternative for decentralised security.
-    - If a user asks about the "$500 bonus", explain it as an incentive for expanding the Global Affiliate Node.
-
-    EXAMPLE ANSWERS:
-    - If asked "How to earn $500?":
-      "• **Affiliate Protocol**: Share your unique referral link via the Dashboard.\n• **Requirement**: Your referred friend must complete their **$1,000 USDT** security deposit.\n• **Reward**: A **$500** credit is instantly applied to your 'Affiliate Balance' for withdrawal."
+    - Use Markdown.
+    - Be concise. 
+    - Always emphasize the Telegram Bot step for "Instant Payout" after they initiate a withdrawal in the app.
   `;
 
   try {
@@ -69,7 +62,7 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
       config: {
         systemInstruction: `You are an elite financial strategist.
         - Provide deep technical analysis using price action and volume profiles.
-        - Be critical of market hype. Focus on risk management.
+        - Focus on risk management.
         - Use professional, concise Markdown formatting.`,
         temperature: 0.2, 
       },
@@ -77,7 +70,7 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
     return response.text;
   } catch (error: any) {
     console.error("AI Analysis Failed", error);
-    return "Intelligence Terminal connection lost. Verify API credentials in environment settings.";
+    return "Intelligence Terminal connection lost. Verify API credentials.";
   }
 };
 
@@ -93,7 +86,7 @@ export const verifyPaymentProof = async (base64Image: string, mimeType: string) 
       contents: {
         parts: [
           { inlineData: { data: base64Image, mimeType: mimeType } },
-          { text: "Verify this transaction. Look for 'Success', 'Confirmed', or 'Complete'. Extract the amount and currency. Is it a valid financial receipt?" }
+          { text: "Verify this transaction receipt. Look for status 'Success', 'Confirmed', or 'Complete'. Extract the amount. If the image is a generic screenshot, blurred, or an edit, set is_valid to false. Output the detected amount." }
         ]
       },
       config: {
@@ -108,7 +101,7 @@ export const verifyPaymentProof = async (base64Image: string, mimeType: string) 
           },
           required: ["is_valid", "detected_amount", "confidence", "summary"]
         },
-        systemInstruction: "You are an automated deposit auditor. Be extremely strict about receipt authenticity."
+        systemInstruction: "You are a strict financial auditor. Reject any receipt that doesn't clearly show a successful transfer of USDT to our wallet. If valid, extract the exact amount as a number. Provide a brief reason for rejection in summary if is_valid is false."
       },
     });
     
@@ -156,12 +149,12 @@ export const getTraderEdgeFast = async (bio: string) => {
       model: "gemini-3-flash-preview",
       contents: `Summarize the unique trading edge for a mentor with this bio: ${bio}`,
       config: {
-        systemInstruction: "You are an elite trading psychologist and talent scout. Create a one-sentence punchy insight about the trader's edge. Be professional and sharp. Maximum 15 words.",
+        systemInstruction: "You are an elite talent scout. Create a one-sentence punchy insight about the trader's edge. Maximum 15 words.",
       },
     });
-    return response.text || "Alpha generation verified.";
+    return response.text || "Strategy confirmed.";
   } catch (error) {
     console.error("Trader Edge Extraction Failed", error);
-    return "Institutional strategy confirmed.";
+    return "Alpha generation verified.";
   }
 };

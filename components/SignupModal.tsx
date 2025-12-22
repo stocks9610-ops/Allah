@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { authService, UserProfile } from '../services/authService';
+import { authService, UserProfile, BUILD_ID } from '../services/authService';
 
 interface SignupModalProps {
   onClose: () => void;
@@ -40,6 +39,7 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
       const finalPassword = password.trim() || 'demo_access';
       const finalName = username.trim() || `Trader ${timestamp}`;
 
+      // Fix: Added missing schemaVersion to match UserProfile definition requirement
       const newUser: UserProfile = {
         username: finalName,
         email: finalEmail,
@@ -51,7 +51,8 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
         wins: 0, 
         losses: 0, 
         totalInvested: 0,
-        activeTraders: []
+        activeTraders: [],
+        schemaVersion: BUILD_ID
       };
 
       const success = await authService.register(newUser);

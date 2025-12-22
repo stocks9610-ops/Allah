@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'copytrade-v2.4-live-fix';
+const CACHE_NAME = 'zulu-sovereign-v5.5';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -7,7 +7,7 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Force new service worker to activate immediately
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
@@ -20,8 +20,8 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('Clearing old cache:', cacheName);
-            return caches.delete(cacheName); // Delete old caches
+            console.log('Purging obsolete cache:', cacheName);
+            return caches.delete(cacheName);
           }
         })
       );
