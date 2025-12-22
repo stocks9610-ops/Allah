@@ -1,10 +1,9 @@
-
 # CopyTrade Deployment & Production Guide
 
 Follow these steps to launch your elite terminal.
 
 ### 1. Intelligence Layer (Gemini API)
-Go to [Google AI Studio](https://aistudio.google.com/app/apikey) and create a Gemini API Key. This powers the Astra Oracle and Market Pulse engines.
+Go to [Google AI Studio](https://aistudio.google.com/app/apikey) and create a Gemini API Key. This powers the Sarah (Account Manager) and Market Analyst Hub engines.
 
 ### 2. Project Repository
 1. Initialize a GitHub repository.

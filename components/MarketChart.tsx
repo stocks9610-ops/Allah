@@ -147,13 +147,13 @@ const MarketChart: React.FC = () => {
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 bg-[#f01a64] rounded-full animate-ping"></div>
           <div>
-            <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Global Terminal</h2>
-            <span className="text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">Verified Access Node</span>
+            <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter leading-none">Global Hub</h2>
+            <span className="text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">Verified Exchange Node</span>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Live Trader Profit</div>
-          <div className="text-[10px] text-[#00b36b] font-mono font-bold">Mainnet Active</div>
+          <div className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Total Profits Paid</div>
+          <div className="text-[10px] text-[#00b36b] font-mono font-bold">Live Market Active</div>
         </div>
       </div>
 
@@ -168,7 +168,7 @@ const MarketChart: React.FC = () => {
 
             <h3 className="relative z-10 text-[#0088cc] text-[10px] md:text-xs font-black uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#0088cc] rounded-full animate-pulse"></span>
-              Network Profits Generated
+              Live Trading Profits Generated
               <span className="w-1.5 h-1.5 bg-[#0088cc] rounded-full animate-pulse"></span>
             </h3>
             
@@ -192,7 +192,7 @@ const MarketChart: React.FC = () => {
               </span>
               <div className="h-6 w-px bg-white/10 mx-1"></div>
               <span className="text-[9px] text-white font-black uppercase tracking-[0.2em] opacity-80">
-                {lastEvent?.label || 'LIVE FEED'}
+                {lastEvent?.label || 'LIVE MARKET FEED'}
               </span>
             </div>
           </div>
@@ -213,7 +213,7 @@ const MarketChart: React.FC = () => {
 
         <div className="w-full lg:w-96 bg-[#131722]/80 backdrop-blur-sm flex flex-col border-l border-[#2a2e39]">
           <div className="p-3 border-b border-[#2a2e39] bg-[#1e222d] flex items-center justify-between">
-            <span className="text-[10px] font-black text-[#00b36b] uppercase tracking-widest animate-pulse">Live Pulse</span>
+            <span className="text-[10px] font-black text-[#00b36b] uppercase tracking-widest animate-pulse">Live Markets</span>
             <div className="flex gap-1">
                <span className="w-1.5 h-1.5 bg-[#00b36b] rounded-full animate-pulse"></span>
                <span className="w-1.5 h-1.5 bg-[#00b36b] rounded-full animate-pulse [animation-delay:-0.2s]"></span>
@@ -252,7 +252,7 @@ const MarketChart: React.FC = () => {
           </div>
           
           <div className="p-3 bg-[#1e222d] border-t border-[#2a2e39] text-center">
-             <span className="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em]">Real-Time Mainnet Sync</span>
+             <span className="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em]">Live Market Connectivity</span>
           </div>
         </div>
       </div>

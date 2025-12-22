@@ -11,7 +11,7 @@ const TickerTape: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setStats(prev => ({
-        // Fluctuate liquidity slowly like an AUM counter
+        // Fluctuate liquidity slowly
         liquidity: prev.liquidity + (Math.random() * 50000 - 10000), 
         // Slowly increase user count
         activeNodes: prev.activeNodes + (Math.random() > 0.8 ? 1 : 0),
@@ -28,27 +28,27 @@ const TickerTape: React.FC = () => {
         <div className="flex items-center gap-2 shrink-0">
           <div className="w-1.5 h-1.5 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
           <span className="text-[9px] font-black text-gray-500 uppercase tracking-[0.2em]">
-            SECURE LIQUIDITY: <span className="text-white">${stats.liquidity.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+            MARKET LIQUIDITY: <span className="text-white">${stats.liquidity.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
           </span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <div className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-pulse shadow-[0_0_8px_#f01a64]"></div>
           <span className="text-[9px] font-black text-gray-500 uppercase tracking-[0.2em]">
-            ACTIVE REPLICATORS: <span className="text-white">{stats.activeNodes.toLocaleString()}</span>
+            ACTIVE TRADERS: <span className="text-white">{stats.activeNodes.toLocaleString()}</span>
           </span>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
           <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_#3b82f6]"></div>
           <span className="text-[9px] font-black text-gray-500 uppercase tracking-[0.2em]">
-            SUCCESS PROBABILITY: <span className="text-white">{stats.accuracy.toFixed(1)}%</span>
+            TRADE ACCURACY: <span className="text-white">{stats.accuracy.toFixed(1)}%</span>
           </span>
         </div>
 
         <div className="hidden lg:flex items-center gap-2 shrink-0">
           <span className="text-[8px] font-black text-[#00b36b] uppercase tracking-[0.3em] border border-[#00b36b]/20 px-2 py-0.5 rounded">
-            NETWORK STATUS: OPTIMAL
+            PLATFORM STATUS: OPTIMAL
           </span>
         </div>
 

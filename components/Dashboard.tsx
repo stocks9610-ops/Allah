@@ -1,9 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
 import { Trader } from '../types';
 import { verifyPaymentProof } from '../services/geminiService';
-import HolographicGuide from './HolographicGuide';
+import TacticalGuide from './TacticalGuide';
 
 interface DashboardProps {
   user: UserProfile;
@@ -12,10 +11,10 @@ interface DashboardProps {
 }
 
 const PROFIT_STRATEGIES = [
-  { id: 1, name: 'Instant Copy Node', tag: 'Limited Slots', hook: 'Copy winning traders instantly', duration: '30 Seconds', durationMs: 30000, minRet: 20, maxRet: 25, risk: 'Secure', minInvest: 500, vip: false },
+  { id: 1, name: 'Instant Copy Plan', tag: 'Limited Slots', hook: 'Copy winning traders instantly', duration: '30 Seconds', durationMs: 30000, minRet: 20, maxRet: 25, risk: 'Secure', minInvest: 500, vip: false },
   { id: 2, name: 'Auto-Profit Stream', tag: 'High Demand', hook: 'No experience needed — just copy profits', duration: '1 Minute', durationMs: 60000, minRet: 30, maxRet: 40, risk: 'Secure', minInvest: 1000, vip: false },
   { id: 3, name: 'VIP Alpha Bridge', tag: 'Elite Access', hook: 'Follow top traders and earn automatically', duration: '5 Minutes', durationMs: 300000, minRet: 60, maxRet: 80, risk: 'Sovereign', minInvest: 2500, vip: true },
-  { id: 4, name: 'Pro-Mirror Core', tag: 'Global Flow', hook: 'Mirror expert trades in real time', duration: '1 Hour', durationMs: 3600000, minRet: 120, maxRet: 150, risk: 'Sovereign', minInvest: 5000, vip: true },
+  { id: 4, name: 'Pro-Market Core', tag: 'Global Flow', hook: 'Mirror expert trades in real time', duration: '1 Hour', durationMs: 3600000, minRet: 120, maxRet: 150, risk: 'Sovereign', minInvest: 5000, vip: true },
   { id: 5, name: 'Whale Wealth Path', tag: 'Whale Only', hook: 'Let professionals trade for you', duration: '4 Hours', durationMs: 14400000, minRet: 300, maxRet: 400, risk: 'Whale Tier', minInvest: 10000, vip: true },
 ];
 
@@ -52,35 +51,38 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [verificationError, setVerificationError] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
 
+  // Profit calculation logic: Total Balance - Signup Bonus (1000)
+  const tradeProfit = Math.max(0, user.balance - 1000);
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setIsVerifyingReceipt(true);
-    setVerificationStatus('Neural Link Initiated...');
+    setVerificationStatus('Connecting to Exchange...');
     setVerificationError('');
 
     const reader = new FileReader();
     reader.onloadend = async () => {
       const base64 = (reader.result as string).split(',')[1];
-      setVerificationStatus('Scanning Blockchain Artifacts...');
+      setVerificationStatus('Verifying Transaction...');
       await new Promise(r => setTimeout(r, 2000));
-      setVerificationStatus('Verifying Ledger Authenticity...');
+      setVerificationStatus('Confirming Receipt Legitimacy...');
       const result = await verifyPaymentProof(base64, file.type);
       
       if (result.is_valid && result.detected_amount > 0) {
-        setVerificationStatus(`Success: $${result.detected_amount} Detected.`);
+        setVerificationStatus(`Success: $${result.detected_amount} Received.`);
         setTimeout(() => {
           onUserUpdate(authService.updateUser({ 
             balance: user.balance + result.detected_amount,
             hasDeposited: true 
           })!);
           setIsVerifyingReceipt(false);
-          alert(`SUCCESS: $${result.detected_amount} synchronized with Neural Ledger.`);
+          alert(`SUCCESS: $${result.detected_amount} added to your real-money balance.`);
         }, 1500);
       } else {
         setVerificationStatus('REJECTED');
-        setVerificationError(result.summary || 'Image Analysis Failed.');
+        setVerificationError(result.summary || 'Receipt Analysis Failed.');
         setTimeout(() => {
            setIsVerifyingReceipt(false);
            setVerificationStatus('');
@@ -102,7 +104,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       return;
     }
     if (!user.hasDeposited) {
-      setWithdrawError("Pending security review: Please complete your first deposit to activate payout channels.");
+      setWithdrawError("Pending security review: Please confirm your first deposit to activate payout channels.");
       return;
     }
     setWithdrawStep('confirm');
@@ -129,7 +131,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     
     if (user.balance < investAmount) {
       depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-      alert("INSUFFICIENT_FUNDS: Please deposit to initialize this strategy node.");
+      alert("INSUFFICIENT_FUNDS: Please deposit to initialize this trading strategy.");
       return;
     }
 
@@ -141,9 +143,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     setIsInvesting(true);
     setTradeStage('syncing');
     setSyncLogs([
-      "Connecting to trader strategy...",
-      "Risk parameters applied...",
-      "Order syncing in progress...",
+      "Connecting to market leader...",
+      "Setting risk parameters...",
+      "Trade synchronization in progress...",
       "Capital allocation confirmed."
     ]);
     
@@ -210,31 +212,31 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   return (
     <div className="bg-[#131722] min-h-screen pt-4 pb-32 px-4 sm:px-6 lg:px-8 relative selection:bg-[#f01a64]/10">
-      <HolographicGuide step={isInvesting ? 'investing' : tradeStage === 'completed' ? 'profit' : 'ready'} />
+      <TacticalGuide step={isInvesting ? 'investing' : tradeStage === 'completed' ? 'profit' : 'ready'} />
 
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* NEURAL LEDGER ACCOUNT STATUS HUD */}
+        {/* REAL-WORLD TRADING STATUS HUD */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-[#1e222d] border border-white/5 p-6 rounded-3xl shadow-xl hover:border-white/10 transition-all">
-            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">Total Balance</span>
+            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">Total Real Balance</span>
             <div className="flex flex-col">
               <span className={`text-xl sm:text-2xl font-black tabular-nums ${user.hasDeposited ? 'text-[#00b36b]' : 'text-amber-500'}`}>
                 ${user.balance.toLocaleString()}
               </span>
               {!user.hasDeposited && (
                 <span className="text-[8px] font-black text-amber-600 uppercase tracking-widest mt-1 italic animate-pulse">
-                  [LOCKED] - Reveals on first deposit
+                  [PENDING] - Confirm first deposit
                 </span>
               )}
             </div>
           </div>
           <div className="bg-[#1e222d] border border-white/5 p-6 rounded-3xl shadow-xl hover:border-white/10 transition-all">
-            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">Mirroring Assets</span>
+            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">In-Trade Assets</span>
             <span className="text-xl sm:text-2xl font-black text-white tabular-nums">${user.totalInvested.toLocaleString()}</span>
           </div>
           <div className="bg-[#1e222d] border border-white/5 p-6 rounded-3xl shadow-xl hover:border-white/10 transition-all">
-            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">Recent Profit</span>
-            <span className="text-xl font-black text-[#00b36b] tabular-nums">+$0.00</span>
+            <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1">Trade Profit</span>
+            <span className="text-xl font-black text-[#00b36b] tabular-nums">+${tradeProfit.toLocaleString()}</span>
           </div>
           <div className="bg-[#f01a64] p-6 rounded-3xl flex items-center justify-between cursor-pointer group hover:bg-pink-700 transition-all shadow-[0_10px_30px_rgba(240,26,100,0.3)]" onClick={() => depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}>
             <div className="text-left">
@@ -250,10 +252,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           <div className="lg:col-span-2 space-y-6">
              <div className="flex justify-between items-end px-2">
                 <div>
-                   <h3 className="text-2xl font-black text-white uppercase tracking-tighter italic">Profit Strategies</h3>
-                   <p className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Select a node to begin capital mirroring</p>
+                   <h3 className="text-2xl font-black text-white uppercase tracking-tighter italic">Trading Strategies</h3>
+                   <p className="text-[#f01a64] text-[9px] font-black uppercase tracking-[0.2em] mt-1">Select a strategy to begin auto-trading</p>
                 </div>
-                <span className="text-[10px] text-[#00b36b] font-black uppercase tracking-widest">Active Nodes: High</span>
+                <span className="text-[10px] text-[#00b36b] font-black uppercase tracking-widest">Active Channels: High</span>
              </div>
 
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -264,7 +266,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                         if (isInvesting) return;
                         if (plan.vip && !user.hasDeposited) {
                            depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-                           alert("🔒 DEPOSIT REQUIRED: This elite node requires a verification deposit to initialize mirroring.");
+                           alert("🔒 DEPOSIT REQUIRED: Please confirm your first deposit to activate this elite strategy.");
                            return;
                         }
                         setSelectedPlanId(plan.id);
@@ -295,7 +297,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                       {selectedPlanId === plan.id && !isInvesting && (
                         <div className="mt-8 pt-8 border-t border-white/5 space-y-6 animate-in fade-in duration-300">
                            <div className="flex flex-col gap-2">
-                              <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Investment Amount (USDT)</span>
+                              <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest">Trade Amount (USDT)</span>
                               <div className="flex gap-3">
                                  <input 
                                    type="number" 
@@ -303,7 +305,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                                    onChange={e => setInvestAmount(Number(e.target.value))} 
                                    className="flex-1 bg-black border border-white/10 text-white text-sm p-4 rounded-2xl focus:border-[#f01a64] outline-none font-black" 
                                  />
-                                 <button onClick={startDeployment} className="bg-[#f01a64] hover:bg-pink-700 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all">Invest</button>
+                                 <button onClick={startDeployment} className="bg-[#f01a64] hover:bg-pink-700 text-white px-8 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all">Start Trade</button>
                               </div>
                            </div>
                         </div>
@@ -318,12 +320,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
              {/* DEPOSIT SECTION */}
              <div ref={depositSectionRef} className="bg-[#1e222d] border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
                 <div className="p-10 bg-black/20">
-                   <h3 className="text-lg font-black text-white uppercase tracking-tighter mb-4">Deposit (Neural Ledger Sync)</h3>
+                   <h3 className="text-lg font-black text-white uppercase tracking-tighter mb-4">Deposit (Confirm Funds)</h3>
                    <div className="space-y-3 mb-8">
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide leading-relaxed">
                          1. Select network and copy address.<br/>
                          2. Send USDT via your crypto wallet.<br/>
-                         3. Upload receipt for verification.
+                         3. Upload receipt for instant credit.
                       </p>
                    </div>
                    <div className="flex gap-2 mb-8">
@@ -380,7 +382,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                 </div>
              </div>
 
-             {/* UPDATED WITHDRAW MONEY SECTION */}
+             {/* WITHDRAW MONEY SECTION */}
              <div className="bg-[#1e222d] border border-white/5 p-10 rounded-[3rem] shadow-2xl space-y-8">
                 <div className="text-center">
                    <h3 className="text-lg font-black text-white uppercase tracking-tighter">Withdraw Money</h3>
@@ -456,7 +458,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                           <span className="text-[10px] font-black text-white font-mono">{maskedAddress(withdrawAddress)}</span>
                        </div>
                        <div className="pt-4 border-t border-white/5 flex justify-between items-center">
-                          <span className="text-[9px] text-gray-500 font-black uppercase">Estimated Time</span>
+                          <span className="text-[9px] text-gray-500 font-black uppercase">Processing Time</span>
                           <span className="text-[10px] font-black text-white">~59 Minutes</span>
                        </div>
                     </div>
@@ -468,7 +470,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                         disabled={isWithdrawing}
                         className="flex-[2] py-4 bg-[#f01a64] text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl disabled:opacity-50"
                       >
-                        {isWithdrawing ? 'Syncing...' : 'Confirm Withdrawal'}
+                        {isWithdrawing ? 'Processing...' : 'Confirm Withdrawal'}
                       </button>
                     </div>
                   </div>
@@ -481,14 +483,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                        </div>
                        <div className="space-y-1">
-                         <h4 className="text-white font-black text-sm uppercase">Request Submitted</h4>
-                         <p className="text-[#00b36b] text-[9px] font-black uppercase tracking-widest">Processing on blockchain</p>
+                         <h4 className="text-white font-black text-sm uppercase">Withdrawal Submitted</h4>
+                         <p className="text-[#00b36b] text-[9px] font-black uppercase tracking-widest">Processing on exchange network</p>
                        </div>
                     </div>
                     
                     <div className="p-6 bg-black/20 rounded-2xl border border-white/5">
                       <p className="text-[11px] text-gray-400 font-medium text-center leading-relaxed mb-6 italic">
-                        "Your payment will take ~59 min to arrive in your wallet. Once received, upload your screenshot to confirm successful payout."
+                        "Your payment will take ~59 min to arrive in your account. Once received, upload your screenshot to confirm successful payout."
                       </p>
                       
                       <input type="file" ref={proofInputRef} onChange={handleProofUpload} className="hidden" accept="image/*" />
@@ -497,14 +499,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                         className="w-full py-4 bg-[#0088cc] text-white rounded-xl font-black uppercase text-[10px] tracking-widest shadow-lg flex items-center justify-center gap-2"
                       >
                          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" /></svg>
-                         Upload Receipt of Success
-                      </button>
-                      
-                      <button 
-                        onClick={() => setWithdrawStep('input')} 
-                        className="w-full mt-4 text-[9px] text-gray-600 font-black uppercase tracking-widest hover:text-white transition-colors"
-                      >
-                        Return to Payout Menu
+                         Upload Success Receipt
                       </button>
                     </div>
                   </div>
@@ -512,7 +507,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                 
                 <div className="flex items-center justify-center gap-2 opacity-30 mt-4">
                    <svg className="w-3 h-3 text-[#00b36b]" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" /></svg>
-                   <span className="text-[8px] text-gray-400 font-black uppercase tracking-[0.2em]">Sovereign Mainnet Node</span>
+                   <span className="text-[8px] text-gray-400 font-black uppercase tracking-[0.2em]">Real-World Exchange Hub</span>
                 </div>
              </div>
           </div>

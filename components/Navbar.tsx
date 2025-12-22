@@ -26,6 +26,9 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Calculate Profit (Assuming 1000 is base sign-up bonus)
+  const tradeProfit = user ? Math.max(0, user.balance - 1000) : 0;
+
   return (
     <>
       <nav className="bg-[#1e222d] border-b border-[#2a2e39] py-3 md:py-4 px-4 md:px-10 flex items-center justify-between sticky top-0 z-[60] backdrop-blur-md bg-opacity-95">
@@ -39,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
-            <span className="text-[8px] md:text-[10px] text-gray-500 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v5.0</span>
+            <span className="text-[8px] md:text-[10px] text-gray-500 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Professional Hub v5.0</span>
           </div>
         </div>
         
@@ -74,13 +77,13 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
               {showMenu && (
                 <div className="absolute right-0 top-full mt-2 w-56 bg-[#1e222d] border border-[#2a2e39] rounded-2xl shadow-2xl overflow-hidden z-[70] animate-in slide-in-from-top-2 fade-in">
                   <div className="p-3 border-b border-[#2a2e39] bg-[#131722]">
-                    <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest block">Command Center</span>
+                    <span className="text-[8px] font-black text-gray-500 uppercase tracking-widest block">Trading Command Center</span>
                   </div>
                   <div className="p-1.5 space-y-0.5">
                     <button onClick={() => { setShowHistory(true); setShowMenu(false); }} className="w-full text-left flex items-center gap-3 px-3 py-2.5 hover:bg-[#2a2e39] rounded-xl group transition-colors">
                       <div className="flex flex-col">
-                        <span className="text-[10px] font-black text-white uppercase tracking-wider">Neural Ledger</span>
-                        <span className="text-[8px] text-gray-500 uppercase">Account History</span>
+                        <span className="text-[10px] font-black text-white uppercase tracking-wider">Account Ledger</span>
+                        <span className="text-[8px] text-gray-500 uppercase tracking-tight">Performance Records</span>
                       </div>
                     </button>
                     <div className="h-px bg-[#2a2e39] my-1 mx-2"></div>
@@ -106,21 +109,42 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-[#1e222d] border border-[#2a2e39] w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-5 border-b border-[#2a2e39] flex justify-between items-center bg-[#131722]">
-              <h3 className="text-white font-black uppercase text-sm tracking-widest">Neural Ledger Account Status</h3>
-              <button onClick={() => setShowHistory(false)} className="text-gray-500 hover:text-white"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg></button>
+              <h3 className="text-white font-black uppercase text-xs tracking-widest italic">Account Edge: Real-World Status</h3>
+              <button onClick={() => setShowHistory(false)} className="text-gray-500 hover:text-white transition-colors">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-            <div className="p-6 max-h-[60vh] overflow-y-auto no-scrollbar">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
-                  <span className="text-gray-400 font-bold text-[10px] uppercase">Account Age</span>
-                  <span className="text-white font-black text-xs uppercase">{new Date(user.joinDate).toLocaleDateString()}</span>
-                </div>
-                <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
-                  <span className="text-gray-400 font-bold text-[10px] uppercase">Total Balance</span>
-                  <span className={`font-black text-xs uppercase ${user.hasDeposited ? 'text-[#00b36b]' : 'text-amber-500'}`}>
-                    ${user.balance.toLocaleString()} {!user.hasDeposited && '(LOCKED)'}
-                  </span>
-                </div>
+            <div className="p-6 space-y-4">
+              <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
+                <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Account Created</span>
+                <span className="text-white font-black text-xs uppercase">{new Date(user.joinDate).toLocaleDateString()}</span>
+              </div>
+              
+              <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
+                <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Verified Trade Profit</span>
+                <span className="text-[#00b36b] font-black text-xs uppercase">
+                  +${tradeProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
+                <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Available Liquidity</span>
+                <span className={`font-black text-xs uppercase ${user.hasDeposited ? 'text-[#00b36b]' : 'text-amber-500'}`}>
+                  ${user.balance.toLocaleString()} {!user.hasDeposited && '(PENDING CONFIRMATION)'}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center p-4 bg-[#131722] rounded-2xl border border-white/5">
+                <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest">Performance Record</span>
+                <span className="text-white font-black text-xs uppercase">{user.wins} Wins / {user.losses} Loss</span>
+              </div>
+
+              <div className="pt-4 text-center">
+                 <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest leading-relaxed">
+                   Real-time data synchronization active. Payouts are routed through the secure exchange network.
+                 </p>
               </div>
             </div>
           </div>

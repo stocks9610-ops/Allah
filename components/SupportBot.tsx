@@ -13,14 +13,14 @@ interface SupportBotProps {
 
 const SUGGESTIONS = [
   "How to earn the $500 referral bonus?",
-  "How to withdraw my $1,000 bonus?",
-  "Is the 98% win rate guaranteed?",
+  "How to withdraw my $1,000 profit?",
+  "Is the 98% success rate verified?",
   "Show me the deposit address."
 ];
 
 const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: "• **SYSTEM STATUS**: Neural Node Astra Online\n• **ACCESS**: Elite Tier Support\n\nI am Astra. My protocols are optimized for your financial success. How shall we begin?" }
+    { role: 'model', text: "• **HUB STATUS**: Sarah Online\n• **ACCESS**: Senior Account Support\n\nHello, I am Sarah. I am here to ensure your market replication is running at peak efficiency. How can I assist you today?" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
 
     const responseText = await startSupportChat(history);
     
-    setMessages(prev => [...prev, { role: 'model', text: responseText || "I'm having trouble connecting to the neural network. Please check your link." }]);
+    setMessages(prev => [...prev, { role: 'model', text: responseText || "Market sync interrupted. Please verify your connection." }]);
     setIsLoading(false);
   };
 
@@ -65,9 +65,9 @@ const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#00b36b] border-2 border-[#131722] rounded-full"></div>
           </div>
           <div>
-            <h3 className="text-white font-black text-sm uppercase tracking-widest leading-none">Astra Oracle</h3>
+            <h3 className="text-white font-black text-sm uppercase tracking-widest leading-none">Sarah (Account)</h3>
             <span className="text-[9px] text-[#00b36b] font-black uppercase tracking-[0.2em] flex items-center gap-1 mt-1">
-              Neural Synapse Active
+              Real-Time Connection Active
             </span>
           </div>
         </div>
@@ -95,7 +95,7 @@ const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
               <span className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-bounce"></span>
               <span className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
               <span className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-bounce [animation-delay:-0.5s]"></span>
-              <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest ml-2">Neural Thinking...</span>
+              <span className="text-[9px] text-gray-500 font-black uppercase tracking-widest ml-2">Processing...</span>
             </div>
           </div>
         )}
@@ -121,7 +121,7 @@ const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
             value={input}
             disabled={isLoading}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Query Astra Concierge..."
+            placeholder="Message Sarah..."
             className="w-full bg-[#1e222d] border border-[#2a2e39] rounded-2xl py-5 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-[#f01a64] transition-all font-bold placeholder:text-gray-700 shadow-2xl disabled:opacity-50"
           />
           <button 
@@ -135,7 +135,7 @@ const SupportBot: React.FC<SupportBotProps> = ({ onClose }) => {
           </button>
         </form>
         <p className="text-[8px] text-center text-gray-600 font-black uppercase tracking-widest mt-4">
-          World Trade Platform / Encrypted Socket v4.2
+          Professional Copy-Trade Hub / Encrypted v5.0
         </p>
       </div>
     </div>

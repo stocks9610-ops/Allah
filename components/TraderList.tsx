@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Trader } from '../types';
 import TraderProfileModal from './TraderProfileModal';
-import { playProfitSound } from '../services/audioService';
 
 interface ExtendedTrader extends Trader {
   category: 'crypto' | 'binary' | 'gold' | 'forex';
@@ -84,7 +82,7 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
   { 
     id: '7', name: 'Forex Scalper Elite', 
     avatar: '/traders/forex.jpg', 
-    roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Neural Grid Scalping',
+    roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Institutional Grid Scalping',
     type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7,
     winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL', 'Grid Recovery'], 
     bio: 'Automated high-frequency signals tailored for the Forex markets. Extreme precision, high turnover.',
@@ -94,7 +92,7 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
 
 const generateTraders = (): ExtendedTrader[] => {
   const generated: ExtendedTrader[] = [];
-  const prefixes = ['Quantum', 'Alpha', 'Omega', 'Prime', 'Iron', 'Golden', 'Elite', 'Pro', 'Master', 'Rapid', 'Zenith', 'Apex', 'Nova', 'Stellar', 'Cosmic', 'Core', 'Smart', 'Safe', 'Trust', 'Venture', 'Wealth', 'Coin', 'Bit', 'Tech', 'Block', 'Neural', 'Cyber', 'Flux', 'Matrix', 'Vector'];
+  const prefixes = ['Quantum', 'Alpha', 'Omega', 'Prime', 'Iron', 'Golden', 'Elite', 'Pro', 'Master', 'Rapid', 'Zenith', 'Apex', 'Nova', 'Stellar', 'Cosmic', 'Core', 'Smart', 'Safe', 'Trust', 'Venture', 'Wealth', 'Coin', 'Bit', 'Tech', 'Block', 'Rapid', 'Cyber', 'Flux', 'Matrix', 'Vector'];
   const suffixes = ['Trader', 'Invest', 'System', 'Logic', 'Signal', 'Edge', 'Flow', 'Wave', 'Trend', 'Scalp', 'Fund', 'Group', 'Labs', 'Hub', 'Capital', 'Assets', 'Strategies', 'Bot', 'AI', 'Algo', 'Dynamics', 'Solutions', 'Global', 'Network', 'Syndicate'];
   
   for (let i = 0; i < 50; i++) {
@@ -179,7 +177,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
       }));
       
       setAnimatingTraders(prev => ({ ...prev, [trader.id]: true }));
-      playProfitSound();
       setTimeout(() => setAnimatingTraders(prev => ({ ...prev, [trader.id]: false })), 400);
     }, 1200);
 
@@ -339,4 +336,3 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
 };
 
 export default TraderList;
-    

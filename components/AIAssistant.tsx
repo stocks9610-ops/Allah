@@ -11,7 +11,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     { 
       role: 'model', 
-      text: '• **STATUS**: Neural Terminal Online\n• **ACCESS**: Hyperthread Enabled\n\nChoose a market task below or upload a chart for a deep forensic audit. I am ready to calculate.' 
+      text: '• **STATUS**: Market Analyst Hub Online\n• **ACCESS**: Global Execution Support\n\nSubmit a chart for a deep market audit or select a task below. I am ready to calculate your next win.' 
     }
   ]);
   const [input, setInput] = useState('');
@@ -21,9 +21,9 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const SUGGESTED_TASKS = [
-    { label: "Chart Analysis", prompt: "Perform deep technical analysis on this screenshot. Identify key liquidation zones and volume gaps.", icon: "📊" },
-    { label: "Strategy Auditor", prompt: "Evaluate a 'Martingale with Dynamic Stops' approach for the current high-volatility market.", icon: "🔍" },
-    { label: "Macro Signal", prompt: "Summarize the next 48-hour outlook for the BTC/USDT pair based on current sentiment.", icon: "🌐" }
+    { label: "Market Audit", prompt: "Perform deep technical analysis on this screenshot. Identify key entry zones and profit targets.", icon: "📊" },
+    { label: "Risk Evaluator", prompt: "Evaluate my current strategy for the high-volatility market environment.", icon: "🔍" },
+    { label: "Alpha Signal", prompt: "Summarize the next 48-hour outlook for the major market pairs based on current sentiment.", icon: "🌐" }
   ];
 
   useEffect(() => {
@@ -62,12 +62,12 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
     setSelectedImage(null);
     if (fileInputRef.current) fileInputRef.current.value = '';
 
-    setMessages(prev => [...prev, { role: 'user', text: userMsg || "[Neural Image Input]" }]);
+    setMessages(prev => [...prev, { role: 'user', text: userMsg || "[Market Image Upload]" }]);
     setIsLoading(true);
 
     const response = await deepMarketAnalysis(userMsg, currentImg?.data, currentImg?.type);
     
-    setMessages(prev => [...prev, { role: 'model', text: response || "Analysis unavailable." }]);
+    setMessages(prev => [...prev, { role: 'model', text: response || "Analysis currently unavailable." }]);
     setIsLoading(false);
   };
 
@@ -81,8 +81,8 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
             </svg>
           </div>
           <div>
-            <span className="font-black text-white text-sm tracking-widest uppercase block leading-none">Intelligence Terminal</span>
-            <span className="text-[9px] text-[#00b36b] font-bold tracking-[0.2em]">GEMINI-3 PRO HYPERTHREAD ACTIVE</span>
+            <span className="font-black text-white text-sm tracking-widest uppercase block leading-none">Market Analyst Hub</span>
+            <span className="text-[9px] text-[#00b36b] font-bold tracking-[0.2em]">GEMINI-3 PRO ACTIVE</span>
           </div>
         </div>
         <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors">
@@ -97,7 +97,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
                <div className="w-1.5 h-1.5 bg-[#f01a64] rounded-full"></div>
-               <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.3em]">Select Neural Task Vector:</p>
+               <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.3em]">Select Analysis Vector:</p>
             </div>
             <div className="grid grid-cols-1 gap-3">
               {SUGGESTED_TASKS.map((task, i) => (
@@ -109,7 +109,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
                   <span className="text-xl">{task.icon}</span>
                   <div className="min-w-0">
                     <span className="text-xs font-black text-white block uppercase group-hover:text-[#f01a64] transition-colors">{task.label}</span>
-                    <span className="text-[9px] text-gray-500 truncate block font-medium uppercase tracking-tighter">Initiate automated market audit</span>
+                    <span className="text-[9px] text-gray-500 truncate block font-medium uppercase tracking-tighter">Initiate market execution audit</span>
                   </div>
                 </button>
               ))}
@@ -134,7 +134,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
                 <span className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
                 <span className="w-1.5 h-1.5 bg-[#f01a64] rounded-full animate-bounce [animation-delay:-0.5s]"></span>
               </div>
-              <span className="text-[10px] text-gray-500 font-black uppercase tracking-[0.3em]">Syncing Neural Data...</span>
+              <span className="text-[10px] text-gray-500 font-black uppercase tracking-[0.3em]">Analyzing Market Data...</span>
             </div>
           </div>
         )}
@@ -147,7 +147,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#f01a64]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
               </svg>
-              <span className="text-[10px] text-[#f01a64] font-black uppercase">Visual Buffer Ready</span>
+              <span className="text-[10px] text-[#f01a64] font-black uppercase">Analysis Image Ready</span>
             </div>
             <button onClick={() => setSelectedImage(null)} className="text-white hover:text-red-500 transition-colors">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"/></svg>
@@ -170,7 +170,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ onClose }) => {
               type="text" 
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Query the World Trade Oracle..."
+              placeholder="Ask the Market Analyst..."
               className="w-full bg-[#1e222d] border border-[#2a2e39] rounded-2xl py-4 pl-6 pr-14 text-sm text-white focus:outline-none focus:border-[#f01a64] transition-all shadow-xl font-bold placeholder:text-gray-600"
             />
             <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 bg-[#f01a64] text-white rounded-xl shadow-lg hover:bg-pink-700 transition-all active:scale-95">

@@ -1,5 +1,4 @@
-
-const CACHE_NAME = 'zulu-sovereign-v5.5';
+const CACHE_NAME = 'copytrade-v5.5-live';
 const urlsToCache = [
   '/',
   '/index.html',

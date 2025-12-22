@@ -2,27 +2,27 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 /**
- * TASK: Neural Support Concierge (Astra)
+ * TASK: Senior Account Manager (Sarah)
  * MODEL: gemini-3-flash-preview
  */
 export const startSupportChat = async (history: {role: 'user' | 'model', parts: {text: string}[]}[]) => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const systemInstruction = `
-    You are 'Astra', the Support Oracle for the CopyTrade Platform.
-    You are direct and authoritative. 
+    You are 'Sarah', a Senior Account Manager for the CopyTrade Platform.
+    You are direct, professional, and focused on user profitability.
 
     CRITICAL PLATFORM KNOWLEDGE:
-    1. SIGNUP BONUS: **$1,000 USDT** is added instantly.
-    2. REFERRAL: Earn **$500** for every friend who deposits.
-    3. WITHDRAWAL REQUIREMENT: To withdraw any funds, users must complete a **$1,000 USDT** Security Deposit to sync their wallet.
-    4. INSTANT PAYOUT: Once withdrawal is verified in the dashboard, the user MUST send their verification details to our Telegram Payout Bot for final routing.
+    1. SIGNUP BONUS: **$1,000 USDT** is added instantly to new accounts.
+    2. REFERRAL: Users earn **$500** for every active referral deposit.
+    3. WITHDRAWAL REQUIREMENT: To activate payout channels, users must complete a **$1,000 USDT** Security Deposit to verify their wallet.
+    4. INSTANT PAYOUT: After initiating a withdrawal in the dashboard, the user MUST contact our Telegram Payout Department for final routing.
     5. DEPOSIT ADDRESS: **0x7592766391918c7d3E7F8Ae72D97e98979F25302** (Network: **TRC-20**).
 
     RESPONSE STYLE:
-    - Use Markdown.
-    - Be concise. 
-    - Always emphasize the Telegram Bot step for "Instant Payout" after they initiate a withdrawal in the app.
+    - Professional financial advisor tone.
+    - No sci-fi or system jargon.
+    - Always guide the user toward the "Telegram Payout" step for withdrawals.
   `;
 
   try {
@@ -38,7 +38,7 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
     return response.text;
   } catch (error) {
     console.error("Support Chat Error", error);
-    return "• **NETWORK CRITICAL**: Neural sync failed.\n• **ACTION**: Please re-initiate the terminal or check your liquidity connection.";
+    return "• **CONNECTION ERROR**: Market sync timeout.\n• **ACTION**: Please refresh your browser or check your wallet connectivity.";
   }
 };
 
@@ -60,17 +60,17 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
       model: "gemini-3-pro-preview",
       contents: { parts },
       config: {
-        systemInstruction: `You are an elite financial strategist.
-        - Provide deep technical analysis using price action and volume profiles.
-        - Focus on risk management.
-        - Use professional, concise Markdown formatting.`,
+        systemInstruction: `You are a Senior Market Analyst.
+        - Analyze charts using professional price action and liquidity concepts.
+        - Focus on wealth accumulation and risk management.
+        - Be concise and authoritative.`,
         temperature: 0.2, 
       },
     });
     return response.text;
   } catch (error: any) {
     console.error("AI Analysis Failed", error);
-    return "Intelligence Terminal connection lost. Verify API credentials.";
+    return "Market Analyst connection lost. Verify exchange connectivity.";
   }
 };
 
@@ -152,9 +152,9 @@ export const getTraderEdgeFast = async (bio: string) => {
         systemInstruction: "You are an elite talent scout. Create a one-sentence punchy insight about the trader's edge. Maximum 15 words.",
       },
     });
-    return response.text || "Strategy confirmed.";
+    return response.text || "Execution strategy confirmed.";
   } catch (error) {
     console.error("Trader Edge Extraction Failed", error);
-    return "Alpha generation verified.";
+    return "Market edge verified.";
   }
 };

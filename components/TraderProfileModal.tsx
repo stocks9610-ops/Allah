@@ -39,12 +39,12 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
   
   const animatedRoi = useCountUp(trader.roi);
 
-  // Initial Neural Scan Animation
+  // Initial Scan Animation
   useEffect(() => {
     const steps = [
-      "Connecting to Neural Cluster...",
+      "Connecting to Market Channel...",
       "Verifying Blockchain History...",
-      "Analyzing Risk Protocols...",
+      "Analyzing Portfolio Protocols...",
       "Syncing Live PnL..."
     ];
     
@@ -87,7 +87,7 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
             </div>
           </div>
           <div>
-             <h3 className="text-white font-black uppercase tracking-widest text-lg animate-pulse">Analyzing Trader DNA</h3>
+             <h3 className="text-white font-black uppercase tracking-widest text-lg animate-pulse">Analyzing Performance Data</h3>
              <p className="text-[#00b36b] font-mono text-xs mt-2 uppercase tracking-tight">
                {["Connecting...", "Verifying History...", "Checking Liquidity...", "Syncing..."][scanStep] || "Finalizing..."}
              </p>
@@ -99,7 +99,6 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
 
   // Use passed props or default values
   const displayWinRate = currentWinRate ? currentWinRate.toFixed(1) : trader.winRate;
-  // Note: Profit isn't explicitly shown in the main view body, but we can use it if we add a field for it.
   
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md p-0 sm:p-4">
@@ -124,7 +123,6 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
               <h2 className="text-xl md:text-3xl font-black text-white uppercase tracking-tighter truncate">{trader.name}</h2>
               <div className="flex flex-wrap gap-2 mt-1">
                 <span className="text-[9px] font-black bg-white/10 text-white px-2 py-0.5 rounded uppercase tracking-widest">{trader.type}</span>
-                {/* RENAMED RISK TO SAFETY SCORE */}
                 <span className="text-[9px] font-black bg-[#f01a64]/10 text-[#f01a64] px-2 py-0.5 rounded uppercase tracking-widest">Safety Score: {trader.riskScore}/10</span>
               </div>
             </div>
@@ -203,10 +201,10 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
                <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#f01a64]/10 rounded-full blur-3xl"></div>
                <h4 className="text-[9px] text-[#f01a64] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                 Neural Edge Analysis
+                 Market Edge Analysis
                </h4>
                <p className="text-gray-300 text-xs font-medium italic leading-relaxed relative z-10">
-                 "{aiInsight || 'Analyzing historical performance data...'}"
+                 "{aiInsight || 'Analyzing historical market performance data...'}"
                </p>
             </div>
             
@@ -221,13 +219,13 @@ const TraderProfileModal: React.FC<TraderProfileModalProps> = ({ trader, current
                onClick={() => setShowDeployConfig(true)}
                className="w-full bg-[#f01a64] hover:bg-pink-700 py-4 rounded-xl font-black text-white text-xs uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(240,26,100,0.4)] active:scale-95 transition-all flex items-center justify-center gap-2"
              >
-               Deploy Capital
+               Copy Strategy
                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
              </button>
           ) : (
              <div className="space-y-5 animate-in slide-in-from-bottom-4 fade-in">
                 <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Copy Amount (USDT)</span>
+                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Mirror Amount (USDT)</span>
                   <span className="text-xl font-black text-white">${investAmount.toLocaleString()}</span>
                 </div>
                 

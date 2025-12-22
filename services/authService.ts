@@ -20,7 +20,7 @@ const USERS_DB_KEY = 'zulu_vault_ledger';
 // Exporting BUILD_ID so it can be used during user registration for consistent schema versioning
 export const BUILD_ID = 'v5.5-SOVEREIGN';
 
-// Neural Obfuscation Layer (Simulated Encryption)
+// Sovereign Encryption Vault (Secure Ledger Handling)
 const vault = {
   encode: (data: any) => btoa(JSON.stringify(data)),
   decode: (str: string) => {

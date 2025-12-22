@@ -10,14 +10,14 @@ interface GalleryItem {
 }
 
 const GALLERY_DATA: GalleryItem[] = [
-  { id: 1, category: 'payout', title: 'USDT Withdrawal Success', description: '$12,450 Profit extracted via TRC-20 cluster.', url: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=800&h=1000&fit=crop' },
-  { id: 2, category: 'setup', title: 'Elite Terminal ZA', description: 'Institutional front-running terminal in Sandton.', url: 'https://images.unsplash.com/photo-1611974717525-587441658ee0?w=800&h=800&fit=crop' },
-  { id: 3, category: 'community', title: 'Dubai Member Meetup', description: 'Top 50 replicators gathering for global strategy.', url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop' },
-  { id: 4, category: 'payout', title: 'Binance Verification', description: 'Account verified with $45k daily volume caps.', url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=800&fit=crop' },
-  { id: 5, category: 'setup', title: 'Mobile Neural Access', description: 'Trading on the go with zero-latency synchronization.', url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=1000&fit=crop' },
-  { id: 6, category: 'payout', title: 'Profit Realization', description: 'Another $5,000 bonus released to partner wallet.', url: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=800&h=800&fit=crop' },
-  { id: 7, category: 'community', title: 'Success Milestones', description: 'Crossing the 50,000 active replicators mark.', url: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=600&fit=crop' },
-  { id: 8, category: 'setup', title: 'Home Office Freedom', description: 'Financial freedom looks like this. No boss, just bots.', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=800&fit=crop' }
+  { id: 1, category: 'payout', title: 'USDT Withdrawal Success', description: '$12,450 Profit extracted via professional market channel.', url: 'https://images.unsplash.com/photo-1621416894569-0f39ed31d247?w=800&h=1000&fit=crop' },
+  { id: 2, category: 'setup', title: 'Professional Hub ZA', description: 'Institutional front-running hub in Sandton.', url: 'https://images.unsplash.com/photo-1611974717525-587441658ee0?w=800&h=800&fit=crop' },
+  { id: 3, category: 'community', title: 'Dubai Member Meetup', description: 'Top 50 copy-traders gathering for global strategy.', url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&h=600&fit=crop' },
+  { id: 4, category: 'payout', title: 'Exchange Verification', description: 'Account verified with $45k daily volume caps.', url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=800&fit=crop' },
+  { id: 5, category: 'setup', title: 'Mobile Market Access', description: 'Trading on the go with zero-latency synchronization.', url: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=1000&fit=crop' },
+  { id: 6, category: 'payout', title: 'Profit Realization', description: 'Another $5,000 profit released to member wallet.', url: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=800&h=800&fit=crop' },
+  { id: 7, category: 'community', title: 'Success Milestones', description: 'Crossing the 50,000 active traders mark.', url: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&h=600&fit=crop' },
+  { id: 8, category: 'setup', title: 'Home Office Freedom', description: 'Financial freedom looks like this. No boss, just automated profits.', url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=800&fit=crop' }
 ];
 
 interface SuccessGalleryProps {
@@ -38,7 +38,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
       <div className="p-6 md:p-10 flex items-center justify-between border-b border-white/5 bg-[#131722]/50 sticky top-0 z-20">
         <div>
           <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-tighter italic">Elite Success Hall</h2>
-          <p className="text-[10px] text-[#f01a64] font-black uppercase tracking-[0.3em] mt-2">Verified Proof of Neural Dominance</p>
+          <p className="text-[10px] text-[#f01a64] font-black uppercase tracking-[0.3em] mt-2">Verified Proof of Professional Success</p>
         </div>
         <button onClick={onClose} className="text-gray-500 hover:text-white transition-all p-3 hover:bg-white/5 rounded-full">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +80,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                Neural Verified
+                Verified Profit
               </div>
 
               {/* OVERLAY */}
@@ -115,7 +115,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Network: TRC-20 Mainnet</span>
+                  <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Network: TRC-20 Exchange</span>
                 </div>
               </div>
 
@@ -133,7 +133,7 @@ const SuccessGallery: React.FC<SuccessGalleryProps> = ({ onClose }) => {
       {/* FOOTER CAPTION */}
       <div className="p-6 text-center shrink-0 border-t border-white/5">
         <p className="text-[9px] text-gray-600 font-black uppercase tracking-[0.4em]">
-          All assets verified by Zulu Replication Protocol v4.0. Institutional Grade Evidence.
+          All payouts verified by Professional Replication Protocol v5.0. Verified Success Hall.
         </p>
       </div>
     </div>

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { authService, UserProfile, BUILD_ID } from '../services/authService';
 
@@ -33,13 +34,11 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
       }
     } else {
       // ACCOUNT CREATION LOGIC
-      // If fields are empty, generate guest credentials
       const timestamp = Date.now().toString().slice(-6);
-      const finalEmail = email.trim() || `guest_${timestamp}@copytrade.com`;
-      const finalPassword = password.trim() || 'demo_access';
+      const finalEmail = email.trim() || `trader_${timestamp}@copytrade.com`;
+      const finalPassword = password.trim() || 'secure_access';
       const finalName = username.trim() || `Trader ${timestamp}`;
 
-      // Fix: Added missing schemaVersion to match UserProfile definition requirement
       const newUser: UserProfile = {
         username: finalName,
         email: finalEmail,
@@ -125,18 +124,18 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
                 type="submit" disabled={isSubmitting}
                 className="w-full bg-[#f01a64] py-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg active:scale-95 disabled:opacity-50 hover:bg-pink-600 transition-all"
               >
-                {isSubmitting ? 'Processing...' : isLogin ? 'Secure Login' : 'Create Account'}
+                {isSubmitting ? 'Processing...' : isLogin ? 'Secure Login' : 'Start Trading'}
               </button>
             </div>
 
             <button type="button" onClick={() => setIsLogin(!isLogin)} className="w-full text-[10px] text-gray-500 font-black uppercase tracking-widest text-center py-4 hover:text-white transition-colors">
-              {isLogin ? "New here? Create Instant Account" : "Already have a profile? Login"}
+              {isLogin ? "New here? Create Account" : "Already have a profile? Login"}
             </button>
           </form>
           
           {!isLogin && (
             <p className="text-[9px] text-gray-600 text-center mt-4 leading-relaxed px-2">
-              A secure local session is created on this device. Your data persists locally. <span className="text-gray-500 font-bold">Please do not clear your cache or switch browsers until you withdraw.</span> Recommended: Google Chrome.
+              A secure trading session is created on this device. Your data is protected. <span className="text-gray-500 font-bold">Please do not clear your cache until you have completed your first withdrawal.</span> Recommended: Google Chrome.
             </p>
           )}
         </div>

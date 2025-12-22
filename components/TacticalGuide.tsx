@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 
 interface TacticalGuideProps {
@@ -6,7 +5,7 @@ interface TacticalGuideProps {
   customMessage?: string;
 }
 
-const HolographicGuide: React.FC<TacticalGuideProps> = ({ step, customMessage }) => {
+const TacticalGuide: React.FC<TacticalGuideProps> = ({ step, customMessage }) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -67,4 +66,4 @@ const HolographicGuide: React.FC<TacticalGuideProps> = ({ step, customMessage })
   );
 };
 
-export default HolographicGuide;
+export default TacticalGuide;

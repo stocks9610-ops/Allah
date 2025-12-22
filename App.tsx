@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useTransition, useRef } from 'react';
 import Navbar from './components/Navbar';
 import TickerTape from './components/TickerTape';
@@ -86,7 +85,7 @@ const App: React.FC = () => {
     setIsRefreshing(true);
     setPullDistance(80); // Hold at active position
     
-    // Simulate data refresh (Neural Sync)
+    // Simulate data refresh (Execution Sync)
     setTimeout(() => {
       setIsRefreshing(false);
       setPullDistance(0);
@@ -95,7 +94,7 @@ const App: React.FC = () => {
       const currentUser = authService.getUser();
       if (currentUser) setUser({...currentUser});
       
-      console.log("Neural Clusters Synchronized");
+      console.log("Market Data Synchronized");
     }, 1500);
   };
 
@@ -199,7 +198,7 @@ const App: React.FC = () => {
         className="absolute left-0 right-0 z-[100] flex justify-center pointer-events-none transition-transform duration-200"
         style={{ transform: `translateY(${pullDistance - 60}px)`, opacity: pullDistance / threshold }}
       >
-        <div className={`bg-[#1e222d] border border-[#f01a64]/30 p-3 rounded-full shadow-[0_0_20px_rgba(240,26,100,0.3)] flex items-center justify-center ${isRefreshing ? 'animate-neural-spin' : ''}`}>
+        <div className={`bg-[#1e222d] border border-[#f01a64]/30 p-3 rounded-full shadow-[0_0_20px_rgba(240,26,100,0.3)] flex items-center justify-center ${isRefreshing ? 'animate-sync-spin' : ''}`}>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#f01a64]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -299,12 +298,12 @@ const App: React.FC = () => {
         <button 
           onClick={() => { setShowAI(!showAI); setShowSupport(false); }}
           className="w-12 h-12 md:w-14 md:h-14 bg-[#f01a64] hover:bg-pink-700 rounded-full flex items-center justify-center shadow-lg transition-transform hover:scale-110 group relative"
-          title="Market Oracle"
+          title="Sarah - Account Manager"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-7 md:w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span className="absolute right-full mr-3 px-2 py-1 bg-[#f01a64] text-white text-[9px] font-black rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">MARKET ORACLE</span>
+          <span className="absolute right-full mr-3 px-2 py-1 bg-[#f01a64] text-white text-[9px] font-black rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">SARAH - ANALYST</span>
         </button>
       </div>
 

@@ -3,100 +3,128 @@ import React from 'react';
 
 const InfoSection: React.FC = () => {
   return (
-    <section className="bg-[#131722] text-gray-300 py-16 border-t border-[#2a2e39]">
-      <div className="max-w-6xl mx-auto px-4 space-y-20">
+    <section className="bg-[#131722] text-gray-300 py-20 border-t border-[#2a2e39] relative overflow-hidden">
+      {/* Background Decorative Element */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-5 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(#f01a64_1px,transparent_1px)] [background-size:40px_40px]"></div>
+      </div>
 
-        {/* --- SECTION 1: HEADER & RATING --- */}
+      <div className="max-w-7xl mx-auto px-4 space-y-24 relative z-10">
+
+        {/* --- SECTION 1: AGGRESSIVE REAL-WORLD HEADER --- */}
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center gap-4 bg-[#1e222d] px-6 py-3 rounded-full border border-[#2a2e39] shadow-lg">
-             <span className="text-white font-bold text-sm uppercase tracking-wide">Powered by ZuluTrade Tech</span>
-             <span className="text-[#f01a64] text-xs">|</span>
-             <div className="text-yellow-400 text-xs tracking-widest">⭐ ⭐ ⭐ ⭐ ☆</div>
+          <div className="inline-flex items-center gap-4 bg-[#1e222d] px-8 py-4 rounded-full border border-[#f01a64]/30 shadow-[0_0_30px_rgba(240,26,100,0.1)]">
+             <span className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Live Market Trading Hub</span>
+             <span className="text-[#f01a64] text-xs font-black">|</span>
+             <div className="text-[#00b36b] text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+               <span className="w-2 h-2 bg-[#00b36b] rounded-full animate-ping"></span>
+               98.4% Accuracy Verified
+             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
-            Social Trading <span className="text-[#00b36b]">Evolved</span>
+          <h2 className="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter italic leading-none">
+            The World's Most <span className="text-[#f01a64]">Aggressive</span> Wealth Engine
           </h2>
-          <p className="max-w-2xl mx-auto text-gray-400 text-sm md:text-base font-medium leading-relaxed">
-            The gap between manual trading and automated wealth creation is closed. Experience the ZuluTrade ecosystem.
+          <p className="max-w-3xl mx-auto text-gray-500 text-sm md:text-lg font-bold uppercase tracking-wide leading-relaxed">
+            Eliminate guesswork. Deploy capital alongside the world's most consistent traders with <span className="text-white">zero psychological bias</span> and guaranteed execution precision.
           </p>
         </div>
 
-        {/* --- SECTION 2: HOW TO START (GRID) --- */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
-          {/* Connector Line (Desktop) */}
-          <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-gradient-to-r from-[#f01a64]/0 via-[#f01a64]/20 to-[#f01a64]/0 z-0"></div>
-          
-          {[
-            { step: "01", title: "Register", desc: "Create your secure identity profile." },
-            { step: "02", title: "Select Broker", desc: "Link an existing account or start fresh." },
-            { step: "03", title: "Filter Leaders", desc: "Use 40+ metrics to find your match." },
-            { step: "04", title: "Automate", desc: "Deploy capital and start copying." }
-          ].map((item, idx) => (
-            <div key={idx} className="relative z-10 bg-[#1e222d] p-6 rounded-2xl border border-[#2a2e39] text-center group hover:border-[#f01a64]/50 transition-colors">
-              <div className="w-10 h-10 bg-[#131722] rounded-full border border-[#2a2e39] flex items-center justify-center text-[#f01a64] font-black text-xs mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                {item.step}
-              </div>
-              <h4 className="text-white font-bold uppercase text-sm mb-2">{item.title}</h4>
-              <p className="text-xs text-gray-500 font-medium leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
+        {/* --- SECTION 2: 6-STEP REAL-WORLD WEALTH FLOW --- */}
+        <div className="space-y-12">
+           <div className="text-center">
+              <h3 className="text-[10px] text-[#f01a64] font-black uppercase tracking-[0.5em] mb-4">Real-World Wealth Roadmap</h3>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-6 gap-4 relative">
+             {[
+               { step: "01", title: "Join & Register", desc: "Open Your Trading Account", icon: "👤" },
+               { step: "02", title: "Select Leader", desc: "Choose a 98% Accuracy Trader", icon: "📊" },
+               { step: "03", title: "Deposit USDT", desc: "Fund Your Real-Time Wallet", icon: "💰" },
+               { step: "04", title: "Passive Earn", desc: "Start Earning Risk-Free", icon: "🛡️" },
+               { step: "05", title: "Watch Grow", desc: "See Your Money Multiply", icon: "📈" },
+               { step: "06", title: "Quick Withdraw", desc: "Instant Payout To Your Wallet", icon: "💎" }
+             ].map((item, idx, arr) => (
+               <div key={idx} className="relative group">
+                 <div className="bg-[#1e222d] p-6 rounded-[2rem] border border-[#2a2e39] text-center h-full flex flex-col items-center justify-center transition-all hover:border-[#f01a64]/40">
+                   <div className="text-2xl mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
+                   <div className="w-8 h-8 bg-[#131722] rounded-full border border-white/5 flex items-center justify-center text-[#f01a64] font-black text-[10px] mb-3 shadow-inner">
+                     {item.step}
+                   </div>
+                   <h4 className="text-white font-black uppercase text-xs mb-1 tracking-tight">{item.title}</h4>
+                   <p className="text-[9px] text-gray-500 font-black uppercase tracking-tighter leading-tight">{item.desc}</p>
+                 </div>
+                 
+                 {/* Arrow Flow Indicator */}
+                 {idx < arr.length - 1 && (
+                   <div className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-20 text-[#f01a64] opacity-30">
+                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                     </svg>
+                   </div>
+                 )}
+               </div>
+             ))}
+           </div>
         </div>
 
-        {/* --- SECTION 3: BENEFITS & COMPARISON --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* --- SECTION 3: REAL-WORLD TRADING BENCHMARK --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           
-          {/* Left: Copy vs Manual */}
-          <div className="bg-[#1e222d] p-8 md:p-10 rounded-[2rem] border border-[#2a2e39] relative overflow-hidden">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-[#00b36b]/10 rounded-full blur-3xl"></div>
-             <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-6">Manual vs. Copy Trading</h3>
-             <div className="space-y-6">
-               <div className="flex gap-4">
-                 <div className="w-1 bg-gray-700 rounded-full h-full min-h-[40px]"></div>
-                 <div>
-                   <h5 className="text-gray-500 font-bold text-xs uppercase mb-1">Manual Trading</h5>
-                   <p className="text-xs text-gray-600">Requires hours of analysis, emotional discipline, and constant chart monitoring.</p>
+          <div className="bg-[#1e222d] p-10 md:p-14 rounded-[3rem] border border-white/5 relative overflow-hidden flex flex-col justify-center">
+             <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#f01a64]/5 rounded-full blur-[100px]"></div>
+             <h3 className="text-3xl font-black text-white uppercase tracking-tighter italic mb-8">Real Trading Advantage</h3>
+             <div className="space-y-10">
+               <div className="flex gap-6">
+                 <div className="w-1.5 bg-gray-800 rounded-full h-auto"></div>
+                 <div className="space-y-2">
+                   <h5 className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Manual Trading Errors</h5>
+                   <p className="text-sm text-gray-600 font-medium leading-relaxed">Prone to fear and greed, 95% of retail traders lose. Requires constant screen time and stress.</p>
                  </div>
                </div>
-               <div className="flex gap-4">
-                 <div className="w-1 bg-[#f01a64] rounded-full shadow-[0_0_10px_#f01a64] h-full min-h-[40px]"></div>
-                 <div>
-                   <h5 className="text-white font-bold text-xs uppercase mb-1">Zulu Copy Trading</h5>
-                   <p className="text-xs text-gray-400">Leverage the expertise of verified leaders. Save time, reduce emotion, and automate execution.</p>
+               <div className="flex gap-6">
+                 <div className="w-1.5 bg-[#00b36b] rounded-full shadow-[0_0_15px_#00b36b] h-auto"></div>
+                 <div className="space-y-2">
+                   <h5 className="text-white font-black text-[10px] uppercase tracking-widest">Global Copy-Trade Engine</h5>
+                   <p className="text-sm text-gray-300 font-medium leading-relaxed">Passive, professional execution. Mirror the exact moves of traders with a <span className="text-[#00b36b] font-black">98.4% Sure-Win Rate</span>. Immediate market profit settlement.</p>
                  </div>
                </div>
              </div>
           </div>
 
-          {/* Right: Key Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
              {[
-               { title: "Flexibility", desc: "Adjust investment size and risk per strategy." },
-               { title: "Transparency", desc: "Real verified data. No hidden metrics." },
-               { title: "Learning", desc: "Analyze pro moves to sharpen your skills." },
-               { title: "Global Access", desc: "Connect with leaders across forex, crypto, and stocks." }
+               { title: "Maximum Profit", desc: "Mirror real market positions with aggressive 100x leverage." },
+               { title: "Zero Lag", desc: "Your trades execute instantly the moment a leader opens a position." },
+               { title: "Sure-Win Growth", desc: "Capital is managed by experts to ensure a 98% success rate." },
+               { title: "Immediate Payout", desc: "Profit is ready for withdrawal to your wallet as soon as the trade closes." }
              ].map((feat, i) => (
-               <div key={i} className="bg-[#1e222d]/50 p-5 rounded-2xl border border-white/5 hover:bg-[#1e222d] transition-colors">
-                 <h4 className="text-white font-bold text-sm mb-2">{feat.title}</h4>
-                 <p className="text-[10px] text-gray-500 font-medium leading-relaxed">{feat.desc}</p>
+               <div key={i} className="bg-[#1e222d]/40 p-8 rounded-[2rem] border border-white/5 flex flex-col justify-center group hover:bg-[#1e222d] transition-all">
+                 <h4 className="text-white font-black text-xs uppercase tracking-tight mb-3 group-hover:text-[#f01a64] transition-colors">{feat.title}</h4>
+                 <p className="text-[10px] text-gray-500 font-bold leading-relaxed uppercase tracking-tighter">{feat.desc}</p>
                </div>
              ))}
           </div>
         </div>
 
-        {/* --- SECTION 4: FOOTER NAVIGATION & CTA --- */}
-        <div className="border-t border-[#2a2e39] pt-12 text-center space-y-8">
-           <div className="flex flex-wrap justify-center gap-6 md:gap-12 text-[10px] uppercase tracking-widest text-gray-500 font-bold">
-              {['Dashboard', 'Leaders', 'Markets', 'Community', 'Analytics'].map((link) => (
-                <span key={link} className="cursor-pointer hover:text-white transition-colors">{link}</span>
+        {/* --- SECTION 4: FINAL CALL TO ACTION --- */}
+        <div className="pt-20 border-t border-white/5 text-center space-y-10">
+           <div className="flex flex-wrap justify-center gap-8 md:gap-16 text-[9px] uppercase tracking-[0.4em] text-gray-600 font-black">
+              {['Live Markets', 'Success Hall', 'Trade Analytics', 'Network Status', 'Verified Payouts'].map((link) => (
+                <span key={link} className="hover:text-white transition-colors cursor-default">{link}</span>
               ))}
            </div>
            
-           <button 
-             onClick={() => window.open('https://t.me/MentorwithZuluTrade_bot', '_blank')}
-             className="bg-[#00b36b] hover:bg-green-600 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest text-xs shadow-xl transition-all active:scale-95"
-           >
-             Initialize Account
-           </button>
+           <div className="max-w-xl mx-auto space-y-6">
+              <p className="text-[11px] text-gray-500 font-black uppercase tracking-widest leading-relaxed">
+                Initialize your account and start trading with 98% accuracy for sure-win results.
+              </p>
+              <button 
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="bg-[#00b36b] hover:bg-green-600 text-white px-12 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] shadow-[0_10px_40px_rgba(0,179,107,0.3)] transition-all active:scale-95"
+              >
+                Access Real Trading Hub
+              </button>
+           </div>
         </div>
 
       </div>
