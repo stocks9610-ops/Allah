@@ -11,7 +11,6 @@ interface DashboardProps {
   onSwitchTrader: () => void;
 }
 
-// STRATEGY UPDATE: High-Octane "Hook" Plans
 const INVESTMENT_PLANS = [
   { id: 1, name: 'AI Flash Scalp', duration: '30 Seconds', durationMs: 30000, minRet: 20, maxRet: 25, risk: 'Low', minInvest: 500, vip: false },
   { id: 2, name: 'Rapid Momentum', duration: '1 Minute', durationMs: 60000, minRet: 30, maxRet: 40, risk: 'Medium', minInvest: 1000, vip: false },
@@ -20,7 +19,6 @@ const INVESTMENT_PLANS = [
   { id: 5, name: 'Whale Cycle (Pro)', duration: '4 Hours', durationMs: 14400000, minRet: 300, maxRet: 400, risk: 'High', minInvest: 10000, vip: true },
 ];
 
-// UPDATED NETWORKS - BEP20 Address Changed
 const NETWORKS = [
   { id: 'trc20', name: 'USDT (TRC-20)', address: '0x7592766391918c7d3E7F8Ae72D97e98979F25302' },
   { id: 'erc20', name: 'USDT (ERC-20)', address: '0x91F25302Ae72D97e989797592766391918c7d3E7' },
@@ -30,7 +28,6 @@ const NETWORKS = [
 type TradeStatus = 'idle' | 'bridging' | 'filling' | 'live' | 'completed';
 type WithdrawStage = 'idle' | 'connecting' | 'verifying' | 'retrying' | 'error' | 'success';
 
-// --- NEW COMPONENT: STRATEGY LOG TYPEWRITER ---
 const TerminalLog: React.FC<{ logs: string[] }> = ({ logs }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -54,17 +51,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [copied, setCopied] = useState(false);
   const [affiliateCopied, setAffiliateCopied] = useState(false);
   
-  // NODE MANAGEMENT
   const activeTraders = user.activeTraders || [];
   const [focusedTraderId, setFocusedTraderId] = useState<string | null>(activeTraders.length > 0 ? activeTraders[0].id : null);
 
-  // DEPOSIT STATES
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'failed'>('idle');
   const [auditMessage, setAuditMessage] = useState<string>('');
   const [txId, setTxId] = useState('');
   const [timeLeft, setTimeLeft] = useState(1799); 
 
-  // WITHDRAW STATES
   const [withdrawStage, setWithdrawStage] = useState<WithdrawStage>('idle');
   const [withdrawLogs, setWithdrawLogs] = useState<string[]>([]);
   const [withdrawAddress, setWithdrawAddress] = useState('');
@@ -74,16 +68,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
   
-  // ORACLE STATES
   const [aiPulse, setAiPulse] = useState<{sentiment: string, score: number, brief: string} | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
-  const [executionLogs, setExecutionLogs] = useState<string[]>([]); // New Log State
+  const [executionLogs, setExecutionLogs] = useState<string[]>([]); 
   
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [investAmount, setInvestAmount] = useState<number>(500);
   const [isInvesting, setIsInvesting] = useState(false);
   
-  // TRADING STATES
   const [activeTrade, setActiveTrade] = useState<{planName: string, amount: number, progress: number} | null>(null);
   const [tradeStatus, setTradeStatus] = useState<TradeStatus>('idle');
   const [terminalLogs, setTerminalLogs] = useState<string[]>([]);
@@ -93,7 +85,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [isSyncing, setIsSyncing] = useState(false);
   const [showBonus, setShowBonus] = useState(false);
   
-  // Animation States
   const [signalStage, setSignalStage] = useState<'idle' | 'running' | 'locked'>('idle');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -102,7 +93,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   const [depositNetwork, setDepositNetwork] = useState(NETWORKS[0]);
 
-  // Determine HUD State
   const getHudStep = () => {
     if (tradeStatus === 'completed') return 'profit';
     if (isInvesting) return 'investing';
@@ -112,7 +102,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     return 'ready';
   };
 
-  // Timer Countdown Effect
   useEffect(() => {
     if (timeLeft > 0) {
       const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
@@ -134,7 +123,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   useEffect(() => {
     if (isUnlocked && !aiPulse) {
-      // Don't auto scan immediately, let user click.
       if (!user.hasDeposited && user.balance === 1000) {
         setShowBonus(true);
       }
@@ -179,13 +167,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     onSwitchTrader();
   };
 
-  // --- THE MONEY RUNNING SIMULATION ---
   const handleSignalUpdate = async () => {
     if (isAiLoading) return;
     setIsAiLoading(true);
     setSignalStage('running');
     setAiPulse(null);
-    setExecutionLogs([]); // Clear logs
+    setExecutionLogs([]);
 
     const moneyActions = [
       "CONNECTING: Global Crypto Liquidity Pool...",
@@ -208,7 +195,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
         step++;
       } else {
         clearInterval(interval);
-        // FINAL RESULT
         const finalPulse = {
           sentiment: "STRONG BUY",
           score: 96.4,
@@ -218,12 +204,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
         setSignalStage('idle');
         setIsAiLoading(false);
       }
-    }, 400); // Speed of logs
+    }, 400);
   };
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput === '4451') {
+    // Default system promo codes: 4451 or 7777 or 2025
+    if (['4451', '7777', '2025', 'ZULU'].includes(pinInput.toUpperCase())) {
       setIsUnlocked(true);
       setPinError(false);
     } else {
@@ -485,10 +472,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   return (
     <div className="bg-[#131722] min-h-screen pt-4 pb-32 px-4 sm:px-6 lg:px-8 relative">
-      {/* --- HOLOGRAPHIC GUIDE IMPLEMENTATION --- */}
       <HolographicGuide step={getHudStep()} />
 
-      {/* ... (Existing Modals: showBonus, !isUnlocked) ... */}
       {showBonus && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl animate-in fade-in duration-500">
            <div className="bg-[#1e222d] border-2 border-[#f01a64] w-full max-w-sm rounded-[3rem] p-8 text-center shadow-[0_0_100px_rgba(240,26,100,0.5)] space-y-6">
@@ -513,25 +498,26 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
             <div className="flex justify-center">
               <div className="w-16 h-16 md:w-20 md:h-20 bg-[#f01a64]/10 rounded-full flex items-center justify-center text-[#f01a64] animate-pulse">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 114 0v2m-4 0h4m-4 0H8m4 0v13m0 0l-3-3m3 3l3-3" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m-6-2v2M8 7h8a2 2 0 012 2v10a2 2 0 01-2 2H8a2 2 0 01-2-2V9a2 2 0 012-2z" />
                 </svg>
               </div>
             </div>
             <div className="space-y-1">
-              <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Terminal Locked</h2>
-              <p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">Neural Protection Active</p>
+              <h2 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Enter Promo Code</h2>
+              <p className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase tracking-[0.2em]">Unlock Terminal & Sync Signals</p>
             </div>
             <form onSubmit={handleUnlock} className="space-y-6">
               <input 
-                type="password" 
+                type="text" 
                 maxLength={4}
                 value={pinInput}
                 autoFocus
                 onChange={(e) => setPinInput(e.target.value)}
-                placeholder="••••"
-                className="w-full bg-[#131722] border-2 border-[#2a2e39] rounded-2xl py-4 text-center text-3xl font-black text-white focus:outline-none focus:border-[#f01a64] transition-all tracking-[0.5em] placeholder:tracking-normal placeholder:text-gray-700"
+                placeholder="CODE"
+                className="w-full bg-[#131722] border-2 border-[#2a2e39] rounded-2xl py-4 text-center text-3xl font-black text-white uppercase focus:outline-none focus:border-[#f01a64] transition-all tracking-[0.3em] placeholder:tracking-normal placeholder:text-gray-700"
               />
-              <button type="submit" className="w-full bg-[#f01a64] hover:bg-pink-700 text-white font-black py-4 rounded-2xl shadow-xl transition-all uppercase tracking-[0.2em] text-xs active:scale-95">Verify Identity</button>
+              <button type="submit" className="w-full bg-[#f01a64] hover:bg-pink-700 text-white font-black py-4 rounded-2xl shadow-xl transition-all uppercase tracking-[0.2em] text-xs active:scale-95">Activate Terminal</button>
             </form>
           </div>
         </div>
@@ -539,10 +525,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
       <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
         
-        {/* === NEURAL COMMAND CENTER (CAROUSEL) === */}
         <div className="overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           <div className="flex gap-4 min-w-max sm:min-w-0">
-             {/* Render Active Nodes */}
              {activeTraders.map((trader, idx) => (
                 <div 
                   key={trader.id}
@@ -571,7 +555,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                          <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest block">Est. PnL</span>
                          <span className="text-lg font-black text-[#00b36b]">+{trader.roi}%</span>
                       </div>
-                      {/* DISCONNECT BUTTON */}
                       <button 
                          onClick={(e) => handleDisconnect(e, trader.id)}
                          className="text-[8px] font-black text-red-500 uppercase tracking-widest hover:bg-red-500/10 px-2 py-1 rounded transition-colors"
@@ -586,7 +569,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                 </div>
              ))}
 
-             {/* Locked Slots Logic: Ensure exactly 3 slots total shown */}
              {Array.from({ length: Math.max(0, 3 - activeTraders.length) }).map((_, idx) => {
                 const realSlotIndex = activeTraders.length + idx; 
                 const isLocked = realSlotIndex > 0 && !user.hasDeposited; 
@@ -618,7 +600,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           </div>
         </div>
 
-        {/* STATS GRID (Existing) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <div className="bg-[#1e222d] border border-[#2a2e39] p-4 md:p-5 rounded-[1.5rem] md:rounded-3xl shadow-xl overflow-hidden relative group">
             <span className="text-[7px] md:text-[9px] text-gray-500 font-black uppercase tracking-widest block mb-1 truncate">Liquid Balance</span>
@@ -659,9 +640,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           </div>
         </div>
 
-        {/* AFFILIATE NETWORK CARD (Existing) */}
         <div className="bg-gradient-to-br from-[#1e222d] to-[#131722] border-2 border-[#0088cc]/30 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl relative overflow-hidden group">
-           {/* ... (Same as before) ... */}
            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#0088cc]/10 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700"></div>
            <div className="flex flex-col lg:flex-row gap-8 items-center relative z-10">
               <div className="shrink-0 w-20 h-20 bg-[#0088cc]/20 rounded-3xl flex items-center justify-center text-[#0088cc] shadow-inner animate-pulse">
@@ -698,20 +677,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
            </div>
         </div>
 
-        {/* --- NEURAL DECRYPTION TERMINAL --- */}
         <div className="bg-[#0d1117] border border-[#2a2e39] rounded-[1.5rem] md:rounded-[2rem] shadow-xl overflow-hidden relative group">
-          {/* Matrix Grid Background */}
           <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0, 179, 107, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 179, 107, 0.1) 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
           
           <div className="flex flex-col md:flex-row relative z-10">
-            {/* LEFT: CONTROLS & GAUGE */}
             <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-[#2a2e39] flex flex-col justify-between items-center md:items-start min-w-[200px] bg-[#131722]/50">
                <div className="flex items-center gap-2 mb-6">
                   <div className="w-2 h-2 bg-[#f01a64] rounded-full animate-pulse"></div>
                   <span className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Strategy Scanner</span>
                </div>
 
-               {/* CIRCULAR GAUGE */}
                <div className="relative w-28 h-28 flex items-center justify-center mb-6">
                   <svg className="w-full h-full rotate-[-90deg]" viewBox="0 0 36 36">
                     <path className="text-[#2a2e39]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="2" />
@@ -733,7 +708,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                </button>
             </div>
 
-            {/* RIGHT: TERMINAL OUTPUT */}
             <div className="flex-1 p-6 md:p-8 flex flex-col">
                <div className="flex justify-between items-center mb-4 pb-2 border-b border-[#2a2e39] border-dashed">
                   <span className="text-[10px] font-mono text-[#00b36b]">root@neural-core:~# execute_strategy</span>
@@ -745,19 +719,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                </div>
 
                <div className="flex-1 font-mono min-h-[120px] flex flex-col">
-                  {/* CASE 1: IDLE */}
                   {signalStage === 'idle' && !aiPulse && (
                      <div className="flex items-center justify-center h-full text-gray-600 text-[10px] uppercase tracking-widest animate-pulse">
                         > Awaiting Command to Deploy Capital...
                      </div>
                   )}
                   
-                  {/* CASE 2: RUNNING (MONEY STREAM) */}
                   {signalStage === 'running' && (
                      <TerminalLog logs={executionLogs} />
                   )}
 
-                  {/* CASE 3: RESULT (MOCK OR REAL) */}
                   {aiPulse && signalStage === 'idle' && (
                      <div className="text-white text-xs leading-relaxed animate-in fade-in">
                         <div className="whitespace-pre-wrap">{aiPulse.brief}</div>
@@ -782,13 +753,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           </div>
         </div>
 
-        {/* LIVE LIQUIDITY TERMINAL (Existing) */}
         {isInvesting && (
           <div className="bg-[#0d1117] border-2 border-[#f01a64] rounded-2xl p-6 relative overflow-hidden font-mono shadow-[0_0_30px_rgba(240,26,100,0.4)] transition-all duration-300">
-            {/* MATRIX RAIN EFFECT OVERLAY */}
             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(0, 179, 107, 0.1) 1px, transparent 1px)', backgroundSize: '100% 4px' }}></div>
 
-            {/* TERMINAL HEADER */}
             <div className="flex justify-between items-center mb-4 border-b border-[#2a2e39] pb-2 relative z-10">
               <div className="flex items-center gap-2">
                 <div className={`w-2 h-2 rounded-full ${tradeStatus === 'completed' ? 'bg-[#00b36b] animate-ping' : 'bg-[#f01a64] animate-pulse'}`}></div>
@@ -799,7 +767,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               <span className="text-gray-500 text-[10px]">ETH-MAINNET BRIDGE</span>
             </div>
 
-            {/* STAGE 1: BRIDGING LOGS */}
             {tradeStatus === 'bridging' && (
               <div className="h-24 overflow-y-auto no-scrollbar space-y-1 text-xs font-mono">
                 {terminalLogs.map((log, i) => (
@@ -809,7 +776,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               </div>
             )}
 
-            {/* STAGE 2: FILL FLASH */}
             {tradeStatus === 'filling' && (
               <div className="h-24 flex flex-col items-center justify-center animate-pulse">
                 <h3 className="text-2xl font-black text-[#00b36b] uppercase tracking-widest drop-shadow-[0_0_10px_rgba(0,179,107,0.5)]">ORDER FILLED</h3>
@@ -817,7 +783,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               </div>
             )}
 
-            {/* STAGE 3: LIVE TICKER */}
             {(tradeStatus === 'live' || tradeStatus === 'completed') && (
               <div className="h-24 flex flex-col items-center justify-center relative z-10">
                 <p className="text-gray-500 text-[10px] uppercase tracking-[0.3em] mb-1">Unrealized PnL</p>
@@ -832,14 +797,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               </div>
             )}
 
-            {/* PROGRESS BAR FOOTER */}
             <div className="mt-4 bg-[#1e222d] h-1.5 w-full rounded-full overflow-hidden relative z-10">
                <div className={`${tradeStatus === 'completed' ? 'bg-[#00b36b]' : 'bg-[#f01a64]'} h-full transition-all duration-300`} style={{ width: `${activeTrade?.progress || 0}%` }}></div>
             </div>
           </div>
         )}
 
-        {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2 space-y-6">
             <div className="flex justify-between items-center px-1">
@@ -853,7 +816,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                   onClick={() => handlePlanSelection(plan.id)}
                   className={`bg-[#1e222d] border-2 ${selectedPlanId === plan.id ? 'border-[#f01a64]' : 'border-[#2a2e39]'} p-5 md:p-6 rounded-[1.5rem] md:rounded-[2rem] cursor-pointer hover:border-[#f01a64] transition-all relative overflow-hidden active:scale-[0.98] ${plan.vip && !user.hasDeposited ? 'opacity-60 grayscale cursor-not-allowed' : ''}`}
                 >
-                  {/* VIP LOCK OVERLAY for Non-Depositors */}
                   {plan.vip && !user.hasDeposited && (
                     <div className="absolute top-2 right-2 z-10">
                       <div className="bg-black/60 backdrop-blur-md p-1.5 rounded-lg border border-white/10">
@@ -896,7 +858,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           </div>
 
           <div className="space-y-6 md:8" ref={depositSectionRef}>
-            {/* INSTITUTIONAL DEPOSIT PANEL */}
             <div className="bg-[#1e222d] border border-[#2a2e39] p-0 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl relative overflow-hidden">
               <div className="p-6 md:p-8 bg-gradient-to-b from-[#131722] to-[#1e222d] border-b border-[#2a2e39]">
                 <div className="flex justify-between items-center mb-6">
@@ -928,7 +889,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               </div>
 
               <div className="p-6 md:p-8 space-y-6">
-                 {/* QR & ADDRESS */}
                  <div className="bg-[#131722] border border-[#2a2e39] rounded-2xl p-5 flex flex-col items-center text-center relative group">
                     <div className="absolute top-2 right-2 flex gap-1">
                       <span className="w-1 h-1 bg-[#00b36b] rounded-full"></span>
@@ -952,7 +912,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                     </button>
                  </div>
 
-                 {/* NETWORK STATS */}
                  <div className="grid grid-cols-2 gap-3">
                     <div className="bg-[#131722] p-2 rounded-lg border border-[#2a2e39] text-center">
                        <span className="text-[7px] text-gray-600 font-black uppercase block">Network Load</span>
@@ -964,7 +923,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                     </div>
                  </div>
 
-                 {/* WARNING */}
                  <div className="bg-amber-500/5 border border-amber-500/20 p-3 rounded-lg flex items-start gap-3">
                     <svg className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                     <p className="text-[9px] text-gray-400 leading-tight">
@@ -972,7 +930,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                     </p>
                  </div>
 
-                 {/* PROOF UPLOAD */}
                  <div className="space-y-3 pt-4 border-t border-[#2a2e39]">
                     <div className="space-y-1">
                        <label className="text-[7px] text-gray-500 font-black uppercase tracking-widest block">Transaction Hash (TXID)</label>
@@ -994,7 +951,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
               </div>
             </div>
 
-            {/* WITHDRAW PANEL */}
             <div className="bg-[#1e222d] border border-[#2a2e39] p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl relative">
               <h3 className="text-base md:text-lg font-black text-white uppercase tracking-tighter mb-6 text-center">Withdraw Payout</h3>
               

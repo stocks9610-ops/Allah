@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
-            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.5</span>
+            <span className="text-[8px] md:text-[10px] text-gray-400 block -mt-0.5 font-semibold uppercase whitespace-nowrap">Elite Terminal v2.6</span>
           </div>
         </div>
         
@@ -80,7 +80,6 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                 </div>
               </button>
 
-              {/* COMMAND CENTER DROPDOWN */}
               {showMenu && (
                 <div className="absolute right-0 top-full mt-2 w-56 bg-[#1e222d] border border-[#2a2e39] rounded-2xl shadow-[0_0_30px_rgba(0,0,0,0.5)] overflow-hidden z-[70] animate-in slide-in-from-top-2 fade-in">
                   <div className="p-3 border-b border-[#2a2e39] bg-[#131722]">
@@ -104,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                       </span>
                       <div className="flex flex-col">
                         <span className="text-[10px] font-black text-white uppercase tracking-wider">Security Node</span>
-                        <span className="text-[8px] text-gray-500 uppercase">Reset PIN Protocol</span>
+                        <span className="text-[8px] text-gray-500 uppercase">Reset Access Protocol</span>
                       </div>
                     </button>
 
@@ -152,7 +151,6 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         </div>
       </nav>
 
-      {/* LEDGER HISTORY MODAL */}
       {showHistory && user && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
           <div className="bg-[#1e222d] border border-[#2a2e39] w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl">
@@ -170,7 +168,6 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#2a2e39]">
-                  {/* Mock Data */}
                   <tr>
                     <td className="px-4 py-3 text-white font-bold">Trading Profit</td>
                     <td className="px-4 py-3 text-[#00b36b] font-mono">+${(user.balance - 1000).toLocaleString()}</td>
@@ -198,7 +195,6 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         </div>
       )}
 
-      {/* SECURITY MODAL */}
       {showSecurity && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
            <div className="bg-[#1e222d] border border-[#2a2e39] w-full max-w-sm rounded-2xl p-6 text-center space-y-6 shadow-[0_0_50px_rgba(240,26,100,0.2)]">
@@ -206,16 +202,15 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
               </div>
               <div>
-                <h3 className="text-white font-black uppercase text-lg tracking-tight mb-2">Security Protocol</h3>
-                <p className="text-gray-400 text-xs">Your Neural Access PIN is set to default.</p>
+                <h3 className="text-white font-black uppercase text-lg tracking-tight mb-2">Terminal Access</h3>
+                <p className="text-gray-400 text-xs">Your system access code is verified.</p>
               </div>
               <div className="bg-[#131722] border border-[#2a2e39] p-4 rounded-xl">
-                 <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest block mb-1">Current PIN</span>
+                 <span className="text-[10px] text-gray-500 font-black uppercase tracking-widest block mb-1">Active Promo Code</span>
                  <span className="text-2xl font-mono text-white tracking-[0.5em] font-black">4451</span>
               </div>
               <div className="flex gap-3">
                 <button onClick={() => setShowSecurity(false)} className="flex-1 bg-[#2a2e39] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-[#353a47]">Close</button>
-                <button onClick={() => { alert("Reset Link Sent to Neural Inbox"); setShowSecurity(false); }} className="flex-1 bg-[#f01a64] text-white py-3 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-pink-700">Reset</button>
               </div>
            </div>
         </div>
@@ -225,4 +220,3 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
 };
 
 export default Navbar;
-    
