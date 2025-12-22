@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "public": true,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "env": {
+    "VERCEL_API_KEY": "vck_3pJEM6YVGKmJiwXjC4jDZj4ULBghTefv6ObCCKSftWK63XQXL73HAcik"
+  }
+}
