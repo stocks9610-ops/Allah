@@ -95,13 +95,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
             progress: Math.min(100, rawProgress),
             currentPnL
           };
-        }).filter(t => t.progress < 100); // Remove completed trades from the active list immediately or handle them? 
-                                           // Better to keep them for a moment or handle via finishTrade.
-                                           // Here we filter ONLY if we want them to disappear. 
-                                           // Let's rely on finishTrade to handle the logic and side-effects, 
-                                           // but we need to remove them from state eventually.
-                                           // For simplicity: We filter out 100% progress trades in the NEXT render cycle 
-                                           // by handling the finish logic which updates user balance.
+        }).filter(t => t.progress < 100); 
       });
 
       // Cleanup finished trades from state
@@ -343,7 +337,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
          </div>
       )}
 
-      <TacticalGuide step={activeTrades.length > 0 ? 'investing' : 'ready'} />
+      <TacticalGuide 
+        step={activeTrades.length > 0 ? 'investing' : 'ready'} 
+        balance={user.balance}
+        hasDeposited={user.hasDeposited}
+        onDepositClick={() => depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
+      />
 
       <div className={`max-w-7xl mx-auto space-y-8 transition-all duration-500 ${isProcessingTrade ? 'blur-sm scale-[0.99] opacity-50' : ''}`}>
         
