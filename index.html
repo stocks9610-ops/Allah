@@ -46,6 +46,13 @@
         pointer-events: none;
       }
 
+      /* Mobile-specific tracking optimizations */
+      @media (max-width: 768px) {
+        .font-black {
+          letter-spacing: -0.01em !important;
+        }
+      }
+
       ::-webkit-scrollbar { width: 4px; }
       ::-webkit-scrollbar-track { background: #131722; }
       ::-webkit-scrollbar-thumb { background: #2a2e39; border-radius: 10px; }

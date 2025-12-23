@@ -158,14 +158,15 @@ const App: React.FC = () => {
       <InfoSection />
       <Footer />
 
-      <div className="fixed bottom-10 right-4 md:right-10 flex flex-col gap-5 z-[95]">
+      {/* Floating Action Cluster - Horizontal on Mobile */}
+      <div className="fixed bottom-10 right-4 md:right-10 flex flex-row md:flex-col items-center gap-3 md:gap-5 z-[95] pb-[env(safe-area-inset-bottom)]">
         <button 
           onClick={() => setShowMentorshipModal(true)}
-          className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/20"
+          className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/20"
           title="Elite Mentorship"
         >
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" alt="Meet" className="w-7 h-7 md:w-8 md:h-8" />
-          <span className="absolute right-full mr-4 px-3 py-1.5 bg-[#131722] border border-white/10 text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" alt="Meet" className="w-6 h-6 md:w-8 md:h-8" />
+          <span className="hidden md:block absolute right-full mr-4 px-3 py-1.5 bg-[#131722] border border-white/10 text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
             Live Mentorship
           </span>
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
@@ -173,26 +174,26 @@ const App: React.FC = () => {
 
         <button 
           onClick={() => window.open('https://t.me/MentorwithZuluTrade_bot', '_blank')}
-          className="w-14 h-14 md:w-16 md:h-16 bg-[#0088cc] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(0,136,204,0.3)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/10"
+          className="w-12 h-12 md:w-16 md:h-16 bg-[#0088cc] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(0,136,204,0.3)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/10"
           title="Telegram Hub"
         >
-          <svg className="h-7 w-7 md:h-8 md:w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+          <svg className="h-6 w-6 md:h-8 md:w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.462 8.27l-1.56 7.42c-.116.545-.44.68-.895.425l-2.37-1.75-1.145 1.1c-.125.127-.23.234-.473.234l.17-2.42 4.41-3.98c.19-.17-.04-.26-.297-.09l-5.45 3.43-2.34-.73c-.51-.16-.52-.51.107-.756l9.15-3.53c.42-.15.79.1.663.667z"/>
           </svg>
-          <span className="absolute right-full mr-4 px-3 py-1.5 bg-[#0088cc] text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
+          <span className="hidden md:block absolute right-full mr-4 px-3 py-1.5 bg-[#0088cc] text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
             Join Telegram
           </span>
         </button>
 
         <button 
           onClick={() => setShowAI(!showAI)}
-          className="w-14 h-14 md:w-16 md:h-16 bg-[#f01a64] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(240,26,100,0.3)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/10"
+          className="w-12 h-12 md:w-16 md:h-16 bg-[#f01a64] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(240,26,100,0.3)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/10"
           title="Sarah AI Assistant"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 md:h-8 md:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
-          <span className="absolute right-full mr-4 px-3 py-1.5 bg-[#f01a64] text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
+          <span className="hidden md:block absolute right-full mr-4 px-3 py-1.5 bg-[#f01a64] text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
             Analyze with Sarah
           </span>
         </button>
@@ -213,16 +214,16 @@ const App: React.FC = () => {
 
       {showMentorshipModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl animate-in fade-in">
-          <div className="bg-[#1e222d] border border-white/10 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)] animate-in zoom-in-95">
-            <div className="p-10 md:p-14 space-y-8 relative">
+          <div className="bg-[#1e222d] border border-white/10 w-full max-w-lg rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)] animate-in zoom-in-95">
+            <div className="p-8 md:p-14 space-y-8 relative">
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-4">
-                   <div className="w-14 h-14 bg-[#00b36b] rounded-2xl flex items-center justify-center text-white shadow-[0_0_25px_rgba(0,179,107,0.3)]">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" className="w-8 h-8 invert brightness-0" alt="" />
+                   <div className="w-12 h-12 md:w-14 md:h-14 bg-[#00b36b] rounded-2xl flex items-center justify-center text-white shadow-[0_0_25px_rgba(0,179,107,0.3)]">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" className="w-6 h-6 md:w-8 md:h-8 invert brightness-0" alt="" />
                    </div>
                    <div>
-                      <h3 className="text-white font-black uppercase text-xl tracking-tighter italic">Live Mentorship</h3>
-                      <span className="text-[10px] text-[#00b36b] font-black uppercase tracking-[0.3em] flex items-center gap-2 mt-1">
+                      <h3 className="text-white font-black uppercase text-lg md:text-xl tracking-tighter italic">Live Mentorship</h3>
+                      <span className="text-[9px] md:text-[10px] text-[#00b36b] font-black uppercase tracking-[0.3em] flex items-center gap-2 mt-1">
                         Professional Education Hub
                       </span>
                    </div>
@@ -232,25 +233,25 @@ const App: React.FC = () => {
                 </button>
               </div>
 
-              <div className="bg-[#131722] p-8 rounded-[2rem] border border-white/5 space-y-6">
+              <div className="bg-[#131722] p-6 md:p-8 rounded-[2rem] border border-white/5 space-y-6">
                  <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                       <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Yearly Retainer</span>
-                       <span className="text-[#00b36b] font-black text-xl">$5,000.00</span>
+                       <span className="text-gray-500 font-black text-[9px] md:text-[10px] uppercase tracking-widest">Yearly Retainer</span>
+                       <span className="text-[#00b36b] font-black text-lg md:text-xl">$5,000.00</span>
                     </div>
                     <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                       <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Weekly Coaching</span>
-                       <span className="text-[#00b36b] font-black text-xl">$100.00</span>
+                       <span className="text-gray-500 font-black text-[9px] md:text-[10px] uppercase tracking-widest">Weekly Coaching</span>
+                       <span className="text-[#00b36b] font-black text-lg md:text-xl">$100.00</span>
                     </div>
                  </div>
-                 <p className="text-gray-300 text-xs font-bold text-center leading-relaxed italic uppercase tracking-tight pt-4">
+                 <p className="text-gray-300 text-[10px] md:text-xs font-bold text-center leading-relaxed italic uppercase tracking-tight pt-4">
                    "Unlock institutional replication and 1-on-1 coaching with Sarah and the elite trade department."
                  </p>
               </div>
 
               <button 
                 onClick={() => setShowMentorshipModal(false)}
-                className="w-full py-5 bg-[#00b36b] text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] shadow-2xl border border-white/10 active:scale-95"
+                className="w-full py-4 md:py-5 bg-[#00b36b] text-white rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] md:text-[11px] shadow-2xl border border-white/10 active:scale-95"
               >
                 Accept Protocol
               </button>

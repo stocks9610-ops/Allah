@@ -65,19 +65,19 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-4 bg-black/90 backdrop-blur-xl">
       <div className="bg-[#1e222d] w-full h-full sm:h-auto sm:max-w-md sm:rounded-[2.5rem] flex flex-col overflow-hidden animate-in zoom-in-95">
-        <div className="p-6 md:p-10 overflow-y-auto no-scrollbar flex-1 pb-24">
-          <div className="flex justify-between items-center mb-8">
+        <div className="p-8 md:p-10 overflow-y-auto no-scrollbar flex-1 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+          <div className="flex justify-between items-center mb-10">
             <h2 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">
               {isLogin ? 'Member Access' : 'Create Account'}
             </h2>
-            <button onClick={onClose} className="p-2 text-gray-500 active:text-white">
+            <button onClick={onClose} className="p-2 text-gray-500 active:text-white transition-colors">
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {!isLogin && (
               <div className="space-y-1">
                 <label className="text-[10px] text-gray-500 font-black uppercase tracking-widest ml-1">Username</label>
@@ -97,7 +97,7 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
               </label>
               <input 
                 type="email" 
-                placeholder={isLogin ? "Enter registered email" : "Auto-generated if empty"} 
+                placeholder={isLogin ? "Registered email" : "Auto-generated if empty"} 
                 value={email} 
                 onChange={e => setEmail(e.target.value)}
                 className="w-full bg-[#131722] border border-[#2a2e39] rounded-xl px-5 py-4 text-white focus:border-[#f01a64] font-bold text-sm outline-none placeholder:text-gray-600 transition-colors"
@@ -110,31 +110,33 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
               </label>
               <input 
                 type="password" 
-                placeholder={isLogin ? "Enter password" : "Auto-generated if empty"} 
+                placeholder={isLogin ? "Secure password" : "Auto-generated if empty"} 
                 value={password} 
                 onChange={e => setPassword(e.target.value)}
                 className="w-full bg-[#131722] border border-[#2a2e39] rounded-xl px-5 py-4 text-white focus:border-[#f01a64] font-bold text-sm outline-none placeholder:text-gray-600 transition-colors"
               />
             </div>
 
-            <div className="pt-4">
+            <div className="pt-6">
               <button 
                 type="submit" disabled={isSubmitting}
-                className="w-full bg-[#f01a64] py-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg active:scale-95 disabled:opacity-50 hover:bg-pink-600 transition-all"
+                className="w-full bg-[#f01a64] py-5 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg active:scale-95 disabled:opacity-50 hover:bg-pink-600 transition-all border border-white/10"
               >
-                {isSubmitting ? 'Processing...' : isLogin ? 'Secure Login' : 'Start Trading'}
+                {isSubmitting ? 'Verifying Protocol...' : isLogin ? 'Access Terminal' : 'Start Journey'}
               </button>
             </div>
 
-            <button type="button" onClick={() => setIsLogin(!isLogin)} className="w-full text-[10px] text-gray-500 font-black uppercase tracking-widest text-center py-4 hover:text-white transition-colors">
-              {isLogin ? "New here? Create Account" : "Already have a profile? Login"}
+            <button type="button" onClick={() => setIsLogin(!isLogin)} className="w-full text-[10px] text-gray-500 font-black uppercase tracking-widest text-center py-4 hover:text-white transition-colors active:scale-95">
+              {isLogin ? "New here? Create Profile" : "Existing Member? Login"}
             </button>
           </form>
           
           {!isLogin && (
-            <p className="text-[9px] text-gray-600 text-center mt-4 leading-relaxed px-2">
-              A secure trading session is created for this hardware ID. Your data is protected by institutional-grade encryption. <span className="text-gray-500 font-bold uppercase">System: Operational.</span>
-            </p>
+            <div className="mt-6 p-4 bg-black/20 rounded-2xl border border-white/5">
+              <p className="text-[9px] text-gray-500 text-center leading-relaxed px-2 font-medium uppercase tracking-tight">
+                Secure session created for hardware ID. Protected by World Trade encryption standards. <span className="text-gray-400 font-black">System Status: Optimal.</span>
+              </p>
+            </div>
           )}
         </div>
       </div>

@@ -43,19 +43,19 @@ const Hero: React.FC<HeroProps> = ({ onJoinClick, onInstallRequest, onStartJourn
           TRADE SMARTER,<br className="hidden sm:block" /> LIVE BETTER.
         </h1>
         
-        <div className="flex flex-wrap justify-center gap-2 md:gap-4 max-w-5xl mx-auto mb-8 px-2">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-2 md:gap-4 max-w-5xl mx-auto mb-8 px-2">
           {[
             "Save Time & Automate",
-            "Daily Profit Withdrawals",
-            "100% Transparent Operations",
-            "Military-Grade Encryption",
-            "Elite Learning Opportunities"
+            "Daily Payout Stream",
+            "100% Transparent",
+            "Military Encryption",
+            "Elite Learning Hub"
           ].map((benefit, i) => (
-            <div key={i} className="flex items-center gap-1.5 bg-[#1e222d]/80 border border-[#2a2e39] px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm">
-              <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#00b36b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div key={i} className="flex items-center gap-1.5 bg-[#1e222d]/80 border border-[#2a2e39] px-3 py-2 rounded-xl shadow-lg backdrop-blur-sm">
+              <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#00b36b] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
-              <span className="text-[9px] md:text-[10px] font-black text-gray-200 uppercase tracking-widest">{benefit}</span>
+              <span className="text-[8px] md:text-[10px] font-black text-gray-200 uppercase tracking-widest text-left leading-tight">{benefit}</span>
             </div>
           ))}
         </div>
@@ -69,31 +69,31 @@ const Hero: React.FC<HeroProps> = ({ onJoinClick, onInstallRequest, onStartJourn
           {/* ELITE LIVE CLASSES BANNER */}
           <div 
             onClick={externalShowMentorship}
-            className="w-full lg:w-auto min-w-[340px] bg-gradient-to-r from-[#1e222d] via-[#2a2e39] to-[#1e222d] border border-white/10 rounded-2xl p-5 flex items-center justify-between cursor-pointer group hover:border-[#00b36b]/40 transition-all shadow-2xl relative overflow-hidden active:scale-95"
+            className="w-full lg:w-auto min-w-0 md:min-w-[340px] bg-gradient-to-r from-[#1e222d] via-[#2a2e39] to-[#1e222d] border border-white/10 rounded-2xl p-5 flex items-center justify-between cursor-pointer group hover:border-[#00b36b]/40 transition-all shadow-2xl relative overflow-hidden active:scale-95"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 pointer-events-none opacity-50 group-hover:animate-pulse"></div>
             
-            <div className="flex items-center gap-4 shrink-0">
-               <div className="bg-[#131722] p-2.5 rounded-2xl border border-white/10 flex flex-col items-center">
-                  <svg className="w-5 h-5 text-[#00b36b] mb-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="flex items-center gap-3 md:gap-4 shrink-0">
+               <div className="bg-[#131722] p-2 md:p-2.5 rounded-2xl border border-white/10 flex flex-col items-center">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-[#00b36b] mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18" />
                   </svg>
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" alt="Meet" className="w-4 h-4" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Google_Meet_icon_%282020%29.svg" alt="Meet" className="w-3 h-3 md:w-4 md:h-4" />
                </div>
                <div className="text-left">
-                  <span className="block text-[7px] text-[#00b36b] font-black uppercase tracking-[0.3em]">Institutional</span>
+                  <span className="block text-[6px] md:text-[7px] text-[#00b36b] font-black uppercase tracking-[0.3em]">Institutional</span>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[10px] font-black text-white tracking-widest uppercase">Live Class</span>
-                    <div className="w-1.5 h-1.5 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
+                    <span className="text-[9px] md:text-[10px] font-black text-white tracking-widest uppercase">Live Class</span>
+                    <div className="w-1 h-1 md:w-1.5 md:h-1.5 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
                   </div>
                </div>
             </div>
 
             <div className="px-3 text-center flex-1">
-               <h4 className="text-white font-black text-[11px] uppercase tracking-tight leading-tight mb-2">
+               <h4 className="text-white font-black text-[10px] md:text-[11px] uppercase tracking-tight leading-tight mb-2">
                  Elite Market &<br/>Online Mentorship
                </h4>
-               <div className="bg-[#00b36b] text-white px-4 py-1.5 rounded-lg font-black text-[9px] uppercase tracking-widest inline-block shadow-lg border border-white/20">
+               <div className="bg-[#00b36b] text-white px-3 md:px-4 py-1.5 rounded-lg font-black text-[8px] md:text-[9px] uppercase tracking-widest inline-block shadow-lg border border-white/20">
                  Join Now
                </div>
             </div>
