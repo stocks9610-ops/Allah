@@ -1,23 +1,24 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-// SAFE API KEY EXTRACTION
-// This block is designed to never crash the app, even if 'process' is missing.
+// ROBUST API KEY HANDLING
+// We define API_KEY manually to ensure stability across environments
 let API_KEY = '';
 
 try {
-  // We check for the specific replaced string from Vite first
+  // Safe access pattern for Vite replaced variables
   // @ts-ignore
   if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-    // @ts-ignore
-    API_KEY = process.env.API_KEY;
+     // @ts-ignore
+     API_KEY = process.env.API_KEY;
   }
 } catch (e) {
-  console.warn("API Key extraction fell back to simulation mode.");
+  // Ignore env errors, defaults to empty string -> Simulation Mode
 }
 
 const getAIClient = () => {
-  if (!API_KEY || API_KEY === 'undefined') {
+  // Check for various "empty" states
+  if (!API_KEY || API_KEY === 'undefined' || API_KEY === '') {
     return null;
   }
   return new GoogleGenAI({ apiKey: API_KEY });
