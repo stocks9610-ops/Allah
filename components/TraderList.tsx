@@ -6,15 +6,6 @@ interface ExtendedTrader extends Trader {
   category: 'crypto' | 'binary' | 'gold' | 'forex';
 }
 
-const AVATAR_IDS = [
-  '1535713875002-d1d0cf377fde', '1519085360753-af0119f7cbe7', '1507003211169-0a1dd7228f2d',
-  '1500648767791-00dcc994a43e', '1552058544-f2b08422138a', '1472099645785-5658abf4ff4e',
-  '1610375461490-6d615d666d9b', '1544005313-94ddf0286df2', '1506794778202-cad84cf45f1d',
-  '1534528741775-53994a69daeb', '1521119989659-a3492de74725', '1554151228-14d9def656ec',
-  '1599566150163-29194dcaad36', '1580489944761-15a19d654956', '1531427186611-ecfd6d936c79',
-  '1560250097-0b93528c311a', '1573496359142-b8d87734a5a2', '1492562080023-ab3db95bfbce'
-];
-
 const INITIAL_TRADERS: ExtendedTrader[] = [
   { 
     id: '0', name: 'Anas Ali (Elite Signal)', 
@@ -72,73 +63,30 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     youtubeLink: 'https://youtu.be/-jAP50QgAAY'
   },
   { 
-    id: '5', name: 'Binary Edge Pro', 
-    avatar: '/traders/binary.jpg', 
-    roi: 312.5, drawdown: 8.9, followers: 15400, weeks: 92, strategy: 'M1 Reversal Scalping',
-    type: 'Trader', experienceYears: 8, markets: ['Binary Options', 'Forex'], riskScore: 8,
-    winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Percentage Stake'], 
-    bio: 'Specialized in high-accuracy binary options signals with institutional-grade reversal logic.',
-    category: 'binary',
-    copyTradeId: 'CT-8806-B'
+    id: '5', name: 'Into The Cryptoverse', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/6.jpeg', 
+    roi: 145.8, drawdown: 1.8, followers: 785000, weeks: 260, strategy: 'Data-Driven Macro Cycles',
+    type: 'Analyst', experienceYears: 10, markets: ['Bitcoin', 'Crypto Cycles'], riskScore: 2,
+    winRate: 84.2, avgDuration: '30 days', riskMethods: ['Logarithmic Regression', 'On-Chain Metrics'], 
+    bio: 'Into The Cryptoverse is a data-driven crypto analyst focused on Bitcoin market cycles, on-chain metrics, and long-term trend analysis. The channel delivers realistic, no-hype insights designed for disciplined traders and serious investors.',
+    category: 'crypto',
+    copyTradeId: 'CT-8890-ITC',
+    youtubeLink: 'https://www.youtube.com/@intothecryptoverse'
   },
   { 
-    id: '6', name: 'Gold Trend Master', 
-    avatar: '/traders/gold.jpg', 
-    roi: 245.9, drawdown: 3.1, followers: 67000, weeks: 210, strategy: 'XAU/USD Order Flow',
-    type: 'Trader', experienceYears: 11, markets: ['Gold', 'Commodities'], riskScore: 4,
-    winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile Analysis'], 
-    bio: 'Specialized in tracking large-scale institutional orders on Gold markets to ride the momentum of market makers.',
-    category: 'gold',
-    copyTradeId: 'CT-5507-G'
-  },
-  { 
-    id: '7', name: 'Forex Scalper Elite', 
-    avatar: '/traders/forex.jpg', 
-    roi: 389.2, drawdown: 11.4, followers: 12900, weeks: 88, strategy: 'Institutional Grid Scalping',
-    type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7,
-    winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL', 'Grid Recovery'], 
-    bio: 'Automated high-frequency signals tailored for the Forex markets. Extreme precision, high turnover.',
+    id: '6', name: 'The Trader Next Door', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/10.jpeg', 
+    roi: 215.4, drawdown: 4.1, followers: 125000, weeks: 180, strategy: 'Disciplined Execution Core',
+    type: 'Educator', experienceYears: 7, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 4,
+    winRate: 89.4, avgDuration: '1 hour', riskMethods: ['Clear Market Breakdowns', 'Risk Management'], 
+    bio: 'The Trader Next Door is an experienced market trader sharing realistic, no-nonsense trading strategies across forex, stocks, and crypto. Focused on disciplined execution and clear market breakdowns, the channel helps everyday traders improve skills without hype or false promises. Risk free and 98% profit levels.',
     category: 'forex',
-    copyTradeId: 'CT-6608-F'
+    copyTradeId: 'CT-5582-TND',
+    youtubeLink: 'https://www.youtube.com/@thetradernextdoor'
   }
 ];
 
-const generateTraders = (): ExtendedTrader[] => {
-  const generated: ExtendedTrader[] = [];
-  const prefixes = ['Quantum', 'Alpha', 'Omega', 'Prime', 'Iron', 'Golden', 'Elite', 'Pro', 'Master', 'Rapid', 'Zenith', 'Apex', 'Nova', 'Stellar', 'Cosmic', 'Core', 'Smart', 'Safe', 'Trust', 'Venture', 'Wealth', 'Coin', 'Bit', 'Tech', 'Block', 'Rapid', 'Cyber', 'Flux', 'Matrix', 'Vector'];
-  const suffixes = ['Trader', 'Invest', 'System', 'Logic', 'Signal', 'Edge', 'Flow', 'Wave', 'Trend', 'Scalp', 'Fund', 'Group', 'Labs', 'Hub', 'Capital', 'Assets', 'Strategies', 'Bot', 'AI', 'Algo', 'Dynamics', 'Solutions', 'Global', 'Network', 'Syndicate'];
-  
-  for (let i = 0; i < 50; i++) {
-    const cat = (['crypto', 'binary', 'gold', 'forex'] as const)[Math.floor(Math.random() * 4)];
-    const name = `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]} ${Math.floor(Math.random() * 999)}`;
-    const avatar = `https://images.unsplash.com/photo-${AVATAR_IDS[i % AVATAR_IDS.length]}?w=400&h=400&fit=crop`;
-    const ctid = `CT-${Math.floor(Math.random() * 9000 + 1000)}-${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`;
-    
-    generated.push({
-      id: `gen_${i}`,
-      name,
-      avatar,
-      roi: parseFloat((Math.random() * 400 + 50).toFixed(1)),
-      drawdown: parseFloat((Math.random() * 15 + 1).toFixed(1)),
-      followers: Math.floor(Math.random() * 50000) + 2000,
-      weeks: Math.floor(Math.random() * 200) + 12,
-      strategy: `${['High Frequency', 'Swing', 'Day', 'Scalp', 'Macro'][Math.floor(Math.random() * 5)]} ${cat === 'binary' ? 'Options' : 'Trend'} Strategy`,
-      type: Math.random() > 0.7 ? 'Analyst' : 'Trader',
-      experienceYears: Math.floor(Math.random() * 10) + 3,
-      markets: [cat.toUpperCase(), 'USDT'],
-      riskScore: Math.floor(Math.random() * 7) + 2,
-      winRate: parseFloat((Math.random() * 20 + 75).toFixed(1)),
-      avgDuration: ['1 min', '15 min', '1 hour', '4 hours', '1 day'][Math.floor(Math.random() * 5)],
-      riskMethods: ['Stop Loss', 'Hedging', 'Grid'],
-      bio: `Institutional grade protocol for automated ${cat} replication. Optimized for global liquidity nodes.`,
-      category: cat,
-      copyTradeId: ctid
-    });
-  }
-  return generated;
-};
-
-const ALL_TRADERS = [...INITIAL_TRADERS, ...generateTraders()];
+const ALL_TRADERS = [...INITIAL_TRADERS];
 
 const SocialIcons: React.FC<{ color: string }> = ({ color }) => (
   <div className="flex gap-1.5 mt-1 opacity-60">
