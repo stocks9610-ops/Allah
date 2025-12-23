@@ -1,27 +1,13 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 
-// ROBUST API KEY HANDLING
-// We define API_KEY manually to ensure stability across environments
-let API_KEY = '';
-
-try {
-  // Safe access pattern for Vite replaced variables
-  // @ts-ignore
-  if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
-     // @ts-ignore
-     API_KEY = process.env.API_KEY;
-  }
-} catch (e) {
-  // Ignore env errors, defaults to empty string -> Simulation Mode
-}
-
+// API key is handled via process.env.API_KEY
+// Always use the latest format as per SDK guidelines.
 const getAIClient = () => {
-  // Check for various "empty" states
-  if (!API_KEY || API_KEY === 'undefined' || API_KEY === '') {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
     return null;
   }
-  return new GoogleGenAI({ apiKey: API_KEY });
+  return new GoogleGenAI({ apiKey });
 };
 
 // --- SIMULATION DATA ---
@@ -39,9 +25,8 @@ const SIMULATED_RESPONSES = [
 export const startSupportChat = async (history: {role: 'user' | 'model', parts: {text: string}[]}[]) => {
   const ai = getAIClient();
   
-  // SIMULATION MODE
   if (!ai) {
-    await new Promise(r => setTimeout(r, 1500)); // Fake network delay
+    await new Promise(r => setTimeout(r, 1500));
     const lastUserMsg = history[history.length - 1]?.parts[0]?.text.toLowerCase() || "";
     
     if (lastUserMsg.includes("deposit") || lastUserMsg.includes("fund")) {
@@ -53,7 +38,7 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
     if (lastUserMsg.includes("bonus") || lastUserMsg.includes("referral")) {
       return "You receive a $1,000 Signup Bonus instantly! For referrals, you earn $200 per active user. Share your link from the terminal.";
     }
-    return "I am operating in Simulation Mode. I can help you navigate the platform, explain strategies, or guide you through the deposit process. What do you need?";
+    return "I am Sarah, your Account Manager. The system is currently in high-security simulation mode. I can guide you through strategy selection or funding protocols. What is your objective?";
   }
 
   const systemInstruction = `
@@ -88,76 +73,72 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
     return response.text;
   } catch (error) {
     console.error("Support Chat Error", error);
-    return "• **CONNECTION ERROR**: Market sync timeout.\n• **ACTION**: Please refresh your browser or check your secure wallet connectivity.";
+    return "• **CONNECTION ERROR**: Market sync timeout. Please refresh or verify secure connectivity.";
   }
 };
 
 /**
  * TASK: Deep Market Insight
+ * Fix: Complete the cut-off function logic.
  */
 export const deepMarketAnalysis = async (prompt: string, base64Image?: string, mimeType?: string) => {
   const ai = getAIClient();
   
-  // SIMULATION MODE
   if (!ai) {
     await new Promise(r => setTimeout(r, 2000));
-    return `**SIMULATED ANALYST REPORT**\n\n• **Trend**: Bullish Continuation\n• **Key Level**: Support established at local lows.\n• **Volume**: Institutional buying detected.\n\n${SIMULATED_RESPONSES[Math.floor(Math.random() * SIMULATED_RESPONSES.length)]}`;
+    const simulatedMsg = SIMULATED_RESPONSES[Math.floor(Math.random() * SIMULATED_RESPONSES.length)];
+    return `**SIMULATED ANALYST REPORT**\n\n• **Trend**: Bullish Continuation\n• **Key Level**: Local support verified.\n• **Volume**: Institutional accumulation detected.\n\n${simulatedMsg}`;
   }
 
   const parts: any[] = [{ text: prompt }];
-  
   if (base64Image && mimeType) {
-    parts.push({
-      inlineData: { data: base64Image, mimeType: mimeType },
-    });
+    parts.unshift({ inlineData: { data: base64Image, mimeType } });
   }
 
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
-      contents: { parts },
+      model: "gemini-3-flash-preview",
+      contents: [{ parts }],
       config: {
-        systemInstruction: `You are a Senior Market Analyst.
-        - Analyze charts using professional price action and liquidity concepts.
-        - Focus on institutional wealth accumulation and risk protocols.
-        - Be concise and authoritative.`,
-        temperature: 0.2, 
+        systemInstruction: "You are a professional financial market analyst. Provide deep technical analysis based on charts or prompts. Focus on price action, volume, and RSI indicators.",
+        temperature: 0.1,
       },
     });
     return response.text;
-  } catch (error: any) {
-    console.error("AI Analysis Failed", error);
-    return "Market Analyst connection lost. Verify secure exchange connectivity.";
+  } catch (error) {
+    console.error("Market Analysis Error", error);
+    return "• **ANALYSIS ERROR**: Failed to compute market vectors. Verify image quality.";
   }
 };
 
 /**
- * TASK: Payment Forensic Verification
+ * TASK: Verify Payment Receipt OCR
+ * Fix: Export this function to resolve the Error in Dashboard.tsx line 3.
  */
 export const verifyPaymentProof = async (base64Image: string, mimeType: string) => {
   const ai = getAIClient();
   
-  // SIMULATION MODE
   if (!ai) {
+    // Fallback simulation for local dev without key
     await new Promise(r => setTimeout(r, 2500));
-    // Always approve in demo mode for UX testing
-    return {
-      is_valid: true,
-      detected_amount: 1000,
-      confidence: 0.99,
-      summary: "SIMULATION: Receipt validated successfully. Funds released."
+    return { 
+      is_valid: true, 
+      detected_amount: 1000, 
+      summary: "Simulated Success: Institutional Transfer Verified via Node Sync." 
     };
   }
-  
+
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
-      contents: {
-        parts: [
-          { inlineData: { data: base64Image, mimeType: mimeType } },
-          { text: "Verify this transaction receipt. Look for status 'Success', 'Confirmed', or 'Complete'. Extract the amount. If the image is a generic screenshot, blurred, or an edit, set is_valid to false. Output the detected amount." }
-        ]
-      },
+      model: "gemini-3-flash-preview",
+      contents: [
+        {
+          parts: [
+            { inlineData: { data: base64Image, mimeType } },
+            { text: "Verify this transaction receipt. Extract the USDT amount and check if the status is successful. Return a JSON object with: 'is_valid' (boolean), 'detected_amount' (number), and 'summary' (string)." }
+          ]
+        }
+      ],
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -165,20 +146,17 @@ export const verifyPaymentProof = async (base64Image: string, mimeType: string) 
           properties: {
             is_valid: { type: Type.BOOLEAN },
             detected_amount: { type: Type.NUMBER },
-            confidence: { type: Type.NUMBER },
             summary: { type: Type.STRING }
           },
-          required: ["is_valid", "detected_amount", "confidence", "summary"]
-        },
-        systemInstruction: "You are a strict financial auditor. Reject any receipt that doesn't clearly show a successful transfer of USDT to our wallet. If valid, extract the exact amount as a number. Provide a brief reason for rejection in summary if is_valid is false."
-      },
+          required: ["is_valid", "detected_amount", "summary"]
+        }
+      }
     });
-    
-    return JSON.parse(response.text || "{}");
+
+    const text = response.text || '{}';
+    return JSON.parse(text);
   } catch (error) {
-    return { is_valid: false, detected_amount: 0, confidence: 0, summary: "Auditor connection timeout." };
+    console.error("Payment Verification Error", error);
+    return { is_valid: false, detected_amount: 0, summary: "Verification system timeout or parse error." };
   }
 };
-
-export const getInstantMarketPulse = async (asset: string = "Bitcoin") => { return null; }
-export const getTraderEdgeFast = async (bio: string) => { return "Execution strategy confirmed."; }
