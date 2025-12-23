@@ -22,9 +22,10 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     roi: 342.5, drawdown: 3.2, followers: 185000, weeks: 156, strategy: 'Signal & Mindset Architecture',
     type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3,
     winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], 
-    bio: 'Young entrepreneur sharing skill teachings. Runs a massive trader signals community and educational content network focused on mindset and risk awareness.',
+    bio: 'Anas Ali is a fast-growing forex and crypto trader known for high-accuracy Risk Free trade signals and bold market execution. He leads one of Asia’s largest trading communities and focuses on disciplined strategies, consistency, and profit-driven trading.',
     category: 'crypto',
-    copyTradeId: 'CT-7701-X'
+    copyTradeId: 'CT-7701-X',
+    youtubeLink: 'https://www.youtube.com/watch?v=dvQzEIbJlw4'
   },
   { 
     id: '1', name: 'Thomas Kralow (Pro)', 
@@ -49,14 +50,15 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     youtubeLink: 'https://youtu.be/0CgD6mDVV_M'
   },
   { 
-    id: '3', name: 'ElioDeFi Protocol', 
-    avatar: '/traders/elio.jpg', 
+    id: '3', name: 'Elio Tapia (DeFi)', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/4.jpeg', 
     roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend',
     type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7,
     winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit', 'Liquidity Analysis'], 
-    bio: 'Focused on decentralized finance (DeFi) and crypto market topics. Explains complex blockchain concepts and navigates deep crypto liquidity markets.',
+    bio: 'Elio Tapia is a crypto and DeFi trader focused on high-growth opportunities, copy trade -powered tools, and next-generation blockchain strategies. He shares sharp market insights, trend analysis, and practical methods to build financial freedom in crypto.join us Risk free Trade',
     category: 'crypto',
-    copyTradeId: 'CT-2204-E'
+    copyTradeId: 'CT-2204-E',
+    youtubeLink: 'https://youtu.be/lnbR_XupmBU'
   },
   { 
     id: '4', name: 'Craig Percoco', 
@@ -163,7 +165,7 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
     ALL_TRADERS.forEach(t => {
       const baseProfit = t.id === '0' ? 245000.00 : 5000.00;
       initialProfits[t.id] = baseProfit + Math.random() * 45000;
-      initialWinRates[t.id] = t.winRate; // Start with base win rate
+      initialWinRates[t.id] = t.winRate;
     });
     
     setTraderProfits(initialProfits);
@@ -213,7 +215,7 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
       case 'crypto': return `${base} bg-[#f01a64] text-white border-[#f01a64] shadow-[0_10px_30px_rgba(240,26,100,0.3)]`;
       case 'binary': return `${base} bg-blue-600 text-white border-blue-600 shadow-[0_10px_30px_rgba(37,99,235,0.3)]`;
       case 'gold': return `${base} bg-yellow-500 text-black border-yellow-500 shadow-[0_10px_30px_rgba(234,179,8,0.3)]`;
-      case 'forex': return `${base} bg-emerald-600 text-white border-emerald-600 shadow-[0_10px_30px_rgba(5,150,105,0.3)]`;
+      case 'forex': return `${base} bg-emerald-600 text-white border-emerald-600 shadow-[0_10px_30_rgba(5,150,105,0.3)]`;
       default: return base;
     }
   };
