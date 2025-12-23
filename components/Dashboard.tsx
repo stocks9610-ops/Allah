@@ -24,22 +24,28 @@ const NETWORKS = [
   { id: 'bep20', name: 'BNB (BEP-20)', address: '0x6991Bd59A34D0B2819653888f6aaAEf004b780ca' } 
 ];
 
+interface ActiveTrade {
+  tradeId: string;
+  plan: typeof PROFIT_STRATEGIES[0];
+  investAmount: number;
+  startTime: number;
+  currentPnL: number;
+  progress: number;
+}
+
 const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrader }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [investAmount, setInvestAmount] = useState<number>(500);
-  const [isInvesting, setIsInvesting] = useState(false);
   
   // Trade Processing States
   const [isProcessingTrade, setIsProcessingTrade] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   
-  // Trade Outcome State
+  // Trade Outcome State (For popup toasts)
   const [tradeResult, setTradeResult] = useState<{status: 'WIN' | 'LOSS', amount: number} | null>(null);
   
-  const [tradeStage, setTradeStage] = useState<'idle' | 'syncing' | 'live' | 'completed'>('idle');
-  const [syncLogs, setSyncLogs] = useState<string[]>([]);
-  const [progress, setProgress] = useState(0);
-  const [livePnL, setLivePnL] = useState(0);
+  // Active Positions (Concurrent Trades)
+  const [activeTrades, setActiveTrades] = useState<ActiveTrade[]>([]);
 
   // Withdrawal States
   const [withdrawStep, setWithdrawStep] = useState<'input' | 'confirm' | 'success'>('input');
@@ -60,6 +66,51 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   // Profit calculation logic: Total Balance - Signup Bonus (1000)
   const tradeProfit = Math.max(0, user.balance - 1000);
+
+  // --- MULTI-TRADE TICKER LOGIC ---
+  useEffect(() => {
+    if (activeTrades.length === 0) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      
+      setActiveTrades(currentTrades => {
+        return currentTrades.map(trade => {
+          const elapsed = now - trade.startTime;
+          const rawProgress = (elapsed / trade.plan.durationMs) * 100;
+          
+          if (rawProgress >= 100 && trade.progress < 100) {
+            // Trade Completed in this tick
+            finishTrade(trade);
+            return { ...trade, progress: 100 };
+          }
+          
+          // Calculate PnL Fluctuation
+          const roi = (trade.plan.minRet + Math.random() * (trade.plan.maxRet - trade.plan.minRet)) / 100;
+          const fluctuation = Math.random() > 0.5 ? 1 : -0.3;
+          const currentPnL = trade.investAmount * roi * (rawProgress / 100) * fluctuation;
+          
+          return {
+            ...trade,
+            progress: Math.min(100, rawProgress),
+            currentPnL
+          };
+        }).filter(t => t.progress < 100); // Remove completed trades from the active list immediately or handle them? 
+                                           // Better to keep them for a moment or handle via finishTrade.
+                                           // Here we filter ONLY if we want them to disappear. 
+                                           // Let's rely on finishTrade to handle the logic and side-effects, 
+                                           // but we need to remove them from state eventually.
+                                           // For simplicity: We filter out 100% progress trades in the NEXT render cycle 
+                                           // by handling the finish logic which updates user balance.
+      });
+
+      // Cleanup finished trades from state
+      setActiveTrades(prev => prev.filter(t => t.progress < 100));
+
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [activeTrades, user]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -156,105 +207,75 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       return;
     }
 
-    // Initiate Trade Processing Sequence
+    // Initiate Trade Processing Sequence (Blocking)
     setIsProcessingTrade(true);
-    setTradeResult(null); // Reset result
+    setTradeResult(null); 
     
     // Random duration between 5000ms and 15000ms
     const randomDuration = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
 
     setTimeout(() => {
+      // End Blocking Phase
       setIsProcessingTrade(false);
       setShowSuccessToast(true);
       
-      // Short delay to show success message before switching view
+      // Add to Active Trades (Non-Blocking)
+      executeTradeLogic(plan);
+
+      // Hide Toast & Reset Selection
       setTimeout(() => {
         setShowSuccessToast(false);
-        executeTradeLogic(plan);
+        setSelectedPlanId(null);
       }, 2000);
     }, randomDuration);
   };
 
   const executeTradeLogic = (plan: typeof PROFIT_STRATEGIES[0]) => {
+    // Deduct Balance Immediately
     onUserUpdate(authService.updateUser({ 
       balance: user.balance - investAmount,
       totalInvested: user.totalInvested + investAmount
     })!);
 
-    setIsInvesting(true);
-    setTradeStage('syncing');
-    setSyncLogs([
-      "Connecting to market leader...",
-      "Setting risk parameters...",
-      "Trade synchronization in progress...",
-      "Capital allocation confirmed."
-    ]);
-    
-    let logIdx = 0;
-    const interval = setInterval(() => {
-      if (logIdx < 4) {
-        logIdx++;
-      } else {
-        clearInterval(interval);
-        setTradeStage('live');
-        runLiveTrade(plan);
-      }
-    }, 850);
+    // Add to active trades list
+    const newTrade: ActiveTrade = {
+      tradeId: Math.random().toString(36).substr(2, 9),
+      plan,
+      investAmount,
+      startTime: Date.now(),
+      currentPnL: 0,
+      progress: 0
+    };
+
+    setActiveTrades(prev => [...prev, newTrade]);
   };
 
-  const runLiveTrade = (plan: typeof PROFIT_STRATEGIES[0]) => {
-    const startTime = Date.now();
-    const duration = plan.durationMs;
-    
-    const tick = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const rawProgress = (elapsed / duration) * 100;
-      
-      if (rawProgress >= 100) {
-        setProgress(100);
-        clearInterval(tick);
-        finishTrade(plan);
-      } else {
-        setProgress(rawProgress);
-        // Fluctuate PnL during trade for realism
-        const fluctuation = Math.random() > 0.5 ? 1 : -0.3;
-        const roi = (plan.minRet + Math.random() * (plan.maxRet - plan.minRet)) / 100;
-        setLivePnL(investAmount * roi * (rawProgress / 100) * fluctuation);
-      }
-    }, 100);
-  };
-
-  const finishTrade = (plan: typeof PROFIT_STRATEGIES[0]) => {
+  const finishTrade = (trade: ActiveTrade) => {
     // 98% Success Rate Logic
     const isWin = Math.random() <= 0.98;
+    
+    // Get latest user state to ensure sync
+    const currentUser = authService.getUser() || user;
 
     if (isWin) {
       // WIN LOGIC
-      const profit = investAmount * ((plan.minRet + Math.random() * (plan.maxRet - plan.minRet)) / 100);
+      const profit = trade.investAmount * ((trade.plan.minRet + Math.random() * (trade.plan.maxRet - trade.plan.minRet)) / 100);
       onUserUpdate(authService.updateUser({
-        balance: user.balance + investAmount + profit, // Return principal + profit
-        totalInvested: Math.max(0, user.totalInvested - investAmount),
-        wins: user.wins + 1
+        balance: currentUser.balance + trade.investAmount + profit, // Return principal + profit
+        totalInvested: Math.max(0, currentUser.totalInvested - trade.investAmount),
+        wins: currentUser.wins + 1
       })!);
       setTradeResult({ status: 'WIN', amount: profit });
     } else {
-      // LOSS LOGIC (Stop Loss Hit)
-      // Principal is LOST. InvestAmount is gone (already deducted in executeTradeLogic).
+      // LOSS LOGIC
       onUserUpdate(authService.updateUser({
-        // Balance does not increase
-        totalInvested: Math.max(0, user.totalInvested - investAmount),
-        losses: user.losses + 1
+        totalInvested: Math.max(0, currentUser.totalInvested - trade.investAmount),
+        losses: currentUser.losses + 1
       })!);
-      setTradeResult({ status: 'LOSS', amount: investAmount });
+      setTradeResult({ status: 'LOSS', amount: trade.investAmount });
     }
     
-    setTradeStage('completed');
     setTimeout(() => {
-      setIsInvesting(false);
-      setTradeStage('idle');
-      setProgress(0);
-      setLivePnL(0);
-      setSelectedPlanId(null);
       setTradeResult(null);
     }, 5000);
   };
@@ -296,7 +317,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
             </div>
             <div className="flex flex-col">
               <span className="font-black uppercase tracking-widest text-xs">Trade Placed Successfully</span>
-              <span className="text-[9px] font-bold uppercase tracking-wide opacity-90">Initializing market sync...</span>
+              <span className="text-[9px] font-bold uppercase tracking-wide opacity-90">Active in Live Positions</span>
             </div>
          </div>
       )}
@@ -322,9 +343,51 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
          </div>
       )}
 
-      <TacticalGuide step={isInvesting ? 'investing' : tradeStage === 'completed' ? 'profit' : 'ready'} />
+      <TacticalGuide step={activeTrades.length > 0 ? 'investing' : 'ready'} />
 
       <div className={`max-w-7xl mx-auto space-y-8 transition-all duration-500 ${isProcessingTrade ? 'blur-sm scale-[0.99] opacity-50' : ''}`}>
+        
+        {/* ACTIVE TRADES MONITOR */}
+        {activeTrades.length > 0 && (
+          <div className="space-y-4 animate-in slide-in-from-top-4">
+             <div className="flex items-center gap-2 px-2">
+                <div className="w-2 h-2 bg-[#00b36b] rounded-full animate-pulse"></div>
+                <h3 className="text-sm font-black text-white uppercase tracking-widest">Live Active Positions ({activeTrades.length})</h3>
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {activeTrades.map((trade) => (
+                  <div key={trade.tradeId} className="bg-[#1e222d] border border-[#f01a64]/50 p-5 rounded-3xl relative overflow-hidden shadow-xl">
+                     <div className="flex justify-between items-start mb-4 relative z-10">
+                        <div>
+                           <span className="text-[10px] font-black text-white uppercase tracking-wide block mb-1">{trade.plan.name}</span>
+                           <span className="text-[8px] text-gray-500 font-mono uppercase tracking-widest">Invested: ${trade.investAmount}</span>
+                        </div>
+                        <div className="text-right">
+                           <span className={`block text-lg font-black font-mono ${trade.currentPnL >= 0 ? 'text-[#00b36b]' : 'text-red-500'}`}>
+                             {trade.currentPnL >= 0 ? '+' : ''}{trade.currentPnL.toFixed(2)}
+                           </span>
+                           <span className="text-[8px] text-gray-500 uppercase font-black tracking-widest">Live PnL</span>
+                        </div>
+                     </div>
+                     
+                     <div className="relative z-10">
+                        <div className="flex justify-between text-[8px] font-black uppercase text-gray-500 mb-1">
+                           <span>Progress</span>
+                           <span>{trade.progress.toFixed(0)}%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-black rounded-full overflow-hidden">
+                           <div className="h-full bg-[#f01a64] transition-all duration-300 ease-out" style={{ width: `${trade.progress}%` }}></div>
+                        </div>
+                     </div>
+
+                     {/* Background Glow */}
+                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#f01a64]/10 rounded-full blur-3xl"></div>
+                  </div>
+                ))}
+             </div>
+          </div>
+        )}
+
         {/* REAL-WORLD TRADING STATUS HUD - Mobile Adaptive Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <div className="bg-[#1e222d] border border-white/5 p-4 md:p-6 rounded-3xl shadow-xl hover:border-white/10 transition-all flex flex-col justify-center">
@@ -373,7 +436,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                    <div 
                      key={plan.id} 
                      onClick={() => {
-                        if (isInvesting || isProcessingTrade) return;
+                        if (isProcessingTrade) return;
                         if (plan.vip && !user.hasDeposited) {
                            depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
                            alert("🔒 DEPOSIT REQUIRED: Please confirm your first deposit to activate this elite strategy.");
@@ -404,7 +467,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                          </div>
                       </div>
 
-                      {selectedPlanId === plan.id && !isInvesting && (
+                      {selectedPlanId === plan.id && (
                         <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/5 space-y-4 md:space-y-6 animate-in fade-in duration-300">
                            <div className="flex flex-col gap-2">
                               <span className="text-[8px] md:text-[9px] text-gray-500 font-black uppercase tracking-widest">Trade Amount (USDT)</span>

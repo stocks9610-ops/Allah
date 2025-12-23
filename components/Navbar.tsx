@@ -58,7 +58,9 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
   const wallet = user ? user.balance : 0;
   const globalBalance = wallet + invested;
   const netProfit = Math.max(0, globalBalance - 1000);
-  const pendingWithdrawal = 0.00; // Default state as no backend queue exists yet
+  
+  // GAS FEE LOGIC: 2% of Total Net Profit
+  const gasFee = netProfit > 0 ? netProfit * 0.02 : 0.00;
 
   return (
     <>
@@ -134,7 +136,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                     </button>
                     <div className="h-px bg-[#2a2e39] my-1 mx-3"></div>
                     <button onClick={() => { setShowTerminateConfirm(true); setShowMenu(false); }} className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-red-500/10 rounded-2xl group transition-all text-red-500">
-                      <span className="text-[11px] font-black uppercase tracking-wider">Terminate Session</span>
+                      <span className="text-[11px] font-black uppercase tracking-wider">Disconnect Terminal</span>
                     </button>
                   </div>
                 </div>
@@ -191,9 +193,9 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
               </div>
               
               <div className="flex justify-between items-center">
-                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Pending Payout</span>
+                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Platform Gas Fee</span>
                  <span className="text-amber-500 font-mono font-bold text-sm tracking-tight">
-                   ${pendingWithdrawal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                   -${gasFee.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                  </span>
               </div>
 
@@ -210,7 +212,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         </div>
       )}
 
-      {/* TERMINATE SESSION CONFIRMATION */}
+      {/* DISCONNECT TERMINAL CONFIRMATION */}
       {showTerminateConfirm && (
         <div className="fixed inset-0 z-[110] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-4 animate-in fade-in duration-300">
            <div className="bg-[#1e222d] border border-red-500/20 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(255,62,62,0.15)] animate-in zoom-in-95">
@@ -225,9 +227,9 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                  </div>
 
                  <div className="space-y-3">
-                    <h3 className="text-white font-black uppercase text-xl tracking-tighter italic">Sever Node Connection?</h3>
+                    <h3 className="text-white font-black uppercase text-xl tracking-tighter italic">Sever Uplink Protocol?</h3>
                     <p className="text-gray-400 text-xs font-medium leading-relaxed px-6">
-                       Executing this protocol will flush your local session bridge and disconnect from the liquidity terminal. Securely.
+                       Disconnecting will sever the live feed to the aggregation pool. PnL tracking will pause until you re-authenticate.
                     </p>
                  </div>
 
@@ -236,7 +238,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                        <div className="w-full h-1.5 bg-black rounded-full overflow-hidden">
                           <div className="h-full bg-red-500 animate-[progress_1.8s_ease-in-out_forwards] w-full"></div>
                        </div>
-                       <span className="text-[10px] text-red-500 font-black uppercase tracking-[0.3em] animate-pulse">Wiping Cache & API Tokens...</span>
+                       <span className="text-[10px] text-red-500 font-black uppercase tracking-[0.3em] animate-pulse">Purging Session Keys...</span>
                     </div>
                  ) : (
                     <div className="flex gap-4 pt-4">
@@ -250,12 +252,12 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                          onClick={handleSecureLogout}
                          className="flex-[2] py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all border border-white/10"
                        >
-                         Confirm Severance
+                         Sever Connection
                        </button>
                     </div>
                  )}
                  
-                 <p className="text-[8px] text-gray-600 font-black uppercase tracking-[0.2em] italic">Security Protocol: AES-256 Session Severance</p>
+                 <p className="text-[8px] text-gray-600 font-black uppercase tracking-[0.2em] italic">Security Protocol: AES-256</p>
               </div>
            </div>
         </div>

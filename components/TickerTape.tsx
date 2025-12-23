@@ -3,20 +3,57 @@ import React, { useState, useEffect } from 'react';
 
 const TickerTape: React.FC = () => {
   const [stats, setStats] = useState({
-    liquidity: 14200000000, // $14.2 Billion
+    liquidity: 142000000, // Start ~$142M
     activeNodes: 45216,
-    accuracy: 98.4
+    accuracy: 98.4,
+    status: "SYSTEM: OPTIMAL (12ms)",
+    statusColor: "text-[#00b36b]"
   });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStats(prev => ({
-        // Fluctuate liquidity slowly
-        liquidity: prev.liquidity + (Math.random() * 50000 - 10000), 
-        // Slowly increase user count
-        activeNodes: prev.activeNodes + (Math.random() > 0.8 ? 1 : 0),
-        accuracy: 98.4 + (Math.random() * 0.2 - 0.1)
-      }));
+      setStats(prev => {
+        // Liquidity: 88M - 289M
+        let newLiquidity = prev.liquidity + (Math.random() * 500000 - 250000); // +/- 250k
+        if (newLiquidity < 88000000) newLiquidity = 88000000 + Math.random() * 1000000;
+        if (newLiquidity > 289000000) newLiquidity = 289000000 - Math.random() * 1000000;
+
+        // Traders: 10k - 52k
+        let newTraders = prev.activeNodes + Math.floor(Math.random() * 7 - 3); // Small fluctuation
+        if (newTraders < 10200) newTraders = 10200 + Math.floor(Math.random() * 10);
+        if (newTraders > 52000) newTraders = 52000 - Math.floor(Math.random() * 10);
+
+        // Accuracy: 91.5% - 99.2%
+        let newAccuracy = prev.accuracy + (Math.random() * 0.4 - 0.2);
+        if (newAccuracy < 91.5) newAccuracy = 91.5 + Math.random() * 0.5;
+        if (newAccuracy > 99.2) newAccuracy = 99.2 - Math.random() * 0.5;
+
+        // Status Logic (Random heartbeat)
+        let newStatus = prev.status;
+        let newStatusColor = prev.statusColor;
+        const r = Math.random();
+        
+        if (r > 0.98) {
+             newStatus = "REROUTING NODES...";
+             newStatusColor = "text-amber-500 animate-pulse";
+        } else if (r > 0.95) {
+             newStatus = "SYNCING LEDGER...";
+             newStatusColor = "text-blue-500 animate-pulse";
+        } else if (prev.status !== "SYSTEM: OPTIMAL (12ms)" && r > 0.7) {
+             // Return to normal (simulate changing latency)
+             const latency = Math.floor(Math.random() * 20) + 8;
+             newStatus = `SYSTEM: OPTIMAL (${latency}ms)`;
+             newStatusColor = "text-[#00b36b]";
+        }
+
+        return {
+          liquidity: newLiquidity,
+          activeNodes: newTraders,
+          accuracy: newAccuracy,
+          status: newStatus,
+          statusColor: newStatusColor
+        };
+      });
     }, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -47,8 +84,8 @@ const TickerTape: React.FC = () => {
         </div>
 
         <div className="hidden lg:flex items-center gap-2 shrink-0">
-          <span className="text-[8px] font-black text-[#00b36b] uppercase tracking-[0.3em] border border-[#00b36b]/20 px-2 py-0.5 rounded">
-            PLATFORM STATUS: OPTIMAL
+          <span className={`text-[8px] font-black uppercase tracking-[0.3em] border border-white/5 px-2 py-0.5 rounded ${stats.statusColor}`}>
+            {stats.status}
           </span>
         </div>
 

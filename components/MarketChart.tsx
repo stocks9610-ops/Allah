@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 
 interface FeedEvent {
@@ -52,9 +53,10 @@ const AnimatedCounter = ({ value }: { value: number }) => {
 };
 
 const MarketChart: React.FC = () => {
-  const [totalProfit, setTotalProfit] = useState<number>(() => 2845000000 + Math.random() * 500000);
+  // Aligned with new Liquidity stats (~$45M range)
+  const [totalProfit, setTotalProfit] = useState<number>(() => 45200000 + Math.random() * 50000);
   const [lastEvent, setLastEvent] = useState<{label: string, val: number, isWin: boolean} | null>(null);
-  const [history, setHistory] = useState<number[]>(new Array(40).fill(2845000000));
+  const [history, setHistory] = useState<number[]>(new Array(40).fill(45200000));
   const [feed, setFeed] = useState<FeedEvent[]>([]);
   const [glowColor, setGlowColor] = useState<'green' | 'red' | 'neutral'>('neutral');
 
