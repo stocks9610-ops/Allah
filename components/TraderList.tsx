@@ -19,6 +19,17 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     youtubeLink: 'https://www.youtube.com/watch?v=dvQzEIbJlw4'
   },
   { 
+    id: '10', name: 'Rayner Teo', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/27.jpeg', 
+    roi: 485.4, drawdown: 2.1, followers: 1500000, weeks: 460, strategy: 'Structured Price Action Logic',
+    type: 'Educator', experienceYears: 12, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 2,
+    winRate: 82.5, avgDuration: '2 days', riskMethods: ['Price Action', 'Capital Preservation'], 
+    bio: 'Rayner Teo is an independent trader and founder of TradingwithRayner, known for clear, profit-first content covering price action, technical analysis, risk-free management, and structured trading strategies across forex, stocks, and crypto. With millions of subscribers, his mission is to help serious traders improve performance with practical, no-hype guidance.',
+    category: 'crypto',
+    copyTradeId: 'CT-2710-RT',
+    youtubeLink: 'https://www.youtube.com/channel/UCFSn-h8wTnhpKJMteN76Abg'
+  },
+  { 
     id: '1', name: 'Thomas Kralow (Pro)', 
     avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/2.jpeg', 
     roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic',
@@ -41,47 +52,25 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     youtubeLink: 'https://youtu.be/0CgD6mDVV_M'
   },
   { 
-    id: '3', name: 'Elio Tapia (DeFi)', 
-    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/4.jpeg', 
-    roi: 520.1, drawdown: 12.5, followers: 76500, weeks: 88, strategy: 'Decentralized Yield & Trend',
-    type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7,
-    winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit', 'Liquidity Analysis'], 
-    bio: 'Elio Tapia is a crypto and DeFi trader focused on high-growth opportunities, copy trade -powered tools, and next-generation blockchain strategies. He shares sharp market insights, trend analysis, and practical methods to build financial freedom in crypto.join us Risk free Trade',
-    category: 'crypto',
-    copyTradeId: 'CT-2204-E',
-    youtubeLink: 'https://youtu.be/lnbR_XupmBU'
-  },
-  { 
-    id: '4', name: 'Craig Percoco', 
+    id: '11', name: 'Binary Edge Pro', 
     avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/5.jpeg', 
-    roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum',
-    type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5,
-    winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops', 'Volume Profile'], 
-    bio: 'Craig Percoco is a high-intensity day trader focused on precision entries, Risk free capital growth, and real market execution. With years of live-market experience and a massive global following, he delivers aggressive trading strategies designed to maximize returns while controlling risk. Risk free Trade and earn well',
-    category: 'crypto',
-    copyTradeId: 'CT-3305-C',
+    roi: 275.4, drawdown: 1.2, followers: 85000, weeks: 104, strategy: '60-Second Momentum Scalp',
+    type: 'Trader', experienceYears: 5, markets: ['Binary Options', 'Forex'], riskScore: 6,
+    winRate: 91.2, avgDuration: '1 minute', riskMethods: ['Momentum Catching', 'Volume Spikes'], 
+    bio: 'A high-speed binary options specialist focusing on short-term market momentum and candle-stick reversals. Known for delivering rapid growth in binary markets with precision timing.',
+    category: 'binary',
+    copyTradeId: 'CT-6611-BIN',
     youtubeLink: 'https://youtu.be/-jAP50QgAAY'
   },
   { 
-    id: '5', name: 'Into The Cryptoverse', 
-    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/6.jpeg', 
-    roi: 145.8, drawdown: 1.8, followers: 785000, weeks: 260, strategy: 'Data-Driven Macro Cycles',
-    type: 'Analyst', experienceYears: 10, markets: ['Bitcoin', 'Crypto Cycles'], riskScore: 2,
-    winRate: 84.2, avgDuration: '30 days', riskMethods: ['Logarithmic Regression', 'On-Chain Metrics'], 
-    bio: 'Into The Cryptoverse is a respected crypto analyst delivering data-driven insights on Bitcoin and the broader crypto market. The channel focuses on on-chain metrics, market cycles, and realistic long-term strategies, helping serious traders and investors make wise decisions without hype or false promises.',
-    category: 'crypto',
-    copyTradeId: 'CT-8890-ITC',
-    youtubeLink: 'https://www.youtube.com/@intothecryptoverse'
-  },
-  { 
-    id: '6', name: 'The Trader Next Door', 
+    id: '12', name: 'Pocket Master', 
     avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/10.jpeg', 
-    roi: 215.4, drawdown: 4.1, followers: 125000, weeks: 180, strategy: 'Disciplined Execution Core',
-    type: 'Educator', experienceYears: 7, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 4,
-    winRate: 89.4, avgDuration: '1 hour', riskMethods: ['Clear Market Breakdowns', 'Risk Management'], 
-    bio: 'The Trader Next Door is an experienced market trader sharing realistic, no-nonsense trading strategies across forex, stocks, and crypto. Focused on disciplined execution and clear market breakdowns, the channel helps everyday traders improve skills without hype or false promises. Risk free and 98% profit levels.',
-    category: 'crypto',
-    copyTradeId: 'CT-5582-TND',
+    roi: 195.8, drawdown: 2.5, followers: 54000, weeks: 78, strategy: 'Volatility Over-Under',
+    type: 'Analyst', experienceYears: 4, markets: ['Binary Options'], riskScore: 5,
+    winRate: 88.4, avgDuration: '30 seconds', riskMethods: ['Support Bounce', 'Resistance Rejection'], 
+    bio: 'Elite binary analyst delivering high-frequency signals based on volatility patterns. Specializes in rapid account scaling using disciplined risk per trade.',
+    category: 'binary',
+    copyTradeId: 'CT-9912-PM',
     youtubeLink: 'https://www.youtube.com/@thetradernextdoor'
   },
   { 
@@ -116,17 +105,6 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     category: 'forex',
     copyTradeId: 'CT-2509-TANI',
     youtubeLink: 'https://www.youtube.com/watch?v=wgyrU6MZTbc'
-  },
-  { 
-    id: '10', name: 'Rayner Teo', 
-    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/27.jpeg', 
-    roi: 225.8, drawdown: 2.1, followers: 1500000, weeks: 460, strategy: 'Structured Price Action Logic',
-    type: 'Educator', experienceYears: 12, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 2,
-    winRate: 82.5, avgDuration: '2 days', riskMethods: ['Price Action', 'Capital Preservation'], 
-    bio: 'Rayner Teo is an independent trader and founder of TradingwithRayner, known for clear, profit-first content covering price action, technical analysis, risk-free management, and structured trading strategies across forex, stocks, and crypto. With millions of subscribers, his mission is to help serious traders improve performance with practical, no-hype guidance.',
-    category: 'forex',
-    copyTradeId: 'CT-2710-RT',
-    youtubeLink: 'https://www.youtube.com/channel/UCFSn-h8wTnhpKJMteN76Abg'
   }
 ];
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'copytrade-v6.0-final-launch';
+const CACHE_NAME = 'copytrade-v7.0-platinum-launch';
 const urlsToCache = [
   '/',
   '/index.html',
