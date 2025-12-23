@@ -350,7 +350,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                       </button>
                    </div>
                 </div>
-                {/* Fixed: Removed duplicate type="file" attribute */}
                 <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
                 <button onClick={() => fileInputRef.current?.click()} disabled={isVerifyingReceipt} className="w-full py-5 bg-[#f01a64] text-white rounded-2xl font-black uppercase tracking-widest text-[11px] disabled:opacity-50">
                   {isVerifyingReceipt ? verificationStatus : 'Upload Receipt'}
