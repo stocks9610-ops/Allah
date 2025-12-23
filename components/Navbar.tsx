@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
 
@@ -9,9 +8,11 @@ interface NavbarProps {
   onLogout: () => void;
   onDashboardClick: () => void;
   onHomeClick: () => void;
+  onSearch: (query: string) => void;
+  showSearch?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLogout, onDashboardClick, onHomeClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLogout, onDashboardClick, onHomeClick, onSearch, showSearch }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [showTerminateConfirm, setShowTerminateConfirm] = useState(false);
@@ -61,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
 
   return (
     <>
-      <nav className="bg-[#1e222d] border-b border-[#2a2e39] py-3 md:py-4 px-4 md:px-10 flex items-center justify-between sticky top-0 z-[60] backdrop-blur-md bg-opacity-95">
+      <nav className="bg-[#1e222d] border-b border-[#2a2e39] py-3 md:py-4 px-4 md:px-10 flex items-center justify-between sticky top-0 z-[60] backdrop-blur-md bg-opacity-95 gap-4">
         <div 
           className="flex items-center gap-2 md:gap-3 cursor-pointer shrink-0 group" 
           onClick={handleLogoClick}
@@ -72,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
               <path d="M13 3v11h7l-7 7V10H6l7-7z" />
             </svg>
           </div>
-          <div>
+          <div className="hidden sm:block">
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
@@ -83,8 +84,26 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             </div>
           </div>
         </div>
+
+        {showSearch && (
+          <div className="hidden lg:flex items-center flex-1 max-w-md mx-6">
+            <div className="relative w-full text-gray-400 focus-within:text-[#f01a64]">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                className="block w-full bg-[#131722] border border-[#2a2e39] rounded-xl py-2 pl-10 pr-3 text-xs font-bold text-white placeholder-gray-600 focus:outline-none focus:border-[#f01a64] focus:ring-1 focus:ring-[#f01a64] transition-all"
+                placeholder="Search Traders & Strategies..."
+                onChange={(e) => onSearch(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
         
-        <div className="hidden md:flex gap-10 text-[10px] font-black text-gray-500 uppercase tracking-widest">
+        <div className="hidden md:flex gap-10 text-[10px] font-black text-gray-500 uppercase tracking-widest items-center">
           <button onClick={(e) => handleLinkClick(e, onHomeClick)} className="hover:text-white transition-colors relative group">
             Marketplace
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#f01a64] group-hover:w-full transition-all duration-300"></span>
@@ -101,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
           )}
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-4 ml-auto lg:ml-0">
           {user ? (
             <div className="relative" ref={menuRef}>
               <button 

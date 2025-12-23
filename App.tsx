@@ -22,6 +22,7 @@ const App: React.FC = () => {
   const [showGallery, setShowGallery] = useState(false);
   const [showMentorshipModal, setShowMentorshipModal] = useState(false);
   const [showReferral, setShowReferral] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   
   const [user, setUser] = useState<UserProfile | null>(null);
   const [view, setView] = useState<'landing' | 'dashboard'>('landing');
@@ -131,7 +132,9 @@ const App: React.FC = () => {
         user={user}
         onLogout={handleLogout}
         onDashboardClick={navigateToDashboard}
-        onHomeClick={() => user ? setView('dashboard') : setView('landing')}
+        onHomeClick={() => setView('landing')}
+        onSearch={setSearchTerm}
+        showSearch={view === 'landing'}
       />
       
       <LiveActivityFeed />
@@ -152,7 +155,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div ref={traderSectionRef}>
-              <TraderList onCopyClick={handleCopyTrader} />
+              <TraderList onCopyClick={handleCopyTrader} searchTerm={searchTerm} />
             </div>
             <Features />
           </>

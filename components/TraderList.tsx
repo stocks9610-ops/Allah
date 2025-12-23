@@ -24,7 +24,7 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     roi: 485.4, drawdown: 2.1, followers: 1500000, weeks: 460, strategy: 'Structured Price Action Logic',
     type: 'Educator', experienceYears: 12, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 2,
     winRate: 82.5, avgDuration: '2 days', riskMethods: ['Price Action', 'Capital Preservation'], 
-    bio: 'Rayner Teo is an independent trader and founder of TradingwithRayner, known for clear, profit-first content covering price action, technical analysis, risk-free management, and structured trading strategies across forex, stocks, and crypto. With millions of subscribers, his mission is to help serious traders improve performance with practical, no-hype guidance.',
+    bio: 'Rayner Teo is an independent trader and founder of TradingwithRayner, known for clear, profit-first content covering price action, technical analysis, and risk-free management, and structured trading strategies across forex, stocks, and crypto. With millions of subscribers, his mission is to help serious traders improve performance with practical, no-hype guidance.',
     category: 'crypto',
     copyTradeId: 'CT-2710-RT',
     youtubeLink: 'https://www.youtube.com/channel/UCFSn-h8wTnhpKJMteN76Abg'
@@ -112,16 +112,17 @@ const ALL_TRADERS = [...INITIAL_TRADERS];
 
 const SocialIcons: React.FC<{ color: string }> = ({ color }) => (
   <div className="flex gap-1.5 mt-1 opacity-60">
-    <svg className={`w-2.5 h-2.5 ${color}`} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.054-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759 6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    <svg className={`w-2.5 h-2.5 ${color}`} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.054-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759 6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     <svg className={`w-2.5 h-2.5 ${color}`} fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.462 8.27l-1.56 7.42c-.116.545-.44.68-.895.425l-2.37-1.75-1.145 1.1c-.125.127-.23.234-.473.234l.17-2.42 4.41-3.98c.19-.17-.04-.26-.297-.09l-5.45 3.43-2.34-.73c-.51-.16-.52-.51.107-.756l9.15-3.53c.42-.15.79.1.663.667z"/></svg>
   </div>
 );
 
 interface TraderListProps {
   onCopyClick: (trader: Trader) => void;
+  searchTerm?: string;
 }
 
-const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
+const TraderList: React.FC<TraderListProps> = ({ onCopyClick, searchTerm = '' }) => {
   const [activeCategory, setActiveCategory] = useState<'crypto' | 'binary' | 'gold' | 'forex'>('crypto');
   const [traderProfits, setTraderProfits] = useState<Record<string, number>>({});
   const [liveWinRates, setLiveWinRates] = useState<Record<string, number>>({});
@@ -179,9 +180,14 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
 
   const getCategoryStyles = (cat: string) => {
     const base = "px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] transition-all transform hover:-translate-y-1 active:scale-95 border-2";
-    if (activeCategory !== cat) {
+    if (activeCategory !== cat && !searchTerm) {
       return `${base} bg-[#1e222d] text-gray-400 border-[#2a2e39] hover:border-gray-500 hover:text-white`;
     }
+    // Dim categories if searching
+    if (searchTerm && activeCategory !== cat) {
+       return `${base} opacity-50 bg-[#1e222d] text-gray-600 border-[#2a2e39] cursor-not-allowed`;
+    }
+    
     switch (cat) {
       case 'crypto': return `${base} bg-[#f01a64] text-white border-[#f01a64] shadow-[0_10px_30px_rgba(240,26,100,0.3)]`;
       case 'binary': return `${base} bg-blue-600 text-white border-blue-600 shadow-[0_10px_30px_rgba(37,99,235,0.3)]`;
@@ -190,6 +196,14 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
       default: return base;
     }
   };
+
+  const filteredTraders = ALL_TRADERS.filter(t => {
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      return t.name.toLowerCase().includes(term) || t.strategy.toLowerCase().includes(term);
+    }
+    return t.category === activeCategory;
+  });
 
   return (
     <section className="py-16 md:py-28 bg-[#131722] border-t border-[#2a2e39] relative">
@@ -207,13 +221,21 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
             {(['crypto', 'binary', 'gold', 'forex'] as const).map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => !searchTerm && setActiveCategory(cat)}
                 className={getCategoryStyles(cat)}
+                disabled={!!searchTerm}
               >
                 {cat}
               </button>
             ))}
           </div>
+          {searchTerm && (
+            <div className="text-center animate-in fade-in">
+              <span className="text-[10px] text-[#f01a64] font-black uppercase tracking-[0.2em] bg-[#f01a64]/10 px-3 py-1 rounded-lg">
+                Showing results for "{searchTerm}" ({filteredTraders.length})
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="relative group/list">
@@ -235,92 +257,104 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
             ref={scrollContainerRef}
             className="flex overflow-x-auto gap-4 md:gap-6 py-4 px-1 no-scrollbar snap-x snap-mandatory scroll-smooth"
           >
-            {ALL_TRADERS.filter(t => t.category === activeCategory).map(trader => (
-              <div 
-                key={trader.id}
-                onClick={() => setSelectedTrader(trader)}
-                className={`min-w-[88vw] sm:min-w-[320px] md:min-w-[340px] bg-[#1e222d] border border-[#2a2e39] rounded-[2.5rem] p-6 cursor-pointer transition-all snap-center relative group hover:border-[#f01a64]/50 hover:shadow-2xl ${
-                  animatingTraders[trader.id] ? 'border-[#f01a64] scale-[1.01]' : ''
-                }`}
-              >
-                <div className="flex flex-col items-center text-center mb-5">
-                  <div className="relative mb-4">
-                    <img loading="lazy" src={trader.avatar} className="w-16 h-16 md:w-20 md:h-20 rounded-3xl object-cover ring-2 ring-white/5 bg-[#131722]" />
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#00b36b] border-2 border-[#1e222d] rounded-full"></div>
-                    
-                    {trader.youtubeLink && (
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(trader.youtubeLink, '_blank');
-                        }}
-                        className="absolute -top-2 -left-2 w-8 h-8 bg-[#FF0000] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,0,0,0.6)] animate-pulse border border-white/20 hover:scale-125 transition-transform"
-                        title="Watch External Strategy"
-                      >
-                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
-                        </svg>
-                      </button>
-                    )}
-                  </div>
-                  <div className="min-w-0 w-full">
-                    <h3 className="text-white font-black text-base md:text-lg truncate mb-0.5 group-hover:text-[#f01a64] transition-colors">{trader.name}</h3>
-                    <span className="text-[7px] text-gray-500 font-black uppercase tracking-[0.3em] block mb-2">{trader.copyTradeId}</span>
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-[8px] bg-[#f01a64]/10 text-[#f01a64] px-2 py-0.5 rounded font-black uppercase tracking-widest">{trader.type}</span>
-                      <SocialIcons color="text-gray-500" />
+            {filteredTraders.length > 0 ? (
+              filteredTraders.map(trader => (
+                <div 
+                  key={trader.id}
+                  onClick={() => setSelectedTrader(trader)}
+                  className={`min-w-[88vw] sm:min-w-[320px] md:min-w-[340px] bg-[#1e222d] border border-[#2a2e39] rounded-[2.5rem] p-6 cursor-pointer transition-all snap-center relative group hover:border-[#f01a64]/50 hover:shadow-2xl ${
+                    animatingTraders[trader.id] ? 'border-[#f01a64] scale-[1.01]' : ''
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center mb-5">
+                    <div className="relative mb-4">
+                      <img loading="lazy" src={trader.avatar} className="w-16 h-16 md:w-20 md:h-20 rounded-3xl object-cover ring-2 ring-white/5 bg-[#131722]" />
+                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#00b36b] border-2 border-[#1e222d] rounded-full"></div>
+                      
+                      {trader.youtubeLink && (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(trader.youtubeLink, '_blank');
+                          }}
+                          className="absolute -top-2 -left-2 w-8 h-8 bg-[#FF0000] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,0,0,0.6)] animate-pulse border border-white/20 hover:scale-125 transition-transform"
+                          title="Watch External Strategy"
+                        >
+                          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                    <div className="min-w-0 w-full">
+                      <h3 className="text-white font-black text-base md:text-lg truncate mb-0.5 group-hover:text-[#f01a64] transition-colors">{trader.name}</h3>
+                      <span className="text-[7px] text-gray-500 font-black uppercase tracking-[0.3em] block mb-2">{trader.copyTradeId}</span>
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-[8px] bg-[#f01a64]/10 text-[#f01a64] px-2 py-0.5 rounded font-black uppercase tracking-widest">{trader.type}</span>
+                        <SocialIcons color="text-gray-500" />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="bg-[#131722] p-5 rounded-3xl mb-5 border border-[#2a2e39] group-hover:border-white/10 transition-colors">
-                  <div className="flex justify-between items-end mb-1 px-1">
-                    <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Total Profits</span>
-                    <span className="text-[8px] text-[#00b36b] font-black uppercase tracking-widest animate-pulse">Live</span>
+                  <div className="bg-[#131722] p-5 rounded-3xl mb-5 border border-[#2a2e39] group-hover:border-white/10 transition-colors">
+                    <div className="flex justify-between items-end mb-1 px-1">
+                      <span className="text-[8px] text-gray-500 font-black uppercase tracking-widest">Total Profits</span>
+                      <span className="text-[8px] text-[#00b36b] font-black uppercase tracking-widest animate-pulse">Live</span>
+                    </div>
+                    <div className={`text-2xl md:text-3xl font-black tracking-tight text-center ${animatingTraders[trader.id] ? 'text-[#00b36b]' : 'text-white'}`}>
+                      ${traderProfits[trader.id]?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    </div>
                   </div>
-                  <div className={`text-2xl md:text-3xl font-black tracking-tight text-center ${animatingTraders[trader.id] ? 'text-[#00b36b]' : 'text-white'}`}>
-                    ${traderProfits[trader.id]?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-3 gap-2 mb-6">
-                  <div className="bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center">
-                    <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">ROI</span>
-                    <span className="text-[#00b36b] font-black text-xs">+{trader.roi}%</span>
+                  <div className="grid grid-cols-3 gap-2 mb-6">
+                    <div className="bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center">
+                      <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">ROI</span>
+                      <span className="text-[#00b36b] font-black text-xs">+{trader.roi}%</span>
+                    </div>
+                    <div className={`bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center ${animatingTraders[trader.id] ? 'bg-[#00b36b]/5' : ''} transition-colors`}>
+                      <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">Win Rate</span>
+                      <span className="text-[#00b36b] font-black text-xs">
+                        {(liveWinRates[trader.id] || trader.winRate).toFixed(1)}%
+                      </span>
+                    </div>
+                    <div className="bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center">
+                      <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">Weeks</span>
+                      <span className="text-blue-500 font-black text-xs">{trader.weeks}</span>
+                    </div>
                   </div>
-                  <div className={`bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center ${animatingTraders[trader.id] ? 'bg-[#00b36b]/5' : ''} transition-colors`}>
-                    <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">Win Rate</span>
-                    <span className="text-[#00b36b] font-black text-xs">
-                      {(liveWinRates[trader.id] || trader.winRate).toFixed(1)}%
-                    </span>
-                  </div>
-                  <div className="bg-[#131722] p-2 rounded-2xl border border-[#2a2e39] text-center">
-                    <span className="text-[7px] text-gray-500 uppercase font-black block mb-0.5">Weeks</span>
-                    <span className="text-blue-500 font-black text-xs">{trader.weeks}</span>
-                  </div>
-                </div>
 
-                <div className="space-y-3">
-                  {trader.youtubeLink && (
+                  <div className="space-y-3">
+                    {trader.youtubeLink && (
+                      <button 
+                        className="w-full py-3.5 bg-[#FF0000]/10 border border-[#FF0000]/30 hover:bg-[#FF0000]/20 text-white rounded-2xl font-black text-[9px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-90 flex items-center justify-center gap-2"
+                        onClick={(e) => { e.stopPropagation(); window.open(trader.youtubeLink, '_blank'); }}
+                      >
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
+                        </svg>
+                        Watch Official Strategy
+                      </button>
+                    )}
                     <button 
-                      className="w-full py-3.5 bg-[#FF0000]/10 border border-[#FF0000]/30 hover:bg-[#FF0000]/20 text-white rounded-2xl font-black text-[9px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-90 flex items-center justify-center gap-2"
-                      onClick={(e) => { e.stopPropagation(); window.open(trader.youtubeLink, '_blank'); }}
+                      className="w-full py-4 bg-[#00b36b] hover:bg-green-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-90 group-hover:shadow-[#00b36b]/20"
+                      onClick={(e) => { e.stopPropagation(); onCopyClick(trader); }}
                     >
-                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
-                      </svg>
-                      Watch Official Strategy
+                      Copy Strategy
                     </button>
-                  )}
-                  <button 
-                    className="w-full py-4 bg-[#00b36b] hover:bg-green-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-90 group-hover:shadow-[#00b36b]/20"
-                    onClick={(e) => { e.stopPropagation(); onCopyClick(trader); }}
-                  >
-                    Copy Strategy
-                  </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+               <div className="flex-1 text-center py-12 bg-[#1e222d] rounded-[2.5rem] border border-white/5 mx-4">
+                  <div className="w-16 h-16 bg-[#f01a64]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                     <svg className="w-8 h-8 text-[#f01a64]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                     </svg>
+                  </div>
+                  <h3 className="text-white font-black uppercase text-lg mb-2">No Traders Found</h3>
+                  <p className="text-gray-500 text-xs font-bold uppercase tracking-widest">Try adjusting your search terms</p>
+               </div>
+            )}
           </div>
           
           <div className="flex md:hidden justify-center mt-6 gap-2 opacity-50">
