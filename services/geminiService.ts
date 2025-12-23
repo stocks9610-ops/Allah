@@ -1,11 +1,25 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
+
+// Access the API Key injected by Vite's define plugin
+// @ts-ignore - process is replaced at build time
+const API_KEY = process.env.API_KEY || '';
+
+const getAIClient = () => {
+  if (!API_KEY) {
+    console.warn("API_KEY is missing. AI features will run in simulation mode.");
+    return null;
+  }
+  return new GoogleGenAI({ apiKey: API_KEY });
+};
 
 /**
  * TASK: Senior Account Manager (Sarah)
  * MODEL: gemini-3-flash-preview
  */
 export const startSupportChat = async (history: {role: 'user' | 'model', parts: {text: string}[]}[]) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
+  if (!ai) return "• **SYSTEM**: AI Offline. Please configure API_KEY in your environment variables.";
   
   const systemInstruction = `
     You are 'Sarah', a Senior Account Manager for the CopyTrade Elite Hub.
@@ -47,7 +61,9 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
  * TASK: Deep Market Insight
  */
 export const deepMarketAnalysis = async (prompt: string, base64Image?: string, mimeType?: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
+  if (!ai) return "Analyst Offline. Check Configuration.";
+
   const parts: any[] = [{ text: prompt }];
   
   if (base64Image && mimeType) {
@@ -79,7 +95,8 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
  * TASK: Payment Forensic Verification
  */
 export const verifyPaymentProof = async (base64Image: string, mimeType: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
+  if (!ai) return { is_valid: false, detected_amount: 0, confidence: 0, summary: "AI Configuration Missing." };
   
   try {
     const response = await ai.models.generateContent({
@@ -116,7 +133,9 @@ export const verifyPaymentProof = async (base64Image: string, mimeType: string) 
  * TASK: Rapid Pulse Engine
  */
 export const getInstantMarketPulse = async (asset: string = "Bitcoin") => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
+  if (!ai) return null;
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -144,7 +163,9 @@ export const getInstantMarketPulse = async (asset: string = "Bitcoin") => {
  * TASK: Trader Edge Summary
  */
 export const getTraderEdgeFast = async (bio: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const ai = getAIClient();
+  if (!ai) return "Execution strategy confirmed.";
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",

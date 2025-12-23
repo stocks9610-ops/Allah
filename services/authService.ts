@@ -1,3 +1,4 @@
+
 import { Trader } from '../types';
 
 export interface UserProfile {
@@ -23,6 +24,14 @@ export interface UserProfile {
 const SESSION_KEY = 'zulu_auth_token';
 const USERS_DB_KEY = 'zulu_vault_ledger';
 export const BUILD_ID = 'v7.0-PLATINUM-LAUNCH';
+
+// SECURITY UPDATE: SHA-256 Hashing
+const hashPassword = async (pwd: string): Promise<string> => {
+  const msgBuffer = new TextEncoder().encode(pwd);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+};
 
 const vault = {
   encode: (data: any) => btoa(JSON.stringify(data)),
@@ -74,9 +83,13 @@ export const authService = {
 
     if (db[emailKey]) return false;
 
+    // Hash password before storage
+    const hashedPassword = user.password ? await hashPassword(user.password) : undefined;
+
     const nodeId = `NODE-${Math.floor(100 + Math.random() * 899)}-${user.username.substring(0, 1).toUpperCase()}`;
     db[emailKey] = { 
       ...user, 
+      password: hashedPassword,
       schemaVersion: BUILD_ID, 
       activeTraders: [],
       nodeId,
@@ -94,7 +107,12 @@ export const authService = {
     const db = authService.getDB();
     const user = db[email.toLowerCase()];
 
-    if (user && user.password === password) {
+    if (!user) return null;
+
+    const inputHash = await hashPassword(password);
+
+    // Check hash
+    if (user.password === inputHash) {
       localStorage.setItem(SESSION_KEY, user.email.toLowerCase());
       return user;
     }
