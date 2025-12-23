@@ -48,7 +48,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   
   const depositSectionRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const proofInputRef = useRef<HTMLInputElement>(null);
   const [depositNetwork, setDepositNetwork] = useState(NETWORKS[0]);
   const [isVerifyingReceipt, setIsVerifyingReceipt] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState('');
@@ -283,6 +282,15 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                   </div>
                 ))}
              </div>
+          </div>
+        )}
+
+        {/* Status indicator when no active trades */}
+        {activeTrades.length === 0 && (
+          <div className="flex items-center justify-center h-24 border border-white/5 rounded-[2.5rem] bg-[#1e222d]/30">
+            <div className="flex items-center justify-center h-full text-gray-600 text-[10px] uppercase tracking-wide">
+              Awaiting Command to Deploy Capital...
+            </div>
           </div>
         )}
 
