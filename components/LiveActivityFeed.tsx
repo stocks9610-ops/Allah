@@ -60,7 +60,7 @@ const LiveActivityFeed: React.FC = () => {
 
   return (
     <div 
-      className={`fixed bottom-24 left-4 md:left-10 z-[110] transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform pb-[env(safe-area-inset-bottom)] ${
+      className={`fixed bottom-36 left-4 md:bottom-10 md:left-10 z-[110] transition-all duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)] transform pb-[env(safe-area-inset-bottom)] ${
         visible ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-12 opacity-0 scale-90 blur-sm'
       }`}
     >

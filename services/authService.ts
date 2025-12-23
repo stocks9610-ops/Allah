@@ -1,4 +1,3 @@
-
 import { Trader } from '../types';
 
 export interface UserProfile {
@@ -26,12 +25,8 @@ const USERS_DB_KEY = 'zulu_vault_ledger_v7'; // Updated key version
 export const BUILD_ID = 'v7.0-PLATINUM-LAUNCH';
 
 // UNIVERSAL ENCODER: Works on HTTP (IP Address) and HTTPS (Netlify) identically.
-// This prevents "Login Failed" errors when switching between dev/prod environments.
 const hashPassword = (pwd: string): string => {
   try {
-    // 1. URL Encode (Handle emojis/special chars)
-    // 2. Base64 Encode
-    // 3. Reverse String (Basic obfuscation)
     return btoa(encodeURIComponent(pwd)).split('').reverse().join('');
   } catch (e) {
     return "raw_" + pwd;
@@ -91,14 +86,19 @@ export const authService = {
           needsUpdate = true;
         }
         if (typeof user.balance !== 'number') { user.balance = 1000; needsUpdate = true; }
+        if (typeof user.pendingClaims !== 'number') { user.pendingClaims = 0; needsUpdate = true; }
         
         if (needsUpdate) {
            authService.updateUser(user);
         }
         return user;
+      } else {
+        // Session exists but user not in DB (cleared/corrupt DB), logout to fix
+        authService.logout();
       }
     } catch (e) {
       console.error("Auth Retrieval Error", e);
+      authService.logout();
     }
     return null;
   },
