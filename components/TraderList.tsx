@@ -62,13 +62,14 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
   },
   { 
     id: '4', name: 'Craig Percoco', 
-    avatar: '/traders/craig.jpg', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/5.jpeg', 
     roi: 289.6, drawdown: 6.1, followers: 112000, weeks: 416, strategy: 'Day Trading Momentum',
     type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5,
     winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops', 'Volume Profile'], 
-    bio: 'Seasoned investor sharing his journey from young day trader to pro. Specializes in market approaches, crypto basics, and high-level execution tutorials.',
+    bio: 'Craig Percoco is a high-intensity day trader focused on precision entries, Risk free capital growth, and real market execution. With years of live-market experience and a massive global following, he delivers aggressive trading strategies designed to maximize returns while controlling risk. Risk free Trade and earn well',
     category: 'crypto',
-    copyTradeId: 'CT-3305-C'
+    copyTradeId: 'CT-3305-C',
+    youtubeLink: 'https://youtu.be/-jAP50QgAAY'
   },
   { 
     id: '5', name: 'Binary Edge Pro', 
