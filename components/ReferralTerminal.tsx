@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
 
@@ -29,8 +30,10 @@ const ReferralTerminal: React.FC<ReferralTerminalProps> = ({ user, onUserUpdate,
     
     // Simulate network detection
     setTimeout(() => {
+      // Use fresh user state for reliable update
+      const freshUser = authService.getUser() || user;
       onUserUpdate(authService.updateUser({ 
-        pendingClaims: (user.pendingClaims || 0) + 1 
+        pendingClaims: (freshUser.pendingClaims || 0) + 1 
       })!);
       setIsDispatching(false);
     }, 1500);
@@ -42,12 +45,20 @@ const ReferralTerminal: React.FC<ReferralTerminalProps> = ({ user, onUserUpdate,
     setClaimStatus('claiming');
     
     setTimeout(() => {
+      const freshUser = authService.getUser() || user;
+      
+      // Verification check
+      if ((freshUser.pendingClaims || 0) <= 0) {
+         setClaimStatus('idle');
+         return;
+      }
+
       const reward = 200;
       const updatedUser = authService.updateUser({
-        balance: user.balance + reward,
-        referralEarnings: (user.referralEarnings || 0) + reward,
-        pendingClaims: (user.pendingClaims || 0) - 1,
-        referralCount: (user.referralCount || 0) + 1
+        balance: freshUser.balance + reward,
+        referralEarnings: (freshUser.referralEarnings || 0) + reward,
+        pendingClaims: (freshUser.pendingClaims || 0) - 1,
+        referralCount: (freshUser.referralCount || 0) + 1
       });
       
       if (updatedUser) {

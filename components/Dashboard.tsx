@@ -104,7 +104,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     }, 100);
 
     return () => clearInterval(interval);
-  }, [activeTrades, user]);
+  }, [activeTrades]); // Removed 'user' dependency to prevent timer jitter
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -125,8 +125,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       if (result.is_valid && result.detected_amount > 0) {
         setVerificationStatus(`PAYMENT RECEIVED SUCCESSFULLY: $${result.detected_amount}`);
         setTimeout(() => {
+          // FETCH FRESH USER STATE BEFORE UPDATE
+          const freshUser = authService.getUser() || user;
           onUserUpdate(authService.updateUser({ 
-            balance: user.balance + result.detected_amount,
+            balance: freshUser.balance + result.detected_amount,
             hasDeposited: true 
           })!);
           setIsVerifyingReceipt(false);
@@ -173,8 +175,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     
     // Simulate API delay
     setTimeout(() => {
-      // DEDUCT BALANCE LOGIC
-      const newBalance = Math.max(0, user.balance - amountToDeduct);
+      // FETCH FRESH USER STATE
+      const freshUser = authService.getUser() || user;
+      
+      if (freshUser.balance < amountToDeduct) {
+         setIsWithdrawing(false);
+         setWithdrawError("Balance update error. Please retry.");
+         return;
+      }
+
+      const newBalance = Math.max(0, freshUser.balance - amountToDeduct);
       onUserUpdate(authService.updateUser({
         balance: newBalance
       })!);
@@ -195,6 +205,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     const plan = PROFIT_STRATEGIES.find(p => p.id === selectedPlanId);
     if (!plan) return;
     
+    // Initial Check
     if (user.balance < investAmount) {
       depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
       alert("INSUFFICIENT_FUNDS: Please deposit to initialize this trading strategy.");
@@ -208,13 +219,30 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     // Random duration between 5000ms and 15000ms
     const randomDuration = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
 
+    // SAFETY TIMER: Ensure we don't get stuck if the browser throttles
+    const safetyTimer = setTimeout(() => {
+       if (isProcessingTrade) {
+         setIsProcessingTrade(false);
+         alert("Network Congestion: Trade queued.");
+       }
+    }, 20000);
+
     setTimeout(() => {
+      clearTimeout(safetyTimer);
       // End Blocking Phase
       setIsProcessingTrade(false);
+      
+      // CRITICAL: Re-check balance before execution (Prevents Race Conditions)
+      const freshUser = authService.getUser() || user;
+      if (freshUser.balance < investAmount) {
+         alert("Transaction Failed: Insufficient settlement balance.");
+         return;
+      }
+
       setShowSuccessToast(true);
       
       // Add to Active Trades (Non-Blocking)
-      executeTradeLogic(plan);
+      executeTradeLogic(plan, freshUser);
 
       // Hide Toast & Reset Selection
       setTimeout(() => {
@@ -224,11 +252,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     }, randomDuration);
   };
 
-  const executeTradeLogic = (plan: typeof PROFIT_STRATEGIES[0]) => {
-    // Deduct Balance Immediately
+  const executeTradeLogic = (plan: typeof PROFIT_STRATEGIES[0], currentUser: UserProfile) => {
+    // Deduct Balance Immediately from FRESH User State
     onUserUpdate(authService.updateUser({ 
-      balance: user.balance - investAmount,
-      totalInvested: user.totalInvested + investAmount
+      balance: currentUser.balance - investAmount,
+      totalInvested: currentUser.totalInvested + investAmount
     })!);
 
     // Add to active trades list

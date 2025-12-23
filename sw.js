@@ -1,36 +1,37 @@
-const CACHE_NAME = 'copytrade-v7.0-platinum-launch';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
 
-self.addEventListener('install', event => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
+const CACHE_NAME = 'copytrade-recovery-v8';
+
+// SAFETY MODE:
+// 1. Delete all previous caches to fix "Blank Screen"
+// 2. Do not aggressively cache JS/CSS to prevent stale logic
+// 3. Network First strategy
+
+self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Force activation
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Purging obsolete cache:', cacheName);
-            return caches.delete(cacheName);
-          }
+        cacheNames.map((cacheName) => {
+          // Clear EVERYTHING to ensure fresh load
+          console.log('Clearing cache:', cacheName);
+          return caches.delete(cacheName);
         })
       );
     })
   );
+  self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
+  // Simple Network-First strategy
+  // This ensures we always get the live file if available
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
+    fetch(event.request).catch(() => {
+      // Fallback only if offline (optional)
+      return new Response("Offline Mode Unavailable - Please Reconnect");
+    })
   );
 });

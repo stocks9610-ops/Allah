@@ -76,7 +76,11 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
             <h1 className="text-lg md:text-xl font-black text-[#f01a64] tracking-tighter uppercase leading-none">
               CopyTrade
             </h1>
-            <span className="text-[8px] md:text-[10px] text-gray-500 block -mt-0.5 font-black uppercase whitespace-nowrap tracking-widest">Professional Hub</span>
+            <div className="flex items-center gap-1.5">
+               <span className="text-[8px] md:text-[10px] text-gray-500 font-black uppercase whitespace-nowrap tracking-widest">Professional Hub</span>
+               {/* SIMULATION INDICATOR */}
+               <span className="hidden md:block text-[8px] bg-[#f01a64] text-white px-1 rounded font-black uppercase">Testnet Mode</span>
+            </div>
           </div>
         </div>
         
