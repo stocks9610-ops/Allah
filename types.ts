@@ -1,4 +1,3 @@
-
 export interface Trader {
   id: string;
   name: string;
@@ -17,6 +16,8 @@ export interface Trader {
   avgDuration: string;
   riskMethods: string[];
   bio: string;
+  copyTradeId: string;
+  youtubeLink?: string;
 }
 
 export interface ChatMessage {

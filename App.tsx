@@ -18,18 +18,12 @@ import { Trader } from './types';
 
 const App: React.FC = () => {
   const [showAI, setShowAI] = useState(false);
-  const [showSupport, setShowSupport] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [showMentorshipModal, setShowMentorshipModal] = useState(false);
   const [user, setUser] = useState<UserProfile | null>(null);
   const [view, setView] = useState<'landing' | 'dashboard'>('landing');
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  
-  const [pullDistance, setPullDistance] = useState(0);
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const startY = useRef(0);
-  const threshold = 80;
 
   const traderSectionRef = useRef<HTMLDivElement>(null);
   const [isPending, startTransition] = useTransition();
@@ -50,34 +44,6 @@ const App: React.FC = () => {
       window.removeEventListener('beforeinstallprompt', () => {});
     };
   }, []);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (window.scrollY === 0) startY.current = e.touches[0].pageY;
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (window.scrollY === 0 && !isRefreshing) {
-      const currentY = e.touches[0].pageY;
-      const distance = currentY - startY.current;
-      if (distance > 0) setPullDistance(Math.min(distance * 0.5, 120));
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (pullDistance >= threshold) triggerRefresh();
-    else setPullDistance(0);
-  };
-
-  const triggerRefresh = () => {
-    setIsRefreshing(true);
-    setPullDistance(80);
-    setTimeout(() => {
-      setIsRefreshing(false);
-      setPullDistance(0);
-      const currentUser = authService.getUser();
-      if (currentUser) setUser({...currentUser});
-    }, 1500);
-  };
 
   const handleLogout = () => {
     authService.logout();
@@ -141,23 +107,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen flex flex-col font-sans selection:bg-pink-500/30 overflow-x-hidden bg-[#131722] relative"
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <div 
-        className="absolute left-0 right-0 z-[100] flex justify-center pointer-events-none transition-transform duration-200"
-        style={{ transform: `translateY(${pullDistance - 60}px)`, opacity: pullDistance / threshold }}
-      >
-        <div className={`bg-[#1e222d] border border-[#f01a64]/30 p-3 rounded-full shadow-[0_0_20px_rgba(240,26,100,0.3)] flex items-center justify-center ${isRefreshing ? 'animate-sync-spin' : ''}`}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#f01a64]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-        </div>
-      </div>
-
+    <div className="min-h-screen flex flex-col font-sans selection:bg-pink-500/30 overflow-x-hidden bg-[#131722] relative">
       <TickerTape />
       <Navbar 
         onJoinClick={() => setShowSignup(true)} 
@@ -170,10 +120,7 @@ const App: React.FC = () => {
       
       <LiveActivityFeed />
 
-      <main 
-        className={`flex-grow transition-all duration-300 ${isPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}
-        style={{ transform: `translateY(${pullDistance * 0.5}px)` }}
-      >
+      <main className={`flex-grow transition-all duration-300 ${isPending ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
         {view === 'landing' ? (
           <>
             <Hero 
@@ -211,10 +158,7 @@ const App: React.FC = () => {
       <InfoSection />
       <Footer />
 
-      {/* RESTRUCTURED FLOATING ACTION COMMAND STACK */}
       <div className="fixed bottom-10 right-4 md:right-10 flex flex-col gap-5 z-[95]">
-        
-        {/* TOP: GOOGLE MEET (MENTORSHIP) */}
         <button 
           onClick={() => setShowMentorshipModal(true)}
           className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(255,255,255,0.1)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/20"
@@ -227,7 +171,6 @@ const App: React.FC = () => {
           <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
         </button>
 
-        {/* MIDDLE: TELEGRAM (COMMUNITY) */}
         <button 
           onClick={() => window.open('https://t.me/MentorwithZuluTrade_bot', '_blank')}
           className="w-14 h-14 md:w-16 md:h-16 bg-[#0088cc] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(0,136,204,0.3)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/10"
@@ -241,7 +184,6 @@ const App: React.FC = () => {
           </span>
         </button>
 
-        {/* BOTTOM: SARAH (AI ANALYST) */}
         <button 
           onClick={() => setShowAI(!showAI)}
           className="w-14 h-14 md:w-16 md:h-16 bg-[#f01a64] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(240,26,100,0.3)] transition-transform hover:scale-110 active:scale-95 group relative border border-white/10"
@@ -269,7 +211,6 @@ const App: React.FC = () => {
         <SuccessGallery onClose={() => setShowGallery(false)} />
       )}
 
-      {/* INTERNAL MENTORSHIP MODAL SYNC */}
       {showMentorshipModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl animate-in fade-in">
           <div className="bg-[#1e222d] border border-white/10 w-full max-w-lg rounded-[3rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)] animate-in zoom-in-95">

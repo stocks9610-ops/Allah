@@ -23,7 +23,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3,
     winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], 
     bio: 'Young entrepreneur sharing skill teachings. Runs a massive trader signals community and educational content network focused on mindset and risk awareness.',
-    category: 'crypto'
+    category: 'crypto',
+    copyTradeId: 'CT-7701-X'
   },
   { 
     id: '1', name: 'Thomas Kralow (Pro)', 
@@ -31,8 +32,10 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic',
     type: 'Trader', experienceYears: 9, markets: ['Crypto', 'Stocks'], riskScore: 4,
     winRate: 92.1, avgDuration: '3 days', riskMethods: ['Portfolio Hedging', 'Growth Scaling'], 
-    bio: 'Investor and entrepreneur blending trading education with personal growth. Shares deep market insights and business lessons for serious wealth builders.',
-    category: 'crypto'
+    bio: 'Thomas Kralow is a high-performance crypto and forex trader known for AI-driven trading strategies. With 500K+ subscribers, he shares bold market insights, aggressive setups, and next-level trading education designed for serious traders. Risk Free Trade',
+    category: 'crypto',
+    copyTradeId: 'CT-9102-K',
+    youtubeLink: 'https://youtu.be/PVjbDGkFrDw'
   },
   { 
     id: '2', name: 'P4 Provider', 
@@ -40,8 +43,10 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     roi: 195.4, drawdown: 2.8, followers: 600000, weeks: 104, strategy: 'Finance Fundamentals',
     type: 'Trader', experienceYears: 8, markets: ['Forex', 'Crypto'], riskScore: 2,
     winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis', 'Trend Confirmation'], 
-    bio: 'P4 Provider is a professional Forex and Crypto trader with over 8 years of experience. He has mentored 3,300+ traders and shares practical trading strategies, market analysis, and risk management techniques through his YouTube channel.',
-    category: 'crypto'
+    bio: 'P4 Provider is a professional Forex and Crypto trader with over 8 years of experience. He has mentored 3,300+ traders and shares practical trading strategies, market analysis, and risk management techniques through his YouTube channel Risk Free Trade.',
+    category: 'crypto',
+    copyTradeId: 'CT-4403-P',
+    youtubeLink: 'https://youtu.be/0CgD6mDVV_M'
   },
   { 
     id: '3', name: 'ElioDeFi Protocol', 
@@ -50,7 +55,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Analyst', experienceYears: 4, markets: ['DeFi', 'Altcoins'], riskScore: 7,
     winRate: 76.9, avgDuration: '4 hours', riskMethods: ['Smart Contract Audit', 'Liquidity Analysis'], 
     bio: 'Focused on decentralized finance (DeFi) and crypto market topics. Explains complex blockchain concepts and navigates deep crypto liquidity markets.',
-    category: 'crypto'
+    category: 'crypto',
+    copyTradeId: 'CT-2204-E'
   },
   { 
     id: '4', name: 'Craig Percoco', 
@@ -59,7 +65,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Trader', experienceYears: 8, markets: ['Crypto', 'Futures'], riskScore: 5,
     winRate: 81.2, avgDuration: '30 min', riskMethods: ['Momentum Stops', 'Volume Profile'], 
     bio: 'Seasoned investor sharing his journey from young day trader to pro. Specializes in market approaches, crypto basics, and high-level execution tutorials.',
-    category: 'crypto'
+    category: 'crypto',
+    copyTradeId: 'CT-3305-C'
   },
   { 
     id: '5', name: 'Binary Edge Pro', 
@@ -68,7 +75,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Trader', experienceYears: 8, markets: ['Binary Options', 'Forex'], riskScore: 8,
     winRate: 89.1, avgDuration: '1 min', riskMethods: ['Fixed Percentage Stake'], 
     bio: 'Specialized in high-accuracy binary options signals with institutional-grade reversal logic.',
-    category: 'binary'
+    category: 'binary',
+    copyTradeId: 'CT-8806-B'
   },
   { 
     id: '6', name: 'Gold Trend Master', 
@@ -77,7 +85,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Trader', experienceYears: 11, markets: ['Gold', 'Commodities'], riskScore: 4,
     winRate: 85.2, avgDuration: '3 days', riskMethods: ['Volume Profile Analysis'], 
     bio: 'Specialized in tracking large-scale institutional orders on Gold markets to ride the momentum of market makers.',
-    category: 'gold'
+    category: 'gold',
+    copyTradeId: 'CT-5507-G'
   },
   { 
     id: '7', name: 'Forex Scalper Elite', 
@@ -86,7 +95,8 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Analyst', experienceYears: 6, markets: ['EUR/USD', 'GBP/JPY'], riskScore: 7,
     winRate: 92.1, avgDuration: '15 min', riskMethods: ['Hard SL', 'Grid Recovery'], 
     bio: 'Automated high-frequency signals tailored for the Forex markets. Extreme precision, high turnover.',
-    category: 'forex'
+    category: 'forex',
+    copyTradeId: 'CT-6608-F'
   }
 ];
 
@@ -99,6 +109,7 @@ const generateTraders = (): ExtendedTrader[] => {
     const cat = (['crypto', 'binary', 'gold', 'forex'] as const)[Math.floor(Math.random() * 4)];
     const name = `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${suffixes[Math.floor(Math.random() * suffixes.length)]} ${Math.floor(Math.random() * 999)}`;
     const avatar = `https://images.unsplash.com/photo-${AVATAR_IDS[i % AVATAR_IDS.length]}?w=400&h=400&fit=crop`;
+    const ctid = `CT-${Math.floor(Math.random() * 9000 + 1000)}-${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`;
     
     generated.push({
       id: `gen_${i}`,
@@ -116,8 +127,9 @@ const generateTraders = (): ExtendedTrader[] => {
       winRate: parseFloat((Math.random() * 20 + 75).toFixed(1)),
       avgDuration: ['1 min', '15 min', '1 hour', '4 hours', '1 day'][Math.floor(Math.random() * 5)],
       riskMethods: ['Stop Loss', 'Hedging', 'Grid'],
-      bio: `Automated generated profile for elite ${cat} trading. Specialized in algorithmic replication.`,
-      category: cat
+      bio: `Institutional grade protocol for automated ${cat} replication. Optimized for global liquidity nodes.`,
+      category: cat,
+      copyTradeId: ctid
     });
   }
   return generated;
@@ -126,7 +138,7 @@ const generateTraders = (): ExtendedTrader[] => {
 const ALL_TRADERS = [...INITIAL_TRADERS, ...generateTraders()];
 
 const SocialIcons: React.FC<{ color: string }> = ({ color }) => (
-  <div className="flex gap-1.5 mt-1.5 opacity-60">
+  <div className="flex gap-1.5 mt-1 opacity-60">
     <svg className={`w-2.5 h-2.5 ${color}`} fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.054-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759 6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     <svg className={`w-2.5 h-2.5 ${color}`} fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.462 8.27l-1.56 7.42c-.116.545-.44.68-.895.425l-2.37-1.75-1.145 1.1c-.125.127-.23.234-.473.234l.17-2.42 4.41-3.98c.19-.17-.04-.26-.297-.09l-5.45 3.43-2.34-.73c-.51-.16-.52-.51.107-.756l9.15-3.53c.42-.15.79.1.663.667z"/></svg>
   </div>
@@ -163,12 +175,9 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
       const randomIdx = Math.floor(Math.random() * filtered.length);
       const trader = filtered[randomIdx];
       
-      // Update Profit
       const baseIncrement = trader.id === '0' ? 850 : 250;
       const increment = baseIncrement + Math.random() * 1250;
-      
-      // Update Win Rate (Fluctuate slightly)
-      const winRateFluctuation = (Math.random() - 0.5) * 0.4; // +/- 0.2%
+      const winRateFluctuation = (Math.random() - 0.5) * 0.4;
       
       setTraderProfits(prev => ({ ...prev, [trader.id]: prev[trader.id] + increment }));
       setLiveWinRates(prev => ({ 
@@ -212,7 +221,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
   return (
     <section className="py-16 md:py-28 bg-[#131722] border-t border-[#2a2e39] relative">
       <div className="max-w-7xl mx-auto px-4">
-        {/* NEW HEADER DESIGN */}
         <div className="text-center mb-12 md:mb-16 space-y-6">
           <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-none bg-gradient-to-b from-white to-gray-500 text-transparent bg-clip-text drop-shadow-2xl">
             Top Traders From The World
@@ -235,9 +243,7 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
           </div>
         </div>
 
-        {/* BROWSER CONTAINER */}
         <div className="relative group/list">
-          {/* DESKTOP NAV ARROWS */}
           <button 
             onClick={scrollLeft}
             className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-12 h-12 bg-black/50 hover:bg-[#f01a64] rounded-full items-center justify-center text-white backdrop-blur-md border border-white/10 shadow-xl transition-all opacity-0 group-hover/list:opacity-100 hover:scale-110"
@@ -268,9 +274,27 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
                   <div className="relative">
                     <img loading="lazy" src={trader.avatar} className="w-14 h-14 md:w-16 md:h-16 rounded-2xl object-cover ring-2 ring-white/5 bg-[#131722]" />
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#00b36b] border-2 border-[#1e222d] rounded-full"></div>
+                    
+                    {trader.youtubeLink && (
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(trader.youtubeLink, '_blank');
+                        }}
+                        className="absolute -top-2 -left-2 w-7 h-7 bg-[#FF0000] rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(255,0,0,0.6)] animate-pulse border border-white/20 hover:scale-125 transition-transform"
+                        title="Watch External Strategy"
+                      >
+                        <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
+                        </svg>
+                      </button>
+                    )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-white font-black text-sm md:text-base truncate mb-1 group-hover:text-[#f01a64] transition-colors">{trader.name}</h3>
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-white font-black text-sm md:text-base truncate mb-0.5 group-hover:text-[#f01a64] transition-colors">{trader.name}</h3>
+                    </div>
+                    <span className="text-[7px] text-gray-500 font-black uppercase tracking-widest block mb-1">{trader.copyTradeId}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-[8px] bg-[#f01a64]/10 text-[#f01a64] px-2 py-0.5 rounded font-black uppercase tracking-widest">{trader.type}</span>
                       <SocialIcons color="text-gray-500" />
@@ -293,7 +317,6 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
                     <span className="text-[7px] text-gray-500 uppercase font-black block mb-1">ROI</span>
                     <span className="text-[#00b36b] font-black text-sm">+{trader.roi}%</span>
                   </div>
-                  {/* REPLACED RISK WITH WIN RATE */}
                   <div className={`bg-[#131722] p-3 rounded-xl border border-[#2a2e39] text-center ${animatingTraders[trader.id] ? 'bg-[#00b36b]/5' : ''} transition-colors`}>
                     <span className="text-[7px] text-gray-500 uppercase font-black block mb-1">Accuracy</span>
                     <span className="text-[#00b36b] font-black text-sm">
@@ -302,17 +325,29 @@ const TraderList: React.FC<TraderListProps> = ({ onCopyClick }) => {
                   </div>
                 </div>
 
-                <button 
-                  className="w-full py-4 bg-[#00b36b] hover:bg-green-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-95 group-hover:shadow-[#00b36b]/20"
-                  onClick={(e) => { e.stopPropagation(); onCopyClick(trader); }}
-                >
-                  Copy Strategy
-                </button>
+                <div className="space-y-3">
+                  {trader.youtubeLink && (
+                    <button 
+                      className="w-full py-3 bg-[#FF0000]/10 border border-[#FF0000]/30 hover:bg-[#FF0000]/20 text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-95 flex items-center justify-center gap-2"
+                      onClick={(e) => { e.stopPropagation(); window.open(trader.youtubeLink, '_blank'); }}
+                    >
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 4-8 4z"/>
+                      </svg>
+                      Watch Official Strategy
+                    </button>
+                  )}
+                  <button 
+                    className="w-full py-4 bg-[#00b36b] hover:bg-green-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg transform transition active:scale-95 group-hover:shadow-[#00b36b]/20"
+                    onClick={(e) => { e.stopPropagation(); onCopyClick(trader); }}
+                  >
+                    Copy Strategy
+                  </button>
+                </div>
               </div>
             ))}
           </div>
           
-          {/* MOBILE SWIPE HINT */}
           <div className="flex md:hidden justify-center mt-4 gap-2 opacity-50">
             <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
             <div className="w-1.5 h-1.5 rounded-full bg-gray-600"></div>

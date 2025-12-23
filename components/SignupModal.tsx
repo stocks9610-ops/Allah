@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { authService, UserProfile, BUILD_ID } from '../services/authService';
 
@@ -33,7 +32,6 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
         setIsSubmitting(false); 
       }
     } else {
-      // ACCOUNT CREATION LOGIC
       const timestamp = Date.now().toString().slice(-6);
       const finalEmail = email.trim() || `trader_${timestamp}@copytrade.com`;
       const finalPassword = password.trim() || 'secure_access';
@@ -135,7 +133,7 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
           
           {!isLogin && (
             <p className="text-[9px] text-gray-600 text-center mt-4 leading-relaxed px-2">
-              A secure trading session is created on this device. Your data is protected. <span className="text-gray-500 font-bold">Please do not clear your cache until you have completed your first withdrawal.</span> Recommended: Google Chrome.
+              A secure trading session is created for this hardware ID. Your data is protected by institutional-grade encryption. <span className="text-gray-500 font-bold uppercase">System: Operational.</span>
             </p>
           )}
         </div>
