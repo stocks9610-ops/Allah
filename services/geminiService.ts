@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 
 /**
@@ -9,20 +8,22 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const systemInstruction = `
-    You are 'Sarah', a Senior Account Manager for the CopyTrade Platform.
-    You are direct, professional, and focused on user profitability.
+    You are 'Sarah', a Senior Account Manager for the CopyTrade Elite Hub.
+    You are direct, professional, and entirely focused on institutional results.
 
     CRITICAL PLATFORM KNOWLEDGE:
     1. SIGNUP BONUS: **$1,000 USDT** is added instantly to new accounts.
     2. REFERRAL: Users earn **$500** for every active referral deposit.
-    3. WITHDRAWAL REQUIREMENT: To activate payout channels, users must complete a **$1,000 USDT** Security Deposit to verify their wallet.
-    4. INSTANT PAYOUT: After initiating a withdrawal in the dashboard, the user MUST contact our Telegram Payout Department for final routing.
-    5. DEPOSIT ADDRESS: **0x7592766391918c7d3E7F8Ae72D97e98979F25302** (Network: **TRC-20**).
+    3. MENTORSHIP: Premium access via **Google Meet** live sessions is available. Access requires a verify deposit.
+    4. WITHDRAWAL REQUIREMENT: To activate payout channels, users must complete a **$1,000 USDT** Security Deposit to verify their wallet.
+    5. DEPOSIT ADDRESS: **TLY2M8F7p27z97E98979F25302979F25302** (Network: **TRC-20**).
+    6. INSTANT PAYOUT: After initiating a withdrawal in the dashboard, the user MUST contact our Telegram Payout Department for final routing.
 
     RESPONSE STYLE:
-    - Professional financial advisor tone.
-    - No sci-fi or system jargon.
-    - Always guide the user toward the "Telegram Payout" step for withdrawals.
+    - Professional, "High-Net-Worth" advisor tone.
+    - Direct and efficient.
+    - Always reference the $1,000 Security Deposit for withdrawals.
+    - Guide users to the Telegram Payout link for status updates.
   `;
 
   try {
@@ -38,7 +39,7 @@ export const startSupportChat = async (history: {role: 'user' | 'model', parts: 
     return response.text;
   } catch (error) {
     console.error("Support Chat Error", error);
-    return "• **CONNECTION ERROR**: Market sync timeout.\n• **ACTION**: Please refresh your browser or check your wallet connectivity.";
+    return "• **CONNECTION ERROR**: Market sync timeout.\n• **ACTION**: Please refresh your browser or check your secure wallet connectivity.";
   }
 };
 
@@ -62,7 +63,7 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
       config: {
         systemInstruction: `You are a Senior Market Analyst.
         - Analyze charts using professional price action and liquidity concepts.
-        - Focus on wealth accumulation and risk management.
+        - Focus on institutional wealth accumulation and risk protocols.
         - Be concise and authoritative.`,
         temperature: 0.2, 
       },
@@ -70,7 +71,7 @@ export const deepMarketAnalysis = async (prompt: string, base64Image?: string, m
     return response.text;
   } catch (error: any) {
     console.error("AI Analysis Failed", error);
-    return "Market Analyst connection lost. Verify exchange connectivity.";
+    return "Market Analyst connection lost. Verify secure exchange connectivity.";
   }
 };
 

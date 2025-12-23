@@ -18,7 +18,7 @@ const AVATAR_IDS = [
 const INITIAL_TRADERS: ExtendedTrader[] = [
   { 
     id: '0', name: 'Anas Ali (Elite Signal)', 
-    avatar: '/traders/anas.jpg', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/1.jpeg', 
     roi: 342.5, drawdown: 3.2, followers: 185000, weeks: 156, strategy: 'Signal & Mindset Architecture',
     type: 'Educator', experienceYears: 6, markets: ['Crypto', 'Signals'], riskScore: 3,
     winRate: 88.5, avgDuration: '1 day', riskMethods: ['Mindset Control', 'Risk Awareness'], 
@@ -27,7 +27,7 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
   },
   { 
     id: '1', name: 'Thomas Kralow (Pro)', 
-    avatar: '/traders/thomas.jpg', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/2.jpeg', 
     roi: 410.8, drawdown: 4.5, followers: 452000, weeks: 312, strategy: 'Business-Grade Market Logic',
     type: 'Trader', experienceYears: 9, markets: ['Crypto', 'Stocks'], riskScore: 4,
     winRate: 92.1, avgDuration: '3 days', riskMethods: ['Portfolio Hedging', 'Growth Scaling'], 
@@ -35,12 +35,12 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     category: 'crypto'
   },
   { 
-    id: '2', name: 'P4Provider Network', 
-    avatar: '/traders/p4.jpg', 
-    roi: 195.4, drawdown: 2.8, followers: 98000, weeks: 104, strategy: 'Finance Fundamentals',
-    type: 'Analyst', experienceYears: 5, markets: ['Crypto', 'Forex'], riskScore: 2,
+    id: '2', name: 'P4 Provider', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/3.jpeg', 
+    roi: 195.4, drawdown: 2.8, followers: 600000, weeks: 104, strategy: 'Finance Fundamentals',
+    type: 'Trader', experienceYears: 8, markets: ['Forex', 'Crypto'], riskScore: 2,
     winRate: 84.3, avgDuration: '1 week', riskMethods: ['Fundamental Analysis', 'Trend Confirmation'], 
-    bio: 'Premier finance-related content provider offering tutorials on market fundamentals. Specialized in helping beginners understand market mechanics.',
+    bio: 'P4 Provider is a professional Forex and Crypto trader with over 8 years of experience. He has mentored 3,300+ traders and shares practical trading strategies, market analysis, and risk management techniques through his YouTube channel.',
     category: 'crypto'
   },
   { 
