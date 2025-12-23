@@ -154,7 +154,7 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
           {!isLogin && (
             <div className="mt-6 p-4 bg-black/20 rounded-2xl border border-white/5">
               <p className="text-[9px] text-gray-500 text-center leading-relaxed px-2 font-medium uppercase tracking-tight">
-                Secure session created for hardware ID. Protected by World Trade encryption standards. <span className="text-gray-400 font-black">System Status: Optimal.</span>
+                Live Trading Account generated for your ID. Connected to Global Liquidity Pools. <span className="text-[#00b36b] font-black">Status: Active.</span>
               </p>
             </div>
           )}
