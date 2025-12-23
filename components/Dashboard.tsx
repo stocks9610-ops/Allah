@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
 import { verifyPaymentProof } from '../services/geminiService';
@@ -27,6 +28,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
   const [investAmount, setInvestAmount] = useState<number>(500);
   const [isInvesting, setIsInvesting] = useState(false);
+  
+  // Trade Processing States
+  const [isProcessingTrade, setIsProcessingTrade] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
   
   const [tradeStage, setTradeStage] = useState<'idle' | 'syncing' | 'live' | 'completed'>('idle');
   const [syncLogs, setSyncLogs] = useState<string[]>([]);
@@ -134,6 +139,25 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       return;
     }
 
+    // Initiate Trade Processing Sequence
+    setIsProcessingTrade(true);
+    
+    // Random duration between 5000ms and 15000ms
+    const randomDuration = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
+
+    setTimeout(() => {
+      setIsProcessingTrade(false);
+      setShowSuccessToast(true);
+      
+      // Short delay to show success message before switching view
+      setTimeout(() => {
+        setShowSuccessToast(false);
+        executeTradeLogic(plan);
+      }, 2000);
+    }, randomDuration);
+  };
+
+  const executeTradeLogic = (plan: typeof PROFIT_STRATEGIES[0]) => {
     onUserUpdate(authService.updateUser({ 
       balance: user.balance - investAmount,
       totalInvested: user.totalInvested + investAmount
@@ -204,16 +228,45 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
     setTimeout(() => setCopySuccess(false), 1000);
   };
 
-  const maskedAddress = (addr: string) => {
-    if (addr.length < 10) return addr;
-    return `${addr.substring(0, 4)}...${addr.substring(addr.length - 3)}`;
-  };
-
   return (
-    <div className="bg-[#131722] min-h-screen pt-4 pb-32 px-4 sm:px-6 lg:px-8 relative selection:bg-[#f01a64]/10">
+    <div className={`bg-[#131722] min-h-screen pt-4 pb-32 px-4 sm:px-6 lg:px-8 relative selection:bg-[#f01a64]/10 ${isProcessingTrade ? 'overflow-hidden' : ''}`}>
+      
+      {/* PROCESSING TRADE OVERLAY */}
+      {isProcessingTrade && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-md animate-in fade-in duration-500">
+           <div className="flex flex-col items-center gap-8 animate-in zoom-in-95 duration-500">
+              <div className="relative w-24 h-24">
+                 <div className="absolute inset-0 border-[6px] border-white/5 rounded-full"></div>
+                 <div className="absolute inset-0 border-[6px] border-t-[#f01a64] border-r-[#f01a64] border-b-transparent border-l-transparent rounded-full animate-spin"></div>
+                 <div className="absolute inset-4 border-[3px] border-t-transparent border-r-transparent border-b-[#00b36b] border-l-[#00b36b] rounded-full animate-spin [animation-duration:2s] direction-reverse"></div>
+                 <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-[10px] font-black text-white animate-pulse">SYNC</span>
+                 </div>
+              </div>
+              <div className="text-center space-y-2">
+                 <h3 className="text-white font-black uppercase tracking-[0.3em] text-base animate-pulse">Processing Trade...</h3>
+                 <p className="text-[10px] text-gray-400 font-mono uppercase tracking-widest">Securing Liquidity Route</p>
+              </div>
+           </div>
+        </div>
+      )}
+
+      {/* SUCCESS TOAST */}
+      {showSuccessToast && (
+         <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[210] bg-[#00b36b] text-white px-6 py-4 rounded-2xl shadow-[0_20px_60px_rgba(0,179,107,0.5)] flex items-center gap-4 animate-in slide-in-from-top-6 fade-in duration-500 border border-white/20">
+            <div className="bg-white/20 p-1.5 rounded-full">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-black uppercase tracking-widest text-xs">Trade Placed Successfully</span>
+              <span className="text-[9px] font-bold uppercase tracking-wide opacity-90">Initializing market sync...</span>
+            </div>
+         </div>
+      )}
+
       <TacticalGuide step={isInvesting ? 'investing' : tradeStage === 'completed' ? 'profit' : 'ready'} />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className={`max-w-7xl mx-auto space-y-8 transition-all duration-500 ${isProcessingTrade ? 'blur-sm scale-[0.99] opacity-50' : ''}`}>
         {/* REAL-WORLD TRADING STATUS HUD - Mobile Adaptive Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <div className="bg-[#1e222d] border border-white/5 p-4 md:p-6 rounded-3xl shadow-xl hover:border-white/10 transition-all flex flex-col justify-center">
@@ -262,7 +315,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                    <div 
                      key={plan.id} 
                      onClick={() => {
-                        if (isInvesting) return;
+                        if (isInvesting || isProcessingTrade) return;
                         if (plan.vip && !user.hasDeposited) {
                            depositSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
                            alert("🔒 DEPOSIT REQUIRED: Please confirm your first deposit to activate this elite strategy.");
@@ -301,10 +354,20 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
                                  <input 
                                    type="number" 
                                    value={investAmount} 
+                                   disabled={isProcessingTrade}
                                    onChange={e => setInvestAmount(Number(e.target.value))} 
-                                   className="flex-1 bg-black border border-white/10 text-white text-sm p-3 md:p-4 rounded-xl md:rounded-2xl focus:border-[#f01a64] outline-none font-black" 
+                                   className="flex-1 bg-black border border-white/10 text-white text-sm p-3 md:p-4 rounded-xl md:rounded-2xl focus:border-[#f01a64] outline-none font-black disabled:opacity-50" 
                                  />
-                                 <button onClick={startDeployment} className="bg-[#f01a64] hover:bg-pink-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all">Start</button>
+                                 <button 
+                                   onClick={(e) => {
+                                      e.stopPropagation();
+                                      startDeployment();
+                                   }} 
+                                   disabled={isProcessingTrade}
+                                   className="bg-[#f01a64] hover:bg-pink-700 text-white px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[9px] md:text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                 >
+                                    Start
+                                 </button>
                               </div>
                            </div>
                         </div>
