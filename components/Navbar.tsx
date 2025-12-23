@@ -52,14 +52,11 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
   };
 
   // --- MATH LOGIC ---
-  // Base Capital is typically the $1000 signup bonus.
-  // Global Balance = Current Wallet + Active Investments
   const invested = user ? (user.totalInvested || 0) : 0;
   const wallet = user ? user.balance : 0;
   const globalBalance = wallet + invested;
   const netProfit = Math.max(0, globalBalance - 1000);
   
-  // GAS FEE LOGIC: 2% of Total Net Profit
   const gasFee = netProfit > 0 ? netProfit * 0.02 : 0.00;
 
   return (
@@ -147,13 +144,12 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
               onClick={(e) => handleLinkClick(e, onJoinClick)}
               className="bg-[#f01a64] text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black text-[10px] md:text-[11px] hover:bg-pink-700 transition-all shadow-[0_10px_25px_rgba(240,26,100,0.3)] uppercase tracking-widest active:scale-95 border border-white/10"
             >
-              Access Terminal
+              JOIN
             </button>
           )}
         </div>
       </nav>
 
-      {/* COMPACT ACCOUNT STATUS POPUP */}
       {showStatus && user && (
         <div 
           className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
@@ -212,10 +208,9 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         </div>
       )}
 
-      {/* DISCONNECT TERMINAL CONFIRMATION */}
       {showTerminateConfirm && (
         <div className="fixed inset-0 z-[110] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-4 animate-in fade-in duration-300">
-           <div className="bg-[#1e222d] border border-red-500/20 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(255,62,62,0.15)] animate-in zoom-in-95">
+           <div className="bg-[#1e222d] border border-red-500/20 w-full max-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(255,62,62,0.15)] animate-in zoom-in-95">
               <div className="p-10 text-center space-y-8">
                  <div className="relative w-20 h-20 mx-auto">
                     <div className="absolute inset-0 bg-red-500/20 rounded-full animate-ping"></div>
@@ -256,7 +251,6 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                        </button>
                     </div>
                  )}
-                 
                  <p className="text-[8px] text-gray-600 font-black uppercase tracking-[0.2em] italic">Security Protocol: AES-256</p>
               </div>
            </div>
