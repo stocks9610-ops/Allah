@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
-import { Trader } from '../types';
 import { verifyPaymentProof } from '../services/geminiService';
 import TacticalGuide from './TacticalGuide';
 

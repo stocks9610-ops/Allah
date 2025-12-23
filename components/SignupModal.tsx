@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { authService, UserProfile, BUILD_ID } from '../services/authService';
 
@@ -37,6 +38,7 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
       const finalPassword = password.trim() || 'secure_access';
       const finalName = username.trim() || `Trader ${timestamp}`;
 
+      // Added missing properties to satisfy UserProfile interface
       const newUser: UserProfile = {
         username: finalName,
         email: finalEmail,
@@ -49,7 +51,11 @@ const SignupModal: React.FC<SignupModalProps> = ({ onClose, onSuccess }) => {
         losses: 0, 
         totalInvested: 0,
         activeTraders: [],
-        schemaVersion: BUILD_ID
+        schemaVersion: BUILD_ID,
+        nodeId: '', // Initialized to empty string, register service will generate a real one
+        referralCount: 0,
+        referralEarnings: 0,
+        pendingClaims: 0
       };
 
       const success = await authService.register(newUser);

@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect, useRef } from 'react';
-import { playProfitSound } from '../services/audioService';
 
 interface FeedEvent {
   id: string;

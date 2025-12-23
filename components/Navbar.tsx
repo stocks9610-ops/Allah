@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { UserProfile } from '../services/authService';
+import { UserProfile, authService } from '../services/authService';
 
 interface NavbarProps {
   onJoinClick: () => void;
@@ -13,7 +13,9 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLogout, onDashboardClick, onHomeClick }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+  const [showTerminateConfirm, setShowTerminateConfirm] = useState(false);
+  const [isTerminating, setIsTerminating] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +42,23 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
     action();
   };
 
-  const tradeProfit = user ? Math.max(0, user.balance - 1000) : 0;
+  const handleSecureLogout = async () => {
+    setIsTerminating(true);
+    // Simulated security wipe sequence
+    await new Promise(r => setTimeout(r, 1800));
+    onLogout();
+    setIsTerminating(false);
+    setShowTerminateConfirm(false);
+  };
+
+  // --- MATH LOGIC ---
+  // Base Capital is typically the $1000 signup bonus.
+  // Global Balance = Current Wallet + Active Investments
+  const invested = user ? (user.totalInvested || 0) : 0;
+  const wallet = user ? user.balance : 0;
+  const globalBalance = wallet + invested;
+  const netProfit = Math.max(0, globalBalance - 1000);
+  const pendingWithdrawal = 0.00; // Default state as no backend queue exists yet
 
   return (
     <>
@@ -108,14 +126,14 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
                     <span className="text-[8px] font-black text-gray-500 uppercase tracking-[0.3em] block">Command Center Hub</span>
                   </div>
                   <div className="p-2 space-y-1">
-                    <button onClick={() => { setShowHistory(true); setShowMenu(false); }} className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-[#2a2e39] rounded-2xl group transition-all">
+                    <button onClick={() => { setShowStatus(true); setShowMenu(false); }} className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-[#2a2e39] rounded-2xl group transition-all">
                       <div className="flex flex-col">
-                        <span className="text-[11px] font-black text-white uppercase tracking-wider group-hover:text-[#f01a64] transition-colors">Account Ledger</span>
-                        <span className="text-[8px] text-gray-500 uppercase tracking-tight">Performance History</span>
+                        <span className="text-[11px] font-black text-white uppercase tracking-wider group-hover:text-[#f01a64] transition-colors">Account Status</span>
+                        <span className="text-[8px] text-gray-500 uppercase tracking-tight">Live Balance Overview</span>
                       </div>
                     </button>
                     <div className="h-px bg-[#2a2e39] my-1 mx-3"></div>
-                    <button onClick={onLogout} className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-red-500/10 rounded-2xl group transition-all text-red-500">
+                    <button onClick={() => { setShowTerminateConfirm(true); setShowMenu(false); }} className="w-full text-left flex items-center gap-3 px-4 py-3 hover:bg-red-500/10 rounded-2xl group transition-all text-red-500">
                       <span className="text-[11px] font-black uppercase tracking-wider">Terminate Session</span>
                     </button>
                   </div>
@@ -133,52 +151,113 @@ const Navbar: React.FC<NavbarProps> = ({ onJoinClick, onGalleryClick, user, onLo
         </div>
       </nav>
 
-      {showHistory && user && (
-        <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 animate-in fade-in duration-300">
-          <div className="bg-[#1e222d] border border-white/10 w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.5)]">
-            <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#131722]">
-              <div className="flex items-center gap-3">
-                 <div className="w-2 h-2 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b]"></div>
-                 <h3 className="text-white font-black uppercase text-xs tracking-[0.2em] italic">Account Integrity Ledger</h3>
-              </div>
-              <button onClick={() => setShowHistory(false)} className="text-gray-500 hover:text-white transition-colors bg-white/5 p-2 rounded-full">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+      {/* COMPACT ACCOUNT STATUS POPUP */}
+      {showStatus && user && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setShowStatus(false)}
+        >
+          <div 
+            className="bg-[#1e222d] w-full max-w-[320px] rounded-2xl border border-[#2a2e39] shadow-2xl p-6 relative animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setShowStatus(false)} 
+              className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="mb-6">
+              <h3 className="text-white font-black uppercase text-xs tracking-[0.2em] mb-1">Account Status</h3>
+              <div className="w-8 h-0.5 bg-[#f01a64]"></div>
             </div>
-            <div className="p-8 space-y-4">
-              <div className="flex justify-between items-center p-5 bg-[#131722] rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
-                <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Protocol Initialized</span>
-                <span className="text-white font-black text-xs uppercase tracking-tight">{new Date(user.joinDate).toLocaleDateString()}</span>
+            
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Net Profit</span>
+                 <span className="text-[#00b36b] font-mono font-bold text-sm tracking-tight">
+                   +${netProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                 </span>
               </div>
               
-              <div className="flex justify-between items-center p-5 bg-[#131722] rounded-2xl border border-white/5 hover:border-[#00b36b]/30 transition-colors">
-                <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Audited Profit</span>
-                <span className="text-[#00b36b] font-black text-sm uppercase">
-                  +${tradeProfit.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                </span>
+              <div className="flex justify-between items-center">
+                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Active Capital</span>
+                 <span className="text-white font-mono font-bold text-sm tracking-tight">
+                   ${wallet.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                 </span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Pending Payout</span>
+                 <span className="text-amber-500 font-mono font-bold text-sm tracking-tight">
+                   ${pendingWithdrawal.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                 </span>
               </div>
 
-              <div className="flex justify-between items-center p-5 bg-[#131722] rounded-2xl border border-white/5 hover:border-amber-500/30 transition-colors">
-                <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Global Balance</span>
-                <span className={`font-black text-sm uppercase ${user.hasDeposited ? 'text-[#00b36b]' : 'text-amber-500'}`}>
-                  ${user.balance.toLocaleString()} {!user.hasDeposited && '(PENDING)'}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center p-5 bg-[#131722] rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
-                <span className="text-gray-500 font-black text-[10px] uppercase tracking-widest">Success Rate</span>
-                <span className="text-white font-black text-sm uppercase">{user.wins}W / {user.losses}L</span>
-              </div>
-
-              <div className="pt-6 text-center">
-                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] leading-relaxed italic">
-                   "All data is synchronized with the global liquidity network."
-                 </p>
+              <div className="h-px bg-white/5 my-2"></div>
+              
+              <div className="flex justify-between items-center">
+                 <span className="text-[10px] text-gray-400 font-black uppercase tracking-wide">Global Balance</span>
+                 <span className="text-white font-black font-mono text-lg tracking-tight">
+                   ${globalBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                 </span>
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* TERMINATE SESSION CONFIRMATION */}
+      {showTerminateConfirm && (
+        <div className="fixed inset-0 z-[110] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-4 animate-in fade-in duration-300">
+           <div className="bg-[#1e222d] border border-red-500/20 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-[0_0_100px_rgba(255,62,62,0.15)] animate-in zoom-in-95">
+              <div className="p-10 text-center space-y-8">
+                 <div className="relative w-20 h-20 mx-auto">
+                    <div className="absolute inset-0 bg-red-500/20 rounded-full animate-ping"></div>
+                    <div className="relative w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white shadow-2xl">
+                       <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                       </svg>
+                    </div>
+                 </div>
+
+                 <div className="space-y-3">
+                    <h3 className="text-white font-black uppercase text-xl tracking-tighter italic">Sever Node Connection?</h3>
+                    <p className="text-gray-400 text-xs font-medium leading-relaxed px-6">
+                       Executing this protocol will flush your local session bridge and disconnect from the liquidity terminal. Securely.
+                    </p>
+                 </div>
+
+                 {isTerminating ? (
+                    <div className="space-y-4">
+                       <div className="w-full h-1.5 bg-black rounded-full overflow-hidden">
+                          <div className="h-full bg-red-500 animate-[progress_1.8s_ease-in-out_forwards] w-full"></div>
+                       </div>
+                       <span className="text-[10px] text-red-500 font-black uppercase tracking-[0.3em] animate-pulse">Wiping Cache & API Tokens...</span>
+                    </div>
+                 ) : (
+                    <div className="flex gap-4 pt-4">
+                       <button 
+                         onClick={() => setShowTerminateConfirm(false)}
+                         className="flex-1 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-white/10 active:scale-95 transition-all"
+                       >
+                         Abort
+                       </button>
+                       <button 
+                         onClick={handleSecureLogout}
+                         className="flex-[2] py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-2xl active:scale-95 transition-all border border-white/10"
+                       >
+                         Confirm Severance
+                       </button>
+                    </div>
+                 )}
+                 
+                 <p className="text-[8px] text-gray-600 font-black uppercase tracking-[0.2em] italic">Security Protocol: AES-256 Session Severance</p>
+              </div>
+           </div>
         </div>
       )}
     </>

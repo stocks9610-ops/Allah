@@ -13,14 +13,17 @@ export interface UserProfile {
   totalInvested: number;
   activeTraders: Trader[];
   schemaVersion: string;
+  // Referral Data
+  nodeId: string;
+  referralCount: number;
+  referralEarnings: number;
+  pendingClaims: number;
 }
 
 const SESSION_KEY = 'zulu_auth_token';
 const USERS_DB_KEY = 'zulu_vault_ledger';
-// Exporting BUILD_ID so it can be used during user registration for consistent schema versioning
-export const BUILD_ID = 'v5.5-SOVEREIGN';
+export const BUILD_ID = 'v7.0-PLATINUM-LAUNCH';
 
-// Sovereign Encryption Vault (Secure Ledger Handling)
 const vault = {
   encode: (data: any) => btoa(JSON.stringify(data)),
   decode: (str: string) => {
@@ -49,9 +52,15 @@ export const authService = {
     const db = authService.getDB();
     const user = db[email.toLowerCase()];
     
-    // Auto-migrate schema if needed
     if (user && user.schemaVersion !== BUILD_ID) {
       user.schemaVersion = BUILD_ID;
+      // Initialize referral fields if missing
+      if (!user.nodeId) {
+        user.nodeId = `NODE-${Math.floor(100 + Math.random() * 899)}-${user.username.substring(0, 1).toUpperCase()}`;
+        user.referralCount = user.referralCount || 0;
+        user.referralEarnings = user.referralEarnings || 0;
+        user.pendingClaims = user.pendingClaims || 0;
+      }
       authService.updateUser(user);
     }
     
@@ -65,7 +74,16 @@ export const authService = {
 
     if (db[emailKey]) return false;
 
-    db[emailKey] = { ...user, schemaVersion: BUILD_ID, activeTraders: [] };
+    const nodeId = `NODE-${Math.floor(100 + Math.random() * 899)}-${user.username.substring(0, 1).toUpperCase()}`;
+    db[emailKey] = { 
+      ...user, 
+      schemaVersion: BUILD_ID, 
+      activeTraders: [],
+      nodeId,
+      referralCount: 0,
+      referralEarnings: 0,
+      pendingClaims: 0
+    };
     localStorage.setItem(USERS_DB_KEY, vault.encode(db));
     localStorage.setItem(SESSION_KEY, emailKey);
     return true;

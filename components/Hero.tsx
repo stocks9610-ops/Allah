@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import FloatingFlags from './FloatingFlags';
 
 interface HeroProps {
@@ -6,20 +6,10 @@ interface HeroProps {
   onInstallRequest: () => Promise<boolean>;
   onStartJourney?: () => void;
   externalShowMentorship?: () => void;
+  onShareClick?: () => void;
 }
 
-const Hero: React.FC<HeroProps> = ({ onJoinClick, onInstallRequest, onStartJourney, externalShowMentorship }) => {
-  const [shareText, setShareText] = useState('SHARE & EARN $200');
-
-  const handleShare = async () => {
-    const text = "🔥 Earn $200 per referral! 💸\n\nInvite friends, they install the app, and YOU earn money! 💰";
-    const url = window.location.href;
-    const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
-    window.open(telegramUrl, '_blank');
-    setShareText('OPENING TELEGRAM...');
-    setTimeout(() => setShareText('SHARE & EARN $200'), 2000);
-  };
-
+const Hero: React.FC<HeroProps> = ({ onJoinClick, onInstallRequest, onStartJourney, externalShowMentorship, onShareClick }) => {
   return (
     <section className="relative overflow-hidden pt-12 pb-24 md:pt-32 md:pb-56 bg-[#131722]">
       <FloatingFlags />
@@ -108,13 +98,13 @@ const Hero: React.FC<HeroProps> = ({ onJoinClick, onInstallRequest, onStartJourn
             </button>
             
             <button 
-              onClick={handleShare}
+              onClick={onShareClick}
               className="w-full sm:w-auto px-10 py-5 bg-[#0088cc] hover:bg-[#0077b5] text-white font-black text-base rounded-2xl shadow-[0_10px_30px_rgba(0,136,204,0.3)] transform transition active:scale-95 uppercase tracking-tighter flex items-center justify-center gap-2 border border-white/10"
             >
               <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.537.818-1.089.508l-3.048-2.247-1.47 1.415c-.162.162-.299.3-.612.3l.219-3.106 5.651-5.108c.245-.219-.054-.341-.379-.126l-6.985 4.4-3.007-.941c-.654-.203-.667-.654.137-.967l11.75-4.529c.544-.203 1.02.123.836.761z"/>
               </svg>
-              <span className="whitespace-nowrap">{shareText}</span>
+              <span className="whitespace-nowrap uppercase tracking-widest">Share & Earn $200</span>
             </button>
           </div>
         </div>
