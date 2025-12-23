@@ -68,7 +68,7 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     roi: 145.8, drawdown: 1.8, followers: 785000, weeks: 260, strategy: 'Data-Driven Macro Cycles',
     type: 'Analyst', experienceYears: 10, markets: ['Bitcoin', 'Crypto Cycles'], riskScore: 2,
     winRate: 84.2, avgDuration: '30 days', riskMethods: ['Logarithmic Regression', 'On-Chain Metrics'], 
-    bio: 'Into The Cryptoverse is a data-driven crypto analyst focused on Bitcoin market cycles, on-chain metrics, and long-term trend analysis. The channel delivers realistic, no-hype insights designed for disciplined traders and serious investors.',
+    bio: 'Into The Cryptoverse is a respected crypto analyst delivering data-driven insights on Bitcoin and the broader crypto market. The channel focuses on on-chain metrics, market cycles, and realistic long-term strategies, helping serious traders and investors make wise decisions without hype or false promises.',
     category: 'crypto',
     copyTradeId: 'CT-8890-ITC',
     youtubeLink: 'https://www.youtube.com/@intothecryptoverse'
@@ -80,9 +80,53 @@ const INITIAL_TRADERS: ExtendedTrader[] = [
     type: 'Educator', experienceYears: 7, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 4,
     winRate: 89.4, avgDuration: '1 hour', riskMethods: ['Clear Market Breakdowns', 'Risk Management'], 
     bio: 'The Trader Next Door is an experienced market trader sharing realistic, no-nonsense trading strategies across forex, stocks, and crypto. Focused on disciplined execution and clear market breakdowns, the channel helps everyday traders improve skills without hype or false promises. Risk free and 98% profit levels.',
-    category: 'forex',
+    category: 'crypto',
     copyTradeId: 'CT-5582-TND',
     youtubeLink: 'https://www.youtube.com/@thetradernextdoor'
+  },
+  { 
+    id: '7', name: 'Traders Paradise Live', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/22.jpeg', 
+    roi: 185.6, drawdown: 3.8, followers: 94000, weeks: 142, strategy: 'Precision Gold Price Action',
+    type: 'Analyst', experienceYears: 8, markets: ['Gold', 'Commodities'], riskScore: 4,
+    winRate: 87.2, avgDuration: '4 hours', riskMethods: ['Market Structure', 'Macro Drivers'], 
+    bio: 'A high-level gold market analyst specializing in precision price action and macro-driven gold movements. Known for disciplined execution and clear market structure analysis, this trader focuses on capital protection while targeting strong, high-probability gold setups.',
+    category: 'gold',
+    copyTradeId: 'CT-2207-GOLD',
+    youtubeLink: 'https://youtu.be/apA_GyhQkxk'
+  },
+  { 
+    id: '8', name: 'Trader Nick', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/23.jpeg', 
+    roi: 265.4, drawdown: 4.8, followers: 158000, weeks: 210, strategy: 'High-Prob Execution Scaling',
+    type: 'Trader', experienceYears: 8, markets: ['Forex', 'Crypto'], riskScore: 5,
+    winRate: 86.5, avgDuration: '2 hours', riskMethods: ['Strict Discipline', 'Probabilistic Sets'], 
+    bio: 'Trader Nick is a high-performance crypto and forex trader known for aggressive yet controlled market execution. His strategy targets high-probability setups, fast decision-making, and scalable account growth while maintaining strict risk discipline in volatile markets.',
+    category: 'forex',
+    copyTradeId: 'CT-1108-NICK',
+    youtubeLink: 'https://www.youtube.com/@TraderNick'
+  },
+  { 
+    id: '9', name: 'Tani Forex', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/25.jpeg', 
+    roi: 310.2, drawdown: 4.2, followers: 215000, weeks: 245, strategy: 'Strategic Growth Precision',
+    type: 'Trader', experienceYears: 9, markets: ['Forex', 'Crypto'], riskScore: 4,
+    winRate: 89.2, avgDuration: '4 hours', riskMethods: ['Disciplined Execution', 'Volatility Control'], 
+    bio: 'Elite crypto and forex trader delivering explosive market insights with precision execution. Known for identifying high-probability setups and dominating volatile conditions, this trader focuses on strategic growth, disciplined risk control, and maximum performance in both crypto and forex markets.',
+    category: 'forex',
+    copyTradeId: 'CT-2509-TANI',
+    youtubeLink: 'https://www.youtube.com/watch?v=wgyrU6MZTbc'
+  },
+  { 
+    id: '10', name: 'Rayner Teo', 
+    avatar: 'https://raw.githubusercontent.com/stocks9610-ops/Stocks-Analysis/new-launch/public/images/27.jpeg', 
+    roi: 225.8, drawdown: 2.1, followers: 1500000, weeks: 460, strategy: 'Structured Price Action Logic',
+    type: 'Educator', experienceYears: 12, markets: ['Forex', 'Stocks', 'Crypto'], riskScore: 2,
+    winRate: 82.5, avgDuration: '2 days', riskMethods: ['Price Action', 'Capital Preservation'], 
+    bio: 'Rayner Teo is an independent trader and founder of TradingwithRayner, known for clear, profit-first content covering price action, technical analysis, risk-free management, and structured trading strategies across forex, stocks, and crypto. With millions of subscribers, his mission is to help serious traders improve performance with practical, no-hype guidance.',
+    category: 'forex',
+    copyTradeId: 'CT-2710-RT',
+    youtubeLink: 'https://www.youtube.com/channel/UCFSn-h8wTnhpKJMteN76Abg'
   }
 ];
 
