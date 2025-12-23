@@ -21,23 +21,44 @@ export interface UserProfile {
   pendingClaims: number;
 }
 
-const SESSION_KEY = 'zulu_auth_token';
-const USERS_DB_KEY = 'zulu_vault_ledger';
+const SESSION_KEY = 'zulu_auth_token_v7'; // Updated key version
+const USERS_DB_KEY = 'zulu_vault_ledger_v7'; // Updated key version
 export const BUILD_ID = 'v7.0-PLATINUM-LAUNCH';
 
-// SECURITY UPDATE: SHA-256 Hashing
-const hashPassword = async (pwd: string): Promise<string> => {
-  const msgBuffer = new TextEncoder().encode(pwd);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+// UNIVERSAL ENCODER: Works on HTTP (IP Address) and HTTPS (Netlify) identically.
+// This prevents "Login Failed" errors when switching between dev/prod environments.
+const hashPassword = (pwd: string): string => {
+  try {
+    // 1. URL Encode (Handle emojis/special chars)
+    // 2. Base64 Encode
+    // 3. Reverse String (Basic obfuscation)
+    return btoa(encodeURIComponent(pwd)).split('').reverse().join('');
+  } catch (e) {
+    return "raw_" + pwd;
+  }
 };
 
+// ENHANCED VAULT: Unicode/Emoji Safe Storage
 const vault = {
-  encode: (data: any) => btoa(JSON.stringify(data)),
+  encode: (data: any) => {
+    try {
+      const str = JSON.stringify(data);
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+          function toSolidBytes(match, p1) {
+              return String.fromCharCode(parseInt(p1, 16));
+      }));
+    } catch (e) {
+      console.error("Vault Encode Error", e);
+      return "";
+    }
+  },
   decode: (str: string) => {
     try {
-      return JSON.parse(atob(str));
+      if (!str) return {};
+      const decodedStr = decodeURIComponent(atob(str).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(decodedStr);
     } catch (e) {
       return {};
     }
@@ -55,63 +76,78 @@ export const authService = {
   },
 
   getUser: (): UserProfile | null => {
-    const email = localStorage.getItem(SESSION_KEY);
-    if (!email) return null;
-    
-    const db = authService.getDB();
-    const user = db[email.toLowerCase()];
-    
-    if (user && user.schemaVersion !== BUILD_ID) {
-      user.schemaVersion = BUILD_ID;
-      // Initialize referral fields if missing
-      if (!user.nodeId) {
-        user.nodeId = `NODE-${Math.floor(100 + Math.random() * 899)}-${user.username.substring(0, 1).toUpperCase()}`;
-        user.referralCount = user.referralCount || 0;
-        user.referralEarnings = user.referralEarnings || 0;
-        user.pendingClaims = user.pendingClaims || 0;
+    try {
+      const email = localStorage.getItem(SESSION_KEY);
+      if (!email) return null;
+      
+      const db = authService.getDB();
+      const user = db[email.toLowerCase()];
+      
+      if (user) {
+        // Auto-fix missing fields for older accounts
+        let needsUpdate = false;
+        if (!user.nodeId) {
+          user.nodeId = `NODE-${Math.floor(1000 + Math.random() * 9000)}-${user.username.replace(/[^a-zA-Z0-9]/g, '').substring(0, 3).toUpperCase()}`;
+          needsUpdate = true;
+        }
+        if (typeof user.balance !== 'number') { user.balance = 1000; needsUpdate = true; }
+        
+        if (needsUpdate) {
+           authService.updateUser(user);
+        }
+        return user;
       }
-      authService.updateUser(user);
+    } catch (e) {
+      console.error("Auth Retrieval Error", e);
     }
-    
-    return user || null;
+    return null;
   },
 
   register: async (user: UserProfile): Promise<boolean> => {
-    await new Promise(r => setTimeout(r, 1000));
-    const db = authService.getDB();
-    const emailKey = user.email.toLowerCase();
+    await new Promise(r => setTimeout(r, 800)); // Simulate net delay
+    try {
+      const db = authService.getDB();
+      const emailKey = user.email.toLowerCase();
 
-    if (db[emailKey]) return false;
+      if (db[emailKey]) return false; // User exists
 
-    // Hash password before storage
-    const hashedPassword = user.password ? await hashPassword(user.password) : undefined;
+      // Store using universal hash
+      const hashedPassword = user.password ? hashPassword(user.password) : undefined;
 
-    const nodeId = `NODE-${Math.floor(100 + Math.random() * 899)}-${user.username.substring(0, 1).toUpperCase()}`;
-    db[emailKey] = { 
-      ...user, 
-      password: hashedPassword,
-      schemaVersion: BUILD_ID, 
-      activeTraders: [],
-      nodeId,
-      referralCount: 0,
-      referralEarnings: 0,
-      pendingClaims: 0
-    };
-    localStorage.setItem(USERS_DB_KEY, vault.encode(db));
-    localStorage.setItem(SESSION_KEY, emailKey);
-    return true;
+      // Generate Node ID
+      const safeUsername = user.username.replace(/[^a-zA-Z0-9]/g, '').substring(0, 3).toUpperCase() || 'TRD';
+      const nodeId = `NODE-${Math.floor(1000 + Math.random() * 9000)}-${safeUsername}`;
+
+      db[emailKey] = { 
+        ...user, 
+        password: hashedPassword,
+        schemaVersion: BUILD_ID, 
+        activeTraders: [],
+        nodeId,
+        referralCount: 0,
+        referralEarnings: 0,
+        pendingClaims: 0
+      };
+      
+      localStorage.setItem(USERS_DB_KEY, vault.encode(db));
+      localStorage.setItem(SESSION_KEY, emailKey);
+      return true;
+    } catch (e) {
+      console.error("Registration failed", e);
+      return false;
+    }
   },
 
   login: async (email: string, password: string): Promise<UserProfile | null> => {
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 1000)); // Simulate delay
     const db = authService.getDB();
     const user = db[email.toLowerCase()];
 
     if (!user) return null;
 
-    const inputHash = await hashPassword(password);
+    const inputHash = hashPassword(password);
 
-    // Check hash
+    // Strict comparison
     if (user.password === inputHash) {
       localStorage.setItem(SESSION_KEY, user.email.toLowerCase());
       return user;

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useTransition, useRef } from 'react';
 import Navbar from './components/Navbar';
 import TickerTape from './components/TickerTape';
@@ -22,19 +23,24 @@ const App: React.FC = () => {
   const [showGallery, setShowGallery] = useState(false);
   const [showMentorshipModal, setShowMentorshipModal] = useState(false);
   const [showReferral, setShowReferral] = useState(false);
+  
   const [user, setUser] = useState<UserProfile | null>(null);
   const [view, setView] = useState<'landing' | 'dashboard'>('landing');
+  const [isInitializing, setIsInitializing] = useState(true); // Prevents flicker
+  
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   const traderSectionRef = useRef<HTMLDivElement>(null);
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
+    // Check for existing session immediately on mount
     const savedUser = authService.getUser();
     if (savedUser) {
       setUser(savedUser);
       setView('dashboard');
     }
+    setIsInitializing(false); // Done loading
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -106,6 +112,18 @@ const App: React.FC = () => {
     } else return true;
     return false;
   };
+
+  // Loading State to prevent Flash of Unauthenticated Content
+  if (isInitializing) {
+    return (
+      <div className="min-h-screen bg-[#131722] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+           <div className="w-12 h-12 border-4 border-[#f01a64] border-t-transparent rounded-full animate-spin"></div>
+           <p className="text-[#f01a64] text-[10px] font-black uppercase tracking-[0.3em] animate-pulse">Initializing Secure Hub...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-pink-500/30 overflow-x-hidden bg-[#131722] relative">
