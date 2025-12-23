@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useTransition, useRef } from 'react';
 import Navbar from './components/Navbar';
 import TickerTape from './components/TickerTape';
@@ -26,7 +25,7 @@ const App: React.FC = () => {
   
   const [user, setUser] = useState<UserProfile | null>(null);
   const [view, setView] = useState<'landing' | 'dashboard'>('landing');
-  const [isInitializing, setIsInitializing] = useState(true); // Prevents flicker
+  const [isInitializing, setIsInitializing] = useState(true); 
   
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
@@ -34,22 +33,20 @@ const App: React.FC = () => {
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    // Check for existing session immediately on mount
     const savedUser = authService.getUser();
     if (savedUser) {
       setUser(savedUser);
       setView('dashboard');
     }
-    setIsInitializing(false); // Done loading
+    setIsInitializing(false);
 
-    window.addEventListener('beforeinstallprompt', (e) => {
+    const handlePrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-    });
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', () => {});
     };
+
+    window.addEventListener('beforeinstallprompt', handlePrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handlePrompt);
   }, []);
 
   const handleLogout = () => {
@@ -109,11 +106,11 @@ const App: React.FC = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       setDeferredPrompt(null);
-    } else return true;
-    return false;
+      return false;
+    } 
+    return true;
   };
 
-  // Loading State to prevent Flash of Unauthenticated Content
   if (isInitializing) {
     return (
       <div className="min-h-screen bg-[#131722] flex items-center justify-center">
@@ -179,7 +176,10 @@ const App: React.FC = () => {
       <Footer />
 
       {/* Floating Action Cluster */}
-      <div className="fixed bottom-10 right-4 md:right-10 flex flex-row md:flex-col items-center gap-3 md:gap-5 z-[95] pb-[env(safe-area-inset-bottom)]">
+      <div 
+        className="fixed bottom-10 right-4 md:right-10 flex flex-row md:flex-col items-center gap-3 md:gap-5 z-[95]"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
         <button 
           onClick={() => user ? setShowReferral(true) : setShowSignup(true)}
           className="w-12 h-12 md:w-16 md:h-16 bg-[#00b36b] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(0,179,107,0.3)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/20"
@@ -254,7 +254,7 @@ const App: React.FC = () => {
 
       {showMentorshipModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/95 backdrop-blur-3xl animate-in fade-in">
-          <div className="bg-[#1e222d] border border-white/10 w-full max-lg rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)] animate-in zoom-in-95">
+          <div className="bg-[#1e222d] border border-white/10 w-full max-w-lg rounded-[2.5rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_120px_rgba(0,0,0,1)] animate-in zoom-in-95">
             <div className="p-8 md:p-14 space-y-8 relative">
               <div className="flex justify-between items-start">
                 <div className="flex items-center gap-4">
