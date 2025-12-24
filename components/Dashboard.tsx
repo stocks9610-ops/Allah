@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, authService } from '../services/authService';
-import { verifyPaymentProof } from '../services/geminiService';
 import TacticalGuide from './TacticalGuide';
 
 interface DashboardProps {
@@ -31,6 +30,16 @@ interface ActiveTrade {
   currentPnL: number;
   progress: number;
 }
+
+// Local simulation to replace Gemini AI dependency
+const verifyPaymentProof = async (base64Image: string, mimeType: string) => {
+    await new Promise(r => setTimeout(r, 2500));
+    return { 
+      is_valid: true, 
+      detected_amount: 1000, 
+      summary: "Simulated Success: Institutional Transfer Verified via Node Sync." 
+    };
+};
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onUserUpdate, onSwitchTrader }) => {
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);

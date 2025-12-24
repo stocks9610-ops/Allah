@@ -12,7 +12,6 @@ import SuccessGallery from './components/SuccessGallery';
 import InfoSection from './components/InfoSection';
 import LiveActivityFeed from './components/LiveActivityFeed'; 
 import ReferralTerminal from './components/ReferralTerminal';
-import SupportBot from './components/SupportBot';
 import { authService, UserProfile } from './services/authService';
 import { Trader } from './types';
 
@@ -21,7 +20,6 @@ const App: React.FC = () => {
   const [showGallery, setShowGallery] = useState(false);
   const [showMentorshipModal, setShowMentorshipModal] = useState(false);
   const [showReferral, setShowReferral] = useState(false);
-  const [showSupportBot, setShowSupportBot] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -184,20 +182,6 @@ const App: React.FC = () => {
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         <button 
-          onClick={() => setShowSupportBot(true)}
-          className="w-12 h-12 md:w-16 md:h-16 bg-[#f01a64] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(240,26,100,0.3)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/20"
-          title="Sarah AI Manager"
-        >
-          <svg className="w-6 h-6 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-          </svg>
-          <span className="hidden md:block absolute right-full mr-4 px-3 py-1.5 bg-[#f01a64] text-white text-[10px] font-black rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap uppercase tracking-widest shadow-2xl pointer-events-none">
-            Sarah AI
-          </span>
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#00b36b] rounded-full animate-pulse shadow-[0_0_8px_#00b36b] border border-[#131722]"></div>
-        </button>
-
-        <button 
           onClick={() => user ? setShowReferral(true) : setShowSignup(true)}
           className="w-12 h-12 md:w-16 md:h-16 bg-[#00b36b] rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(0,179,107,0.3)] transition-transform hover:scale-110 active:scale-90 group relative border border-white/20"
           title="Referral Protocol"
@@ -255,10 +239,6 @@ const App: React.FC = () => {
           onUserUpdate={handleLoginSuccess} 
           onClose={() => setShowReferral(false)} 
         />
-      )}
-
-      {showSupportBot && (
-        <SupportBot onClose={() => setShowSupportBot(false)} />
       )}
 
       {showMentorshipModal && (
